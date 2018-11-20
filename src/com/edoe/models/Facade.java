@@ -1,5 +1,8 @@
 package com.edoe.models;
-
+/**
+ * 
+ *
+ */
 public class Facade {
 	private ControllerUsuario controle;
 
@@ -24,7 +27,7 @@ public class Facade {
 
 	}
 
-	public String removeUsuario(String id) {
-		return controle.removeUsuario(id);
+	public void removeUsuario(String id) {
+		controle.removeUsuario(id);
 	}
 }

@@ -13,7 +13,7 @@ public abstract class Usuario {
 
 	private String nome;
 	private String email;
-	private String telefone;
+	private String celular;
 	private String id;
 	private String classe;
 
@@ -25,7 +25,7 @@ public abstract class Usuario {
 	 * @param id
 	 * @param classe
 	 */
-	public Usuario(String nome, String email, String telefone, String id, String classe) {
+	public Usuario(String nome, String email, String celular, String id, String classe) {
 
 		if (nome == null || nome.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
@@ -33,7 +33,7 @@ public abstract class Usuario {
 		if (email == null || email.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: email nao pode ser vazio ou nulo.");
 		}
-		if (telefone == null || telefone.trim().isEmpty()) {
+		if (celular == null || celular.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: celular nao pode ser vazio ou nulo.");
 		}
 		if (id == null || id.trim().isEmpty()) {
@@ -41,7 +41,7 @@ public abstract class Usuario {
 		}
 		this.nome = nome;
 		this.email = email;
-		this.telefone = telefone;
+		this.celular = celular;
 		this.id = id;
 		this.classe = classe;
 	}
@@ -62,12 +62,12 @@ public abstract class Usuario {
 		this.email = email;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getCelular() {
+		return celular;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 
 	public String getId() {
@@ -114,7 +114,7 @@ public abstract class Usuario {
 	 */
 	@Override
 	public String toString() {
-		return this.getNome() + "/" + this.getId() + ", " + this.getEmail() + ", " + this.getTelefone() + ", status: ";
+		return this.getNome() + "/" + this.getId() + ", " + this.getEmail() + ", " + this.getCelular() + ", status: ";
 	}
 
 }
