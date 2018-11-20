@@ -41,19 +41,19 @@ public abstract class Usuario {
 	 * Construtor de um usuario.
 	 * 
 	 * @param nome 
-	 * 			String que representa o nome do usuario.
+	 * 	String que representa o nome do usuario.
 	 * 
 	 * @param email 
-	 * 			String que representa o email do usuario.
+	 * 	String que representa o email do usuario.
 	 * 
 	 * @param telefone 
-	 * 			String que representa o telefone do usuario.
+	 * 	String que representa o telefone do usuario.
 	 * 
 	 * @param id 
-	 * 			String que representa a identificacap do usuario.
+	 * 	String que representa a identificacap do usuario.
 	 * 
 	 * @param classe 
-	 * 			String que representa a classe correspondente ao usuario.
+	 * 	String que representa a classe correspondente ao usuario.
 	 */
 	public Usuario(String nome, String email, String celular, String id, String classe) {
 
@@ -184,7 +184,7 @@ public abstract class Usuario {
 	}
 	
 	/**
-	 * Metodo responsavel que retorna a representacao textual do usuario.
+	 * Metodo responsavel por retornar a representacao textual do usuario.
 	 */
 	@Override
 	public String toString() {
