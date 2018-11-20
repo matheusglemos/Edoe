@@ -41,19 +41,19 @@ public abstract class Usuario {
 	 * Construtor de um usuario.
 	 * 
 	 * @param nome 
-	 * 	String que representa o nome do usuario.
+	 * 		String que representa o nome do usuario.
 	 * 
 	 * @param email 
-	 * 	String que representa o email do usuario.
+	 * 		String que representa o email do usuario.
 	 * 
 	 * @param telefone 
-	 * 	String que representa o telefone do usuario.
+	 * 		String que representa o telefone do usuario.
 	 * 
 	 * @param id 
-	 * 	String que representa a identificacap do usuario.
+	 * 		String que representa a identificacap do usuario.
 	 * 
 	 * @param classe 
-	 * 	String que representa a classe correspondente ao usuario.
+	 * 		String que representa a classe correspondente ao usuario.
 	 */
 	public Usuario(String nome, String email, String celular, String id, String classe) {
 
@@ -89,7 +89,7 @@ public abstract class Usuario {
 	 * Metodo responsavel por alterar o nome do usuario.
 	 * 
 	 * @param nome 
-	 * 			String que representa o nome do usuario.
+	 * 		String que representa o nome do usuario.
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -108,7 +108,7 @@ public abstract class Usuario {
 	 * Metodo responsavel por alterar o email do usuario.
 	 * 
 	 * @param email
-	 * 			String que representa o email do usuario.
+	 * 		String que representa o email do usuario.
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -127,7 +127,7 @@ public abstract class Usuario {
 	 * Metodo responsavel por alterar o celular do usuario.
 	 * 
 	 * @param celular
-	 * 			String que representa o celular do usuario.
+	 * 		String que representa o celular do usuario.
 	 */
 	public void setCelular(String celular) {
 		this.celular = celular;
