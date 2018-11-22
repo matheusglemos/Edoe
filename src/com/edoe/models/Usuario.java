@@ -1,5 +1,7 @@
 package com.edoe.models;
 
+import Validador.ValidadorUsuario;
+
 /**
  * Classe abstrata que representa um usuario no sistema. Cada usuario possui
  * nome, email, celular, id e uma classe.
@@ -51,23 +53,7 @@ public abstract class Usuario {
 	 * @param classe   String que representa a classe correspondente ao usuario.
 	 */
 	public Usuario(String nome, String email, String celular, String id, String classe) {
-
-		if (nome == null || nome.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
-		}
-		if (email == null || email.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: email nao pode ser vazio ou nulo.");
-		}
-		if (celular == null || celular.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: celular nao pode ser vazio ou nulo.");
-		}
-		if (id == null || id.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		}
-		if (classe == null || classe.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");
-		} 
-
+		ValidadorUsuario.validaCriacaoDeUsuario(nome, email, celular, id, classe);
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
