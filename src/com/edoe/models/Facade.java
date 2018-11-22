@@ -14,13 +14,15 @@ public class Facade {
 	/**
 	 * Atributo referente ao controle de usuarios.
 	 */
-	private ControllerUsuario controle;
+	private ControllerUsuario controleUm;
+	private ControllerItens controleDois;
 
 	/**
 	 * Metodo responsavel pelo carregamento de dados.
 	 */
 	public void inicializa() {
-		controle = new ControllerUsuario();
+		controleUm = new ControllerUsuario();
+		controleDois = new ControllerItens();
 	}
 
 	/**
@@ -42,7 +44,7 @@ public class Facade {
 	 * 		String que representa a classe do usuario doador.
 	 */
 	public void adicionaDoador(String nome, String id, String email, String celular, String classe) {
-		controle.adicionaDoador(nome, id, email, celular, classe);
+		controleUm.adicionaDoador(nome, id, email, celular, classe);
 	}
 
 	/**
@@ -55,7 +57,7 @@ public class Facade {
 	 * presente no sistema.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
-		return controle.pesquisaUsuarioPorId(id);
+		return controleUm.pesquisaUsuarioPorId(id);
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class Facade {
 	 * presente no sistema.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
-		return controle.pesquisaUsuarioPorId(nome);
+		return controleUm.pesquisaUsuarioPorId(nome);
 	}
 
 	/**
@@ -80,7 +82,7 @@ public class Facade {
 	 * @return Null.
 	 */
 	public String atualizaUsuario(String id) {
-		return controle.atualizaUsuario(id);
+		return controleUm.atualizaUsuario(id);
 	}
 
 	/**
@@ -90,6 +92,28 @@ public class Facade {
 	 * 		String que representa o id do usuario.
 	 */
 	public void removeUsuario(String id) {
-		controle.removeUsuario(id);
+		controleUm.removeUsuario(id);
 	}
+	
+	public void adicionaDescritor(String descricao) {
+		
+	}
+	
+	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+		
+	}
+	
+	public void exibeItem(String idDoador) {
+		
+	}
+	
+	public void atualizaItemParaDoacao(String idDoador) {
+		
+	}
+	
+	public void removeItemParaDoacao(String idDoador) {
+		
+	}
+	
+	
 }

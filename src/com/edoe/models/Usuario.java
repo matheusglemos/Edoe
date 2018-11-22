@@ -1,8 +1,8 @@
 package com.edoe.models;
 
 /**
- * Classe abstrata que representa um usuario no sistema. 
- * Cada usuario possui nome, email, celular, id e uma classe.
+ * Classe abstrata que representa um usuario no sistema. Cada usuario possui
+ * nome, email, celular, id e uma classe.
  * 
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -16,22 +16,22 @@ public abstract class Usuario {
 	 * Atributo que representa o nome do usuario.
 	 */
 	private String nome;
-	
+
 	/**
 	 * Atributo que representa o email do usuario.
 	 */
 	private String email;
-	
+
 	/**
 	 * Atributo que representa o celular do usuario.
 	 */
 	private String celular;
-	
+
 	/**
 	 * Atributo que representa o id do usuario.
 	 */
 	private String id;
-	
+
 	/**
 	 * Atributo que representa a classe do usuario.
 	 */
@@ -40,20 +40,15 @@ public abstract class Usuario {
 	/**
 	 * Construtor de um usuario.
 	 * 
-	 * @param nome 
-	 * 		String que representa o nome do usuario.
+	 * @param nome     String que representa o nome do usuario.
 	 * 
-	 * @param email 
-	 * 		String que representa o email do usuario.
+	 * @param email    String que representa o email do usuario.
 	 * 
-	 * @param telefone 
-	 * 		String que representa o telefone do usuario.
+	 * @param telefone String que representa o telefone do usuario.
 	 * 
-	 * @param id 
-	 * 		String que representa a identificacap do usuario.
+	 * @param id       String que representa a identificacap do usuario.
 	 * 
-	 * @param classe 
-	 * 		String que representa a classe correspondente ao usuario.
+	 * @param classe   String que representa a classe correspondente ao usuario.
 	 */
 	public Usuario(String nome, String email, String celular, String id, String classe) {
 
@@ -69,6 +64,10 @@ public abstract class Usuario {
 		if (id == null || id.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
+		if (classe == null || classe.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");
+		} 
+
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
@@ -88,8 +87,7 @@ public abstract class Usuario {
 	/**
 	 * Metodo responsavel por alterar o nome do usuario.
 	 * 
-	 * @param nome 
-	 * 		String que representa o nome do usuario.
+	 * @param nome String que representa o nome do usuario.
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -107,8 +105,7 @@ public abstract class Usuario {
 	/**
 	 * Metodo responsavel por alterar o email do usuario.
 	 * 
-	 * @param email
-	 * 		String que representa o email do usuario.
+	 * @param email String que representa o email do usuario.
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -126,8 +123,7 @@ public abstract class Usuario {
 	/**
 	 * Metodo responsavel por alterar o celular do usuario.
 	 * 
-	 * @param celular
-	 * 		String que representa o celular do usuario.
+	 * @param celular String que representa o celular do usuario.
 	 */
 	public void setCelular(String celular) {
 		this.celular = celular;
@@ -150,7 +146,7 @@ public abstract class Usuario {
 	public String getClasse() {
 		return classe;
 	}
-	
+
 	/**
 	 * Metodo que gera o hashcode do usuario.
 	 */
@@ -161,10 +157,10 @@ public abstract class Usuario {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	/**
-	 * Metodo responsavel por comparar um usuario com outro a partir de
-	 * sua identificacao (id).
+	 * Metodo responsavel por comparar um usuario com outro a partir de sua
+	 * identificacao (id).
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -182,7 +178,7 @@ public abstract class Usuario {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Metodo responsavel por retornar a representacao textual do usuario.
 	 */

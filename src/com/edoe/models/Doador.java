@@ -39,6 +39,6 @@ public class Doador extends Usuario {
 	 */
 	@Override
 	public String toString() {
-		return "Doador []";
+		return this.getNome() + "/" + this.getId() + ", " + this.getEmail() + ", " + this.getCelular() + ", status: doador";
 	}
 }
