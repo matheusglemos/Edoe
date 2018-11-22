@@ -1,7 +1,8 @@
-package com.edoe.models;
+package main;
 
 import controllers.ControllerItens;
 import controllers.ControllerUsuario;
+import easyaccept.EasyAccept;
 
 /**
  * Classe que ira se comunicar com os controllers. 
@@ -26,6 +27,11 @@ public class Facade {
 	public void inicializa() {
 		controleUm = new ControllerUsuario();
 		controleDois = new ControllerItens();
+	}
+	
+	public static void main(String[] args) {
+		args = new String[] {"main.Facade", "acceptance_tests/use_case_1.txt" };
+		EasyAccept.main(args);
 	}
 
 	/**
