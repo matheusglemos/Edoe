@@ -1,5 +1,8 @@
 package com.edoe.models;
 
+import controllers.ControllerItens;
+import controllers.ControllerUsuario;
+
 /**
  * Classe que ira se comunicar com os controllers. 
  * Facilitando assim a comunicacao com a interface.

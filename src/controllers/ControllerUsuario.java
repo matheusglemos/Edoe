@@ -1,7 +1,9 @@
-package com.edoe.models;
+package controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.edoe.models.Doador;
 
 /**
  * Classe que controla o usuario. Adiciona, pesquisa atualiza e remove usuarios.

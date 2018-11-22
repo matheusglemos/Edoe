@@ -1,7 +1,9 @@
-package com.edoe.models;
+package controllers;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.edoe.models.Item;
 
 public class ControllerItens {
 	
