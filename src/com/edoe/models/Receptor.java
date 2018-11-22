@@ -25,7 +25,7 @@ public class Receptor extends Usuario {
 	 * @param classe   String referente a classe do usuario.
 	 * @throws Exception
 	 */
-	public Receptor(String nome, String email, String telefone, String id, String classe) throws Exception {
+	public Receptor(String nome, String email, String telefone, String id, String classe) {
 		super(nome, email, telefone, id, classe);
 	}
 

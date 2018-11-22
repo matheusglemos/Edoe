@@ -1,9 +1,14 @@
 package controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.edoe.models.Doador;
+import com.edoe.models.Receptor;
+import com.edoe.models.Usuario;
 
 /**
  * Classe que controla o usuario. Adiciona, pesquisa atualiza e remove usuarios.
@@ -19,13 +24,28 @@ public class ControllerUsuario {
 	/**
 	 * Atributo que representa os doadores.
 	 */
-	private Map<String, Doador> doadores;
+	private Map<String, Usuario> doadores;
 
 	/**
 	 * Construtor do controlador de usuarios.
 	 */
 	public ControllerUsuario() {
 		this.doadores = new HashMap<>();
+	}
+	
+	public void lerReceptores(String caminho) throws IOException {
+		Scanner sc = new Scanner(new File(caminho));
+		String linha = null;
+		while(sc.hasNextLine()) {
+			linha = sc.nextLine();
+			if(linha.equals("id,nome,E-mail,celular,classe")) {
+				continue;
+			}String dadosUsuario[] = linha.split(",");
+			if(dadosUsuario.length != 5) {
+				throw new IOException("Campos invalidos");
+			}doadores.put(dadosUsuario[0], new Receptor(dadosUsuario[1], dadosUsuario[2], dadosUsuario[3], dadosUsuario[0], dadosUsuario[4]));
+			
+		}
 	}
 
 	/**
@@ -56,7 +76,7 @@ public class ControllerUsuario {
 	 */
 	public void adicionaDoador(String nome, String id, String email, String celular, String classe) {
 		if (this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario ja existente: " + this.doadores.get(id) + ".");
+			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
 		}
 		Doador doador = new Doador(nome, email, celular, id, classe);
 		this.doadores.put(id, doador);
@@ -70,7 +90,11 @@ public class ControllerUsuario {
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu nome.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
-		return this.doadores.get(nome).toString();
+		for (Usuario Doadores : doadores.values()) {
+			if (doadores.get(nome).equals(nome)) {
+				return this.doadores.toString();
+			}
+		}throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
 	}
 
 	/**
@@ -94,8 +118,19 @@ public class ControllerUsuario {
 	 * 
 	 * @return null.
 	 */
-	public String atualizaUsuario(String id) {
-		return null;
+	public void atualizaUsuario(String id,String nome, String email, String celular) {
+		if (this.existeUsuario(id)) {
+			if (nome != null) {
+				this.doadores.get(id).setNome(nome);
+			}
+			if(email != null) {
+				this.doadores.get(id).setEmail(email);
+			}
+			if(celular != null) {
+				this.doadores.get(id).setCelular(celular);
+			}
+		}
+		throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
 	}
 
 	/**
@@ -105,7 +140,7 @@ public class ControllerUsuario {
 	 */
 	public void removeUsuario(String id) {
 		if (!this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + this.doadores.get(id) + ".");
+			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
 		}
 		this.doadores.remove(id);
 	}

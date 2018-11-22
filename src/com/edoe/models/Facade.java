@@ -84,8 +84,8 @@ public class Facade {
 	 * 
 	 * @return Null.
 	 */
-	public String atualizaUsuario(String id) {
-		return controleUm.atualizaUsuario(id);
+	public void atualizaUsuario(String id,String nome, String email, String celular) {
+		 controleUm.atualizaUsuario(id,nome,email,celular);
 	}
 
 	/**
