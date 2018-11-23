@@ -1,6 +1,6 @@
 package com.edoe.models;
 
-import Validador.ValidadorUsuario;
+import validador.ValidadorUsuario;
 
 /**
  * Classe abstrata que representa um usuario no sistema. Cada usuario possui

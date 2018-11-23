@@ -1,4 +1,4 @@
-package Validador;
+package validador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +38,9 @@ public class ValidadorUsuario {
 		List<String> listaClasses = new ArrayList<String>();
 		listaClasses.add("pessoa_fisica");
 		listaClasses.add("igreja");
-		listaClasses.add("orgao publico municipal");
-		listaClasses.add("orgao publico estadual");
-		listaClasses.add("orgao publico federal");
+		listaClasses.add("orgao_publico_municipal");
+		listaClasses.add("orgao_publico_estadual");
+		listaClasses.add("orgao_publico_federal");
 		listaClasses.add("ong");
 		listaClasses.add("associacao");
 		listaClasses.add("sociedade");
