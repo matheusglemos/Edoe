@@ -4,16 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * 
-
  *
  */
 public class Item {
-
+	/**
+	 * 
+	 */
+	
 	private int idItem;
+	
+	/**
+	 * 
+	 */
 	private List<String> tags;
+	
+	/**
+	 * 
+	 */
 	private int quantidade;
+	
+	/**
+	 * 
+	 */
 	private String descricao;
-
+	
+	/**
+	 * 
+	 * @param idItem
+	 * @param tags
+	 * @param quantidade
+	 * @param descricao
+	 */
 	public Item(int idItem, List<String> tags, int quantidade, String descricao) {
 		this.idItem = idItem;
 		this.tags = new ArrayList<>();
@@ -56,7 +77,9 @@ public class Item {
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -78,7 +101,9 @@ public class Item {
 			return false;
 		return true;
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
 		return this.getidItem() + " - " + this.getDescricao() + ", " + this.getTags() + ", quantidade:"

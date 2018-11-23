@@ -32,7 +32,11 @@ public class ControllerUsuario {
 	public ControllerUsuario() {
 		this.doadores = new HashMap<>();
 	}
-	
+	/**
+	 * 
+	 * @param caminho
+	 * @throws IOException
+	 */
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
 		String linha = null;
@@ -74,7 +78,7 @@ public class ControllerUsuario {
 	 * 
 	 * @param classe  String que representa a classe do usuario doador.
 	 */
-	public void adicionaDoador(String nome, String id, String email, String celular, String classe) {
+	public void adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		if (this.existeUsuario(id)) {
 			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
 		}
