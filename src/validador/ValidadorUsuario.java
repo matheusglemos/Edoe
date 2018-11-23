@@ -1,16 +1,34 @@
 package validador;
 
+/**
+ * Classe responsavel por validar um usuario.
+ * 
+ * @author Matheus Gusmao
+ * @author Davidson Guedes
+ * @author Almir Crispiniano
+ * @author Caroliny Silva
+ *
+ */
 public class ValidadorUsuario {
 	/**
-	 * O método irá analisar as excecoes durante a criacao do usuario. Caso nome,
+	 * O metodo ira analisar as excecoes durante a criacao do usuario. Caso nome,
 	 * email, celular, id ou classe sejam nulo ou vazio, a excecao sera lancada
 	 * juntamente com uma mensagem.
 	 * 
 	 * @param nome
-	 * @param email
-	 * @param celular
+	 *            String que representa o nome do usuario doador.
+	 * 
 	 * @param id
+	 *            String que representa o id do usuario doador.
+	 * 
+	 * @param email
+	 *            String que representa o email do usuario doador.
+	 * 
+	 * @param celular
+	 *            String que representa o celular do usuario doador.
+	 * 
 	 * @param classe
+	 *            String que representa a classe do usuario doador.
 	 */
 	public static void validaCriacaoDeUsuario(String nome, String email, String celular, String id, String classe) {
 		if (nome == null || nome.trim().isEmpty()) {

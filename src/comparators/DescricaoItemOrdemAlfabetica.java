@@ -3,11 +3,12 @@ package comparators;
 import java.util.Comparator;
 
 import com.edoe.models.Item;
+
 /**
  * 
  *
  */
-public class DescricaoItemOrdemAlfabetica implements Comparator<Item>{
+public class DescricaoItemOrdemAlfabetica implements Comparator<Item> {
 	/**
 	 * 
 	 */
