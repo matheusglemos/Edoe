@@ -1,4 +1,7 @@
-package validador;
+package Validador;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe responsavel por validar um usuario.
@@ -31,6 +34,17 @@ public class ValidadorUsuario {
 	 *            String que representa a classe do usuario doador.
 	 */
 	public static void validaCriacaoDeUsuario(String nome, String email, String celular, String id, String classe) {
+		
+		List<String> listaClasses = new ArrayList<String>();
+		listaClasses.add("pessoa_fisica");
+		listaClasses.add("igreja");
+		listaClasses.add("orgao publico municipal");
+		listaClasses.add("orgao publico estadual");
+		listaClasses.add("orgao publico federal");
+		listaClasses.add("ong");
+		listaClasses.add("associacao");
+		listaClasses.add("sociedade");
+		
 		if (nome == null || nome.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		}
@@ -45,6 +59,9 @@ public class ValidadorUsuario {
 		}
 		if (classe == null || classe.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");
+		}
+		if (!listaClasses.contains(classe.trim().toLowerCase())) {
+			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
 		}
 	}
 

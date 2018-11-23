@@ -1,4 +1,4 @@
-package validador;
+package Validador;
 
 public class ValidadorItem {
 

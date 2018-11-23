@@ -111,6 +111,15 @@ class DoadorTest {
 		});
 		assertEquals("Entrada invalida: classe nao pode ser vazia ou nula.", iae.getMessage());
 	}
+	
+	@Test
+	@DisplayName("teste da classe invalida")
+	void testClasseInvalida() {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			new Doador("Fernando", "fernando@yahoo.com", "(85) 99456-8578", "11725897", "Empresa");
+		});
+		assertEquals("Entrada invalida: opcao de classe invalida.", iae.getMessage());
+	}
 
 	@Test
 	@DisplayName("teste dois usuarios diferentes")
