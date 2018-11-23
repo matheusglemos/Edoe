@@ -180,5 +180,4 @@ public abstract class Usuario {
 	public String toString() {
 		return this.getNome() + "/" + this.getId() + ", " + this.getEmail() + ", " + this.getCelular() + ", status: ";
 	}
-
 }

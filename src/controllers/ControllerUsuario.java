@@ -91,12 +91,13 @@ public class ControllerUsuario {
 	 * @param classe
 	 *            String que representa a classe do usuario doador.
 	 */
-	public void adicionaDoador(String id, String nome, String email, String celular, String classe) {
+	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		if (this.existeUsuario(id)) {
 			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
 		}
 		Doador doador = new Doador(nome, email, celular, id, classe);
 		this.usuarios.put(id, doador);
+		return id;
 	}
 
 	/**
