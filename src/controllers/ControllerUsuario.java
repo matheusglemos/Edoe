@@ -53,15 +53,16 @@ public class ControllerUsuario {
 			if (dadosUsuario.length != 5) {
 				throw new IOException("Campos invalidos");
 			}
-			usuarios.put(dadosUsuario[0],
-					new Receptor(dadosUsuario[1], dadosUsuario[2], dadosUsuario[3], dadosUsuario[0], dadosUsuario[4]));
+			usuarios.put(dadosUsuario[0], new Receptor(dadosUsuario[1],
+					dadosUsuario[2], dadosUsuario[3], dadosUsuario[0],
+					dadosUsuario[4]));
 
 		}
 	}
 
 	/**
-	 * Metodo responsavel por verificar se existe uma usuario cadastrado no mapa de
-	 * usuarios
+	 * Metodo responsavel por verificar se existe uma usuario cadastrado no mapa
+	 * de usuarios
 	 * 
 	 * @param id
 	 *            String que representa o id do usuario doador.
@@ -91,9 +92,11 @@ public class ControllerUsuario {
 	 * @param classe
 	 *            String que representa a classe do usuario doador.
 	 */
-	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
+	public String adicionaDoador(String id, String nome, String email,
+			String celular, String classe) {
 		if (this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
+			throw new IllegalArgumentException("Usuario ja existente: " + id
+					+ ".");
 		}
 		Doador doador = new Doador(nome, email, celular, id, classe);
 		this.usuarios.put(id, doador);
@@ -106,15 +109,21 @@ public class ControllerUsuario {
 	 * @param id
 	 *            String que representa o nome do usuario.
 	 * 
-	 * @return A representacao textual do usuario, por meio da pesquisa de seu nome.
+	 * @return A representacao textual do usuario, por meio da pesquisa de seu
+	 *         nome.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
+		if (nome == null || nome.equals("")) {
+			throw new IllegalArgumentException(
+					"Entrada invalida: nome nao pode ser vazio ou nulo.");
+		}
 		for (Usuario usuarios : usuarios.values()) {
 			if (usuarios.getNome().equals(nome)) {
-				return this.usuarios.toString();
+				return usuarios.toString();
 			}
 		}
-		throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
+		throw new IllegalArgumentException("Usuario nao encontrado: " + nome
+				+ ".");
 	}
 
 	/**
@@ -123,11 +132,13 @@ public class ControllerUsuario {
 	 * @param id
 	 *            String que representa o id do usuario.
 	 * 
-	 * @return A representacao textual do usuario, por meio da pesquisa de seu id.
+	 * @return A representacao textual do usuario, por meio da pesquisa de seu
+	 *         id.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
 		if (!this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + this.usuarios.get(id) + ".");
+			throw new IllegalArgumentException("Usuario nao encontrado: "
+					+ this.usuarios.get(id) + ".");
 		}
 		return this.usuarios.get(id).toString();
 	}
@@ -140,7 +151,12 @@ public class ControllerUsuario {
 	 * 
 	 * @return null.
 	 */
-	public void atualizaUsuario(String id, String nome, String email, String celular) {
+	public void atualizaUsuario(String id, String nome, String email,
+			String celular) {
+		if (id == null || id.equals("")) {
+			throw new IllegalArgumentException(
+					"Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
 		if (this.existeUsuario(id)) {
 			if (nome != null) {
 				this.usuarios.get(id).setNome(nome);
@@ -151,8 +167,10 @@ public class ControllerUsuario {
 			if (celular != null) {
 				this.usuarios.get(id).setCelular(celular);
 			}
+		} else {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + id
+					+ ".");
 		}
-		throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
 	}
 
 	/**
@@ -162,8 +180,13 @@ public class ControllerUsuario {
 	 *            String que representa o id do usuario.
 	 */
 	public void removeUsuario(String id) {
+		if (id == null || id.equals("")) {
+			throw new IllegalArgumentException(
+					"Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
 		if (!this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
+			throw new IllegalArgumentException("Usuario nao encontrado: " + id
+					+ ".");
 		}
 		this.usuarios.remove(id);
 	}

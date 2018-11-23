@@ -38,18 +38,21 @@ public class Doador extends Usuario {
 	 * @param classe
 	 *            String referente a classe do usuario.
 	 */
-	public Doador(String nome, String email, String telefone, String id, String classe) {
+	public Doador(String nome, String email, String telefone, String id,
+			String classe) {
 		super(nome, email, telefone, id, classe);
 		this.itens = new HashMap<>();
 
 	}
 
 	/**
-	 * Metodo responsavel por retornar a representacao textual do usuario doador.
+	 * Metodo responsavel por retornar a representacao textual do usuario
+	 * doador.
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "doador";
+		return this.getNome() + "/" + this.getId() + ", " + this.getEmail()
+				+ ", " + this.getCelular() + ", status: doador";
 	}
 
 	/**
@@ -65,7 +68,8 @@ public class Doador extends Usuario {
 
 	}
 
-	public void adicionaItemParaDoacao(String descricaoItem, int quantidade, String tags) {
+	public void adicionaItemParaDoacao(String descricaoItem, int quantidade,
+			String tags) {
 
 	}
 

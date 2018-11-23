@@ -55,7 +55,8 @@ public class Facade {
 	 * @param classe
 	 *            String que representa a classe do usuario doador.
 	 */
-	public String adicionaDoador(String nome, String id, String email, String celular, String classe) {
+	public String adicionaDoador(String nome, String id, String email,
+			String celular, String classe) {
 		return this.controleUm.adicionaDoador(nome, id, email, celular, classe);
 	}
 
@@ -65,8 +66,8 @@ public class Facade {
 	 * @param id
 	 *            String que representa o id do usuario.
 	 * 
-	 * @return A representacao textual do usuario procurado, se estiver presente no
-	 *         sistema.
+	 * @return A representacao textual do usuario procurado, se estiver presente
+	 *         no sistema.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
 		return controleUm.pesquisaUsuarioPorId(id);
@@ -78,11 +79,11 @@ public class Facade {
 	 * @param nome
 	 *            String que representa o nome do usuario.
 	 * 
-	 * @return A representacao textual do usuario procurado, se estiver presente no
-	 *         sistema.
+	 * @return A representacao textual do usuario procurado, se estiver presente
+	 *         no sistema.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
-		return controleUm.pesquisaUsuarioPorId(nome);
+		return controleUm.pesquisaUsuarioPorNome(nome);
 	}
 
 	/**
@@ -93,7 +94,8 @@ public class Facade {
 	 * 
 	 * @return Null.
 	 */
-	public void atualizaUsuario(String id, String nome, String email, String celular) {
+	public void atualizaUsuario(String id, String nome, String email,
+			String celular) {
 		controleUm.atualizaUsuario(id, nome, email, celular);
 	}
 
@@ -111,7 +113,8 @@ public class Facade {
 
 	}
 
-	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+	public void adicionaItemParaDoacao(String idDoador, String descricaoItem,
+			int quantidade, String tags) {
 
 	}
 
