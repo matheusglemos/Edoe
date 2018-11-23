@@ -1,5 +1,8 @@
 package com.edoe.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Classe que representa um usuario como doador.
  * Esta classe e filha da classe usuario.
@@ -10,6 +13,12 @@ package com.edoe.models;
  * @author Almir Crispiniano
  */
 public class Doador extends Usuario {
+	
+	/**
+	 * 
+	 */
+	
+	private Map<String, Item> itens;
 
 	/**
 	 * Construtor de um usuario doador.
@@ -31,6 +40,7 @@ public class Doador extends Usuario {
 	 */
 	public Doador(String nome, String email, String telefone, String id, String classe) {
 		super(nome, email, telefone, id, classe);
+		this.itens = new HashMap<>();
 
 	}
 
@@ -40,5 +50,34 @@ public class Doador extends Usuario {
 	@Override
 	public String toString() {
 		return this.getNome() + "/" + this.getId() + ", " + this.getEmail() + ", " + this.getCelular() + ", status: doador";
+	}
+	
+	/**
+	 * 
+	 * @param descricao
+	 * @return
+	 */
+	public boolean existeDescritor(String descricao) {
+		return this.itens.containsKey(descricao);
+	}
+	
+	public void adicionaDescritor(String descricao) {
+	
+	}
+	
+	public void adicionaItemParaDoacao(String descricaoItem, int quantidade, String tags) {
+		
+	}
+	
+	public void exibeItem(int idItem) {
+		
+	}
+	
+	public void atualizaItemParaDoacao(int idItem, int quantidade, String tags ) {
+		
+	}
+	
+	public void removeItemParaDoacao(int idItem) {
+		
 	}
 }

@@ -1,25 +1,32 @@
 package com.edoe.models;
 
+import java.util.ArrayList;
+import java.util.List;
+/**
+ * 
+
+ *
+ */
 public class Item {
 
-	private int id;
-	private String tag;
+	private int idItem;
+	private List<String> tags;
 	private int quantidade;
 	private String descricao;
 
-	public Item(int id, String tag, int quantidade, String descricao) {
-		this.id = id;
-		this.tag = tag;
+	public Item(int idItem, List<String> tags, int quantidade, String descricao) {
+		this.idItem = idItem;
+		this.tags = new ArrayList<>();
 		this.quantidade = quantidade;
 		this.descricao = descricao;
 	}
 
-	public String getTag() {
-		return tag;
+	public List<String> getTags() {
+		return tags;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 
 	public int getQuantidade() {
@@ -30,20 +37,23 @@ public class Item {
 		this.quantidade = quantidade;
 	}
 
-	public int getId() {
-		return id;
+	public int getidItem() {
+		return idItem;
 	}
 
 	public String getDescricao() {
 		return descricao;
 	}
 
+	/**
+	 * Dois itens sao iguais se possurem a mesma descricao e as mesmas tags
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
+		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
 
@@ -61,17 +71,18 @@ public class Item {
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
-		if (tag == null) {
-			if (other.tag != null)
+		if (tags == null) {
+			if (other.tags != null)
 				return false;
-		} else if (!tag.equals(other.tag))
+		} else if (!tags.equals(other.tags))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "<id> - <descrição>, tags: [tag1, tag2, …], quantidade: n";
+		return this.getidItem() + " - " + this.getDescricao() + ", " + this.getTags() + ", quantidade:"
+				+ this.getQuantidade();
 	}
 
 }
