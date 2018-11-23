@@ -46,7 +46,7 @@ public class ControllerUsuario {
 		String linha = null;
 		while (sc.hasNextLine()) {
 			linha = sc.nextLine();
-			if (linha.equals("id,nome,E-mail,celular,classe")) {
+			if (linha.equals("id,nome,e-mail,celular,classe")) {
 				continue;
 			}
 			String dadosUsuario[] = linha.split(",");
