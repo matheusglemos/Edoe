@@ -113,9 +113,15 @@ public class ControllerUsuario {
 	 *         nome.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
+		String res = "";
 		if (nome == null || nome.equals("")) {
 			throw new IllegalArgumentException(
 					"Entrada invalida: nome nao pode ser vazio ou nulo.");
+		}// ainda precisa adicionar a verificação
+		for (Usuario usuarios : usuarios.values()) {
+			if (usuarios.getNome().equals(nome)) {
+				res += usuarios.toString() + " | \n";
+			}
 		}
 		for (Usuario usuarios : usuarios.values()) {
 			if (usuarios.getNome().equals(nome)) {
@@ -136,9 +142,13 @@ public class ControllerUsuario {
 	 *         id.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
+		if (id == null || id.equals("")) {
+			throw new IllegalArgumentException(
+					"Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
 		if (!this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: "
-					+ this.usuarios.get(id) + ".");
+			throw new IllegalArgumentException("Usuario nao encontrado: " + id
+					+ ".");
 		}
 		return this.usuarios.get(id).toString();
 	}
