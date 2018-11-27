@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -30,7 +31,7 @@ public class ControllerUsuario {
 	 * Construtor do controlador de usuarios.
 	 */
 	public ControllerUsuario() {
-		this.usuarios = new HashMap<>();
+		this.usuarios = new LinkedHashMap<>();
 	}
 
 	/**
@@ -103,19 +104,25 @@ public class ControllerUsuario {
 	public String pesquisaUsuarioPorNome(String nome) {
 		String res = "";
 		if (nome == null || nome.equals("")) {
-			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
-		} // ainda precisa adicionar a verificação
-		for (Usuario usuarios : usuarios.values()) {
-			if (usuarios.getNome().equals(nome)) {
-				res += usuarios.toString() + " | \n";
+			throw new IllegalArgumentException(
+					"Entrada invalida: nome nao pode ser vazio ou nulo.");
+		}
+		int i = 0;
+		for(Usuario usuarios : usuarios.values()) {
+			if(usuarios.getNome().equals(nome)) {
+				if (i != 0) {
+					res += " | " + usuarios.toString();
+				} else {
+					res += usuarios.toString();
+					i++;
+				}
 			}
 		}
-		for (Usuario usuarios : usuarios.values()) {
-			if (usuarios.getNome().equals(nome)) {
-				return usuarios.toString();
-			}
+		if (res.equals("")) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + nome
+					+ ".");
 		}
-		throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
+		return res;
 	}
 
 	/**
@@ -147,13 +154,13 @@ public class ControllerUsuario {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (this.existeUsuario(id)) {
-			if (nome != null) {
+			if (nome != null && !"".equals(nome)) {
 				this.usuarios.get(id).setNome(nome);
 			}
-			if (email != null) {
+			if (email != null && !"".equals(email)) {
 				this.usuarios.get(id).setEmail(email);
 			}
-			if (celular != null) {
+			if (celular != null && !"".equals(celular)) {
 				this.usuarios.get(id).setCelular(celular);
 			}
 			return this.usuarios.get(id).toString();
