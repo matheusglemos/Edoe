@@ -43,13 +43,13 @@ public class ControllerItens {
 	 * @return
 	 */
 	public boolean adicionaDescritor(String descricao) {
-		if (!this.existeDescritor(descricao)) {
-			return this.descritores.add(descricao.toLowerCase().trim());
-		}
 		if (descricao == null || descricao.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
-		throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao);
+		if (!this.existeDescritor(descricao.toLowerCase().trim())) {
+			return this.descritores.add(descricao.toLowerCase().trim());
+		}
+		throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao.toLowerCase().trim() + ".");
 
 	}
 
