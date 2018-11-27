@@ -58,27 +58,6 @@ public class Doador extends Usuario {
 				+ ", status: doador";
 	}
 
-	/**
-	 * 
-	 * @param descricao
-	 * @return
-	 */
-	public boolean existeDescritor(String descricao) {
-		return this.descricoes.contains(descricao);
-	}
-
-	/**
-	 * 
-	 * @param descricao
-	 * @return
-	 */
-	public boolean adicionaDescritor(String descricao) {
-		if (!this.existeDescritor(descricao)) {
-			return this.descricoes.add(descricao);
-		}
-		throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao);
-
-	}
 
 	/**
 	 * 
@@ -122,7 +101,7 @@ public class Doador extends Usuario {
 				this.itens.get(idItem).setQuantidade(quantidade);
 			}
 			if(tags != null) {
-				this.itens.get(idItem);
+				this.itens.get(idItem).setTags(tags);
 			}
 		}else {
 			

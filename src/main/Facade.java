@@ -25,7 +25,7 @@ public class Facade {
 
 	public Facade() {
 		controleUm = new ControllerUsuario();
-		controleDois = new ControllerItens();
+		controleDois = new ControllerItens(controleUm);
 	}
 
 	public static void main(String[] args) {
@@ -97,25 +97,46 @@ public class Facade {
 	public void removeUsuario(String id) {
 		controleUm.removeUsuario(id);
 	}
-
+	/**
+	 * 
+	 * @param descricao
+	 */
 	public void adicionaDescritor(String descricao) {
-
+		controleDois.adicionaDescritor(descricao);
 	}
-
-	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-
+	/**
+	 * 
+	 * @param idDoador
+	 * @param idItem
+	 * @param descricaoItem
+	 * @param quantidade
+	 * @param tags
+	 */
+	public void adicionaItemParaDoacao(String idDoador, int idItem, String descricaoItem, int quantidade, String tags) {
+		controleDois.adicionaItemParaDoacao(idItem, idDoador, descricaoItem, quantidade, tags);
 	}
-
-	public void exibeItem(String idDoador) {
-
+	/**
+	 * 
+	 * @param idDoador
+	 * @param idItem
+	 */
+	public void exibeItem(String idDoador, int idItem) {
+		controleDois.exibeItem(idDoador, idItem);
 	}
-
-	public void atualizaItemParaDoacao(String idDoador) {
-
+	/**
+	 * 
+	 * @param idDoador
+	 */
+	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
-
-	public void removeItemParaDoacao(String idDoador) {
-
+	/**
+	 * 
+	 * @param idItem
+	 * @param idDoador
+	 */
+	public void removeItemParaDoacao(int idItem, String idDoador) {
+		controleDois.removeItemParaDoacao(idItem, idDoador);
 	}
 
 }

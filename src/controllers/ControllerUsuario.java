@@ -183,5 +183,9 @@ public class ControllerUsuario {
 		}
 		this.usuarios.remove(id);
 	}
+	
+	public Doador getDoador(String id) {
+		return (Doador)this.usuarios.get(id);
+	}
 
 }

@@ -59,8 +59,8 @@ public class Item {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
-		this.tags = tags;
+	public void setTags(String tag) {
+		 separaTags(tag);
 	}
 
 	public int getQuantidade() {
