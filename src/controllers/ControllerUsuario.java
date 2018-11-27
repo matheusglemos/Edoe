@@ -1,8 +1,8 @@
 package controllers;
 
 import java.io.File;
+
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -187,5 +187,6 @@ public class ControllerUsuario {
 	public Doador getDoador(String id) {
 		return (Doador)this.usuarios.get(id);
 	}
+	
 
 }
