@@ -19,13 +19,15 @@ public class ControllerItens {
 	 * 
 	 */
 	private Set<String> descritores;
-	
-	
+
+	private int contadorItens;
+
 	public ControllerItens(ControllerUsuario controllerUsuario) {
 		this.controllerUsuario = controllerUsuario;
 		this.descritores = new HashSet<>();
+		this.contadorItens = 0;
 	}
-	
+
 	/**
 	 *
 	 * @param descricao
@@ -44,12 +46,13 @@ public class ControllerItens {
 		if (!this.existeDescritor(descricao)) {
 			return this.descritores.add(descricao.toLowerCase().trim());
 		}
-		if(descricao == null || descricao.trim().isEmpty()) {
+		if (descricao == null || descricao.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
 		throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao);
-	
+
 	}
+
 	/**
 	 * 
 	 * @param idItem
@@ -58,29 +61,33 @@ public class ControllerItens {
 	 * @param quantidade
 	 * @param tags
 	 */
-	public void adicionaItemParaDoacao(int idItem, String idDoador, String descricaoItem, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
 		if (descricaoItem == null || descricaoItem.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
-		if(idDoador == null || idDoador.trim().isEmpty()) {
+		if (idDoador == null || idDoador.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
-		if(quantidade < 0) {
+		if (quantidade <= 0) {
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		}
-		controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(idItem, descricaoItem, quantidade, tags);
+		controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(++this.contadorItens, descricaoItem, quantidade,
+				tags);
+		return this.contadorItens;
 	}
+
 	/**
 	 * 
 	 * @param idDoador
 	 * @param idItem
 	 */
-	public void exibeItem(String idDoador,int idItem) {
-		if(!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
+	public void exibeItem(String idDoador, int idItem) {
+		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
 		}
 		this.controllerUsuario.getDoador(idDoador).exibeItem(idItem);
 	}
+
 	/**
 	 * 
 	 * @param idItem
@@ -98,32 +105,31 @@ public class ControllerItens {
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
 		}
-		if(!controllerUsuario.existeUsuario(idDoador)) {
+		if (!controllerUsuario.existeUsuario(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador);
 		}
-		if(controllerUsuario.existeUsuario(idDoador)) {
+		if (controllerUsuario.existeUsuario(idDoador)) {
 			this.controllerUsuario.getDoador(idDoador).atualizaItemParaDoacao(idItem, quantidade, tags);
 		}
-		
+
 	}
+
 	/**
 	 * 
 	 * @param idItem
 	 * @param idDoador
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
-		if(!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
+		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
 		}
 		if (idItem < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
-		if(idDoador == null || idDoador.trim().isEmpty()) {
+		if (idDoador == null || idDoador.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
 	}
-	
-	
 
 }

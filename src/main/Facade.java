@@ -29,7 +29,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt" };
+		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -97,6 +97,7 @@ public class Facade {
 	public void removeUsuario(String id) {
 		controleUm.removeUsuario(id);
 	}
+
 	/**
 	 * 
 	 * @param descricao
@@ -104,6 +105,7 @@ public class Facade {
 	public void adicionaDescritor(String descricao) {
 		controleDois.adicionaDescritor(descricao);
 	}
+
 	/**
 	 * 
 	 * @param idDoador
@@ -112,9 +114,10 @@ public class Facade {
 	 * @param quantidade
 	 * @param tags
 	 */
-	public void adicionaItemParaDoacao(String idDoador, int idItem, String descricaoItem, int quantidade, String tags) {
-		controleDois.adicionaItemParaDoacao(idItem, idDoador, descricaoItem, quantidade, tags);
+	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+		return controleDois.adicionaItemParaDoacao(idDoador, descricaoItem, quantidade, tags);
 	}
+
 	/**
 	 * 
 	 * @param idDoador
@@ -123,6 +126,7 @@ public class Facade {
 	public void exibeItem(String idDoador, int idItem) {
 		controleDois.exibeItem(idDoador, idItem);
 	}
+
 	/**
 	 * 
 	 * @param idDoador
@@ -130,6 +134,7 @@ public class Facade {
 	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
+
 	/**
 	 * 
 	 * @param idItem
