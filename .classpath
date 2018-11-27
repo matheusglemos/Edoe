@@ -9,6 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="/home/carol/Edoe/acceptance_tests/easyaccept.jar"/>
+	<classpathentry kind="lib" path="/home/carolinymbs/Edoe/acceptance_tests/easyaccept(1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
