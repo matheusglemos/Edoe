@@ -43,6 +43,13 @@ class ControllerUsuarioTest {
 	}
 	
 	@Test
+	@DisplayName("teste pesquisa usuario por nome")
+	void testPesquisaUsuarioNome() {
+		c.adicionaDoador("104", "Davidson", "davidson@gmail.com", "87979222", "PESSOA_FISICA");
+		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador", c.pesquisaUsuarioPorNome("Davidson"));
+	}
+	
+	@Test
 	@DisplayName("teste pesquisa usuario nome vazio")
 	void testPesquisaUsuarioNomeVazio() {
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
@@ -67,6 +74,13 @@ class ControllerUsuarioTest {
 			c.pesquisaUsuarioPorNome("Davidson");
 		});
 		assertEquals("Usuario nao encontrado: Davidson.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste pesquisa usuario por ID")
+	void testPesquisaUsuarioID() {
+		c.adicionaDoador("104", "Davidson", "davidson@gmail.com", "87979222", "PESSOA_FISICA");
+		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador", c.pesquisaUsuarioPorNome("Davidson"));
 	}
 	
 	@Test
