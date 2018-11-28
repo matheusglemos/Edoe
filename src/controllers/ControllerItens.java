@@ -38,7 +38,7 @@ public class ControllerItens {
 	 */
 	private int contadorItens;
 	/**
-	 * 
+	 * Lista de itens
 	 */
 	private List<Item> itens;
 
@@ -165,11 +165,12 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo 1 da parte 3
+	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados no sistema, 
+	 * ordenado em ordem alfabética pela descrição do item
 	 * 
-	 * @return
+	 * @return String contendo lista dos descritores em ordem alfabetica
 	 */
-	public String descricaoOrdemAlfabetica() {
+	public String listaDescritorDeItensParaDoacao() {
 		String resultado = "";
 		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
 		for (Item item : this.itens) {
@@ -179,17 +180,26 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Editar ainda
+	 * Metodo que permite a listagem de todos os itens inseridos no sistema, 
+	 * ordenada pela quantidade do item no sistema.
 	 * 
-	 * @return
+	 * @return	String contendo lista dos itens em ordem pela quantidade do item 
 	 */
-	public String descricaoOrdemQuantidade() {
+	public String listaItensParaDoacao() {
 		String resultado = "";
 		Collections.sort(this.itens, new OrdemQuantidadeDeItens());
 		for (Item item : this.itens) {
 			resultado += item.quantidadeDoItemNoSistema();
 		}
 		return resultado;
+	}
+	
+	/**
+	 * Falta fazer
+	 */
+	
+	public void pesquisaItemParaDoacaoPorDescricao() {
+		
 	}
 
 }

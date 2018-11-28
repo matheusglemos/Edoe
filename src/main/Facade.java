@@ -155,4 +155,24 @@ public class Facade {
 		controleDois.removeItemParaDoacao(idItem, idDoador);
 	}
 
+	/**
+	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
+	 * no sistema, ordenado em ordem alfabética pela descrição do item
+	 * 
+	 * @return String contendo lista dos descritores em ordem alfabetica
+	 */
+	public String listaDescritorDeItensParaDoacao() {
+		return controleDois.listaDescritorDeItensParaDoacao();
+	}
+
+	/**
+	 * Metodo que permite a listagem de todos os itens inseridos no sistema,
+	 * ordenada pela quantidade do item no sistema.
+	 * 
+	 * @return String contendo lista dos itens em ordem pela quantidade do item
+	 */
+	public String listaItensParaDoacao() {
+		return controleDois.listaItensParaDoacao();
+	}
+
 }
