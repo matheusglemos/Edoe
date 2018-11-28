@@ -145,7 +145,7 @@ public class Item {
 	 */
 	@Override
 	public String toString() {
-		return this.getidItem() + " - " + this.getDescricao() + ", " + this.getTags() + ", quantidade:"
+		return this.getidItem() + " - " + this.getDescricao() + ", tags:" + this.getTags() + ", quantidade:"
 				+ this.getQuantidade();
 	}
 
@@ -155,7 +155,7 @@ public class Item {
 	 * 
 	 * @return String representando um item em quantidade junto a sua descrição
 	 */
-	public String listaDescritorDeItensParaDoacao() {
+	public String quantidadeDescricao() {
 		return this.getQuantidade() + "-" + this.getDescricao();
 	}
 
@@ -165,9 +165,8 @@ public class Item {
 	 * 
 	 * @return String representando o item de um doador
 	 */
-	public String listaItensParaDoacao() {
-		return this.getidItem() + "-" + this.getDescricao() + ", tags: " + this.getTags() + ", quantidade: "
-				+ this.getQuantidade() + ", doador: " + this.doador.getNome() + "/" + this.doador.getId();
+	public String quantidadeDoItemNoSistema() {
+		return toString() + ", doador: " + this.doador.getNome() + "/" + this.doador.getId();
 	}
 
 }
