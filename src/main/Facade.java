@@ -8,7 +8,7 @@ import easyaccept.EasyAccept;
 
 /**
  * Classe que ira se comunicar com os controllers. Facilitando assim a
- * comunicacao com a interface.
+ * comunicacao com a interface grafica.
  * 
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -83,7 +83,7 @@ public class Facade {
 	 * 
 	 * @param id String que representa o id do usuario.
 	 * 
-	 * @return Null.
+	 * @return
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		return controleUm.atualizaUsuario(id, nome, email, celular);
@@ -99,46 +99,57 @@ public class Facade {
 	}
 
 	/**
+	 * Metodo que adiciona uma descrição no mapa de descritores
 	 * 
-	 * @param descricao
+	 * @param descricao String que representa a descrição de um item
+	 * @return booleano
 	 */
 	public void adicionaDescritor(String descricao) {
 		controleDois.adicionaDescritor(descricao);
 	}
 
 	/**
+	 * Metodo responsavel por adicionar um item para doacao associado a um usuario
+	 * doador
 	 * 
-	 * @param idDoador
-	 * @param idItem
-	 * @param descricaoItem
-	 * @param quantidade
-	 * @param tags
+	 * @param idDoador      String que representa o id de um doador
+	 * @param descricaoItem String que representa a descricao de um item
+	 * @param quantidade    Inteiro que representa a quantidade de itens
+	 * @param tags          String que representa as tags de um item
+	 * @return
 	 */
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
 		return controleDois.adicionaItemParaDoacao(idDoador, descricaoItem, quantidade, tags);
 	}
 
 	/**
+	 * Metodo responsavel por acessar um item de um doador e exibir a sua
+	 * representação textual
 	 * 
-	 * @param idDoador
-	 * @param idItem
+	 * @param idDoador String que representa o id de um doador
+	 * @param idItem   Inteiro que representa o id de um item
 	 */
 	public void exibeItem(String idDoador, int idItem) {
 		controleDois.exibeItem(idDoador, idItem);
 	}
 
 	/**
+	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
 	 * 
-	 * @param idDoador
+	 * @param idDoador   String que representa o id de um doador
+	 * @param idItem     Inteiro que representa o id de um item
+	 * @param quantidade Inteiro que representa a quantidade de itens
+	 * @param tags       String que representa as tags de um item
 	 */
 	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 
 	/**
+	 * Metodo responsavel por remover um item de um doador
 	 * 
-	 * @param idItem
-	 * @param idDoador
+	 * @param idDoador String que representa o id de um doador
+	 * @param idItem   Inteiro que representa o id de um item
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		controleDois.removeItemParaDoacao(idItem, idDoador);

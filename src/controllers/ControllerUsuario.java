@@ -104,12 +104,11 @@ public class ControllerUsuario {
 	public String pesquisaUsuarioPorNome(String nome) {
 		String res = "";
 		if (nome == null || nome.equals("")) {
-			throw new IllegalArgumentException(
-					"Entrada invalida: nome nao pode ser vazio ou nulo.");
+			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		}
 		int i = 0;
-		for(Usuario usuarios : usuarios.values()) {
-			if(usuarios.getNome().equals(nome)) {
+		for (Usuario usuarios : usuarios.values()) {
+			if (usuarios.getNome().equals(nome)) {
 				if (i != 0) {
 					res += " | " + usuarios.toString();
 				} else {
@@ -119,8 +118,7 @@ public class ControllerUsuario {
 			}
 		}
 		if (res.equals("")) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + nome
-					+ ".");
+			throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
 		}
 		return res;
 	}
@@ -147,7 +145,7 @@ public class ControllerUsuario {
 	 * 
 	 * @param id String que representa o id do usuario.
 	 * 
-	 * @return null.
+	 * @return
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		if (id == null || id.equals("")) {
@@ -183,10 +181,15 @@ public class ControllerUsuario {
 		}
 		this.usuarios.remove(id);
 	}
-	
+
+	/**
+	 * Metodo responsavel por retornar um doador a partir do id de um usuario
+	 * 
+	 * @param id String que representa o id do usuario.
+	 * @return Um usuario doador
+	 */
 	public Doador getDoador(String id) {
-		return (Doador)this.usuarios.get(id);
+		return (Doador) this.usuarios.get(id);
 	}
-	
 
 }

@@ -1,11 +1,7 @@
 package com.edoe.models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Classe que representa um usuario como doador. Esta classe e filha da classe
@@ -19,15 +15,10 @@ import java.util.Set;
 public class Doador extends Usuario {
 
 	/**
-	 * 
+	 * Atributo que represnta um mapa de itens que um usuario doador possui.
 	 */
 
 	private Map<Integer, Item> itens;
-
-	/**
-	 * 
-	 */
-	private Set<String> descricoes;
 
 	/**
 	 * Construtor de um usuario doador.
@@ -45,7 +36,6 @@ public class Doador extends Usuario {
 	public Doador(String nome, String email, String telefone, String id, String classe) {
 		super(nome, email, telefone, id, classe);
 		this.itens = new HashMap<>();
-		this.descricoes = new HashSet<>();
 
 	}
 
@@ -58,30 +48,34 @@ public class Doador extends Usuario {
 				+ ", status: doador";
 	}
 
-
 	/**
+	 * Metodo responsavel por adicionar um item para doacao no mapa de itens
 	 * 
-	 * @param idItem
-	 * @param descricaoItem
-	 * @param quantidade
-	 * @param tags
+	 * @param idItem        Inteiro que representa um id de um item
+	 * @param descricaoItem String que representa a descricao de um item
+	 * @param quantidade    Inteiro que representa a quantidade de itens
+	 * @param tags          String que representa as tags de um item
 	 */
 	public void adicionaItemParaDoacao(int idItem, String descricaoItem, int quantidade, String tags) {
 		Item item = new Item(idItem, descricaoItem, tags, quantidade);
 		this.itens.put(idItem, item);
 
 	}
-	
+
 	/**
+	 * Metodo responsavel por verificar a existencia de um item no mapa de itens.
 	 * 
+	 * @param idItem Inteiro que representa um id de um item
+	 * @return
 	 */
 	public boolean existeItem(int idItem) {
 		return this.itens.containsKey(idItem);
 	}
 
 	/**
+	 * Metodo responsavel por exibir a sua representação textual de um item
 	 * 
-	 * @param idItem
+	 * @param idItem Inteiro que representa um id de um item
 	 * @return
 	 */
 	public String exibeItem(int idItem) {
@@ -90,28 +84,30 @@ public class Doador extends Usuario {
 	}
 
 	/**
+	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
 	 * 
-	 * @param idItem
-	 * @param quantidade
-	 * @param tags
+	 * @param idItem     Inteiro que representa um id de um item
+	 * @param quantidade Inteiro que representa a quantidade de itens
+	 * @param tags       String que representa as tags de um item
 	 */
 	public void atualizaItemParaDoacao(int idItem, int quantidade, String tags) {
-		if(this.existeItem(idItem)) {
-			if(quantidade > 0) {
+		if (this.existeItem(idItem)) {
+			if (quantidade > 0) {
 				this.itens.get(idItem).setQuantidade(quantidade);
 			}
-			if(tags != null) {
+			if (tags != null) {
 				this.itens.get(idItem).setTags(tags);
 			}
-		}else {
-			
+		} else {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
 		}
 
 	}
 
 	/**
+	 * Metodo responsavel por remover um item do mapa de itens
 	 * 
-	 * @param idItem
+	 * @param idItem Inteiro que representa um id de um item
 	 */
 	public void removeItemParaDoacao(int idItem) {
 		this.itens.remove(idItem);

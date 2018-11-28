@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe que representa um Item no sistema. Cada item possui
- * id, tags, quantidade e descricao.
+ * Classe que representa um Item no sistema. Cada item possui id, tags,
+ * quantidade e descricao.
  * 
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -40,6 +40,8 @@ public class Item {
 	 */
 	private String tag;
 
+	private Doador doador;
+
 	/**
 	 * 
 	 * @param idItem
@@ -47,12 +49,13 @@ public class Item {
 	 * @param quantidade
 	 * @param descricao
 	 */
-	public Item(int idItem, String descricaoItem, String tag, int quantidade) {
+	public Item(int idItem, String descricaoItem, String tag, int quantidade, Doador doador) {
 		this.idItem = idItem;
 		this.tags = new ArrayList<>();
 		this.quantidade = quantidade;
 		this.descricaoItem = descricaoItem;
 		this.tag = tag;
+		this.doador = doador;
 	}
 
 	public List<String> getTags() {
@@ -60,7 +63,7 @@ public class Item {
 	}
 
 	public void setTags(String tag) {
-		 separaTags(tag);
+		separaTags(tag);
 	}
 
 	public int getQuantidade() {
@@ -78,8 +81,10 @@ public class Item {
 	public String getDescricao() {
 		return descricaoItem;
 	}
+
 	/**
 	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista
+	 * 
 	 * @param tag
 	 */
 	private void separaTags(String tag) {
@@ -90,8 +95,8 @@ public class Item {
 	}
 
 	/**
-	 * Metodo que gera o hashcode de um Item.
-	 * Dois itens sao iguais se possurem a mesma descricao e as mesmas tags
+	 * Metodo que gera o hashcode de um Item. Dois itens sao iguais se possurem a
+	 * mesma descricao e as mesmas tags
 	 */
 	@Override
 	public int hashCode() {
@@ -103,8 +108,8 @@ public class Item {
 	}
 
 	/**
-	 * Metodo responsavel por comparar um Item com outro a partir da
-	 * sua descricao e tags
+	 * Metodo responsavel por comparar um Item com outro a partir da sua descricao e
+	 * tags
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -129,12 +134,30 @@ public class Item {
 	}
 
 	/**
-	 *Metodo responsavel por retornar a representacao textual de um Item.
+	 * Metodo responsavel por retornar a representacao textual de um Item.
 	 */
 	@Override
 	public String toString() {
 		return this.getidItem() + " - " + this.getDescricao() + ", " + this.getTags() + ", quantidade:"
 				+ this.getQuantidade();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String quantidadeDescricao() {
+		return this.getQuantidade() + "-" + this.getDescricao();
+	}
+
+	/**
+	 * Editar ainda
+	 * 
+	 * @return
+	 */
+	public String quantidadeDoItemNoSistema() {
+		return this.getidItem() + "-" + this.getDescricao() + ", " + this.getTags() + ", quantidade: "
+				+ this.getQuantidade() + ", doador: " + this.doador.getNome();
 	}
 
 }
