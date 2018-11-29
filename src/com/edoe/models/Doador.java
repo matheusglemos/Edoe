@@ -57,7 +57,7 @@ public class Doador extends Usuario {
 	 * @param tags          String que representa as tags de um item
 	 */
 	public void adicionaItemParaDoacao(int idItem, String descricaoItem, int quantidade, String tags) {
-		Item item = new Item(idItem, descricaoItem, tags, quantidade);
+		Item item = new Item(idItem, descricaoItem, tags, quantidade, this);
 		this.itens.put(idItem, item);
 
 	}

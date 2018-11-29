@@ -99,10 +99,11 @@ public class ControllerItens {
 		if (quantidade <= 0) {
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		}
-		Doador doador = controllerUsuario.getDoador(idDoador);
+		if (!this.controllerUsuario.existeUsuario(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
 		controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(++this.contadorItens, descricaoItem, quantidade,
 				tags);
-		this.itens.add(new Item(contadorItens, descricaoItem, tags, quantidade, doador));
 		return this.contadorItens;
 	}
 
@@ -115,7 +116,7 @@ public class ControllerItens {
 	 */
 	public void exibeItem(String idDoador, int idItem) {
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
 		this.controllerUsuario.getDoador(idDoador).exibeItem(idItem);
 	}
@@ -136,7 +137,7 @@ public class ControllerItens {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
 		if (!controllerUsuario.existeUsuario(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador);
@@ -155,7 +156,7 @@ public class ControllerItens {
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem);
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
 		if (idItem < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
@@ -165,6 +166,46 @@ public class ControllerItens {
 		}
 		this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
 	}
+
+	/**
+	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
+	 * no sistema, ordenado em ordem alfabética pela descrição do item
+	 * 
+	 * @return String contendo lista dos descritores em ordem alfabetica
+	 */
+	public String listaDescritorDeItensParaDoacao() {
+		String resultado = "";
+		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
+		for (Item item : this.itens) {
+			resultado += item.quantidadeDescricao() + " | ";
+		}
+		return resultado;
+	}
+
+	/**
+	 * Metodo que permite a listagem de todos os itens inseridos no sistema,
+	 * ordenada pela quantidade do item no sistema.
+	 * 
+	 * @return String contendo lista dos itens em ordem pela quantidade do item
+	 */
+	public String listaItensParaDoacao() {
+		String resultado = "";
+		Collections.sort(this.itens, new OrdemQuantidadeDeItens());
+		for (Item item : this.itens) {
+			resultado += item.quantidadeDoItemNoSistema();
+		}
+		return resultado;
+	}
+
+	/**
+	 * Falta fazer
+	 */
+
+	public void pesquisaItemParaDoacaoPorDescricao() {
+
+	}
+
+}
 
 	/**
 	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
