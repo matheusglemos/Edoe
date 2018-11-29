@@ -129,8 +129,8 @@ public class Facade {
 	 * @param idDoador String que representa o id de um doador
 	 * @param idItem   Inteiro que representa o id de um item
 	 */
-	public void exibeItem(String idDoador, int idItem) {
-		controleDois.exibeItem(idDoador, idItem);
+	public String exibeItem(int idItem, String idDoador) {
+		return controleDois.exibeItem(idDoador, idItem);
 	}
 
 	/**

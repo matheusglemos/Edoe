@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -102,9 +103,23 @@ public class ControllerItens {
 		if (!this.controllerUsuario.existeUsuario(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
-		controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(++this.contadorItens, descricaoItem, quantidade,
-				tags);
-		return this.contadorItens;
+		if (this.controllerUsuario.getDoador(idDoador).existeItem(descricaoItem)) {
+			Collection<Item> itens = this.controllerUsuario.getDoador(idDoador).getItens();
+			int id = 0;
+			for (Item item : itens) {
+				if (item.getDescricao().equals(descricaoItem)) {
+					item.setQuantidade(quantidade);
+					item.setTags(tags);
+					id = item.getidItem();
+				}
+			}
+			return id;
+		} else {
+			controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(++this.contadorItens, descricaoItem,
+					quantidade, tags);
+			return this.contadorItens;
+		}
+
 	}
 
 	/**
@@ -114,11 +129,11 @@ public class ControllerItens {
 	 * @param idDoador String que representa o id de um doador
 	 * @param idItem   Inteiro que representa o id de um item
 	 */
-	public void exibeItem(String idDoador, int idItem) {
+	public String exibeItem(String idDoador, int idItem) {
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
-		this.controllerUsuario.getDoador(idDoador).exibeItem(idItem);
+		return this.controllerUsuario.getDoador(idDoador).exibeItem(idItem);
 	}
 
 	/**
@@ -166,46 +181,6 @@ public class ControllerItens {
 		}
 		this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
 	}
-
-	/**
-	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
-	 * no sistema, ordenado em ordem alfabética pela descrição do item
-	 * 
-	 * @return String contendo lista dos descritores em ordem alfabetica
-	 */
-	public String listaDescritorDeItensParaDoacao() {
-		String resultado = "";
-		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
-		for (Item item : this.itens) {
-			resultado += item.quantidadeDescricao() + " | ";
-		}
-		return resultado;
-	}
-
-	/**
-	 * Metodo que permite a listagem de todos os itens inseridos no sistema,
-	 * ordenada pela quantidade do item no sistema.
-	 * 
-	 * @return String contendo lista dos itens em ordem pela quantidade do item
-	 */
-	public String listaItensParaDoacao() {
-		String resultado = "";
-		Collections.sort(this.itens, new OrdemQuantidadeDeItens());
-		for (Item item : this.itens) {
-			resultado += item.quantidadeDoItemNoSistema();
-		}
-		return resultado;
-	}
-
-	/**
-	 * Falta fazer
-	 */
-
-	public void pesquisaItemParaDoacaoPorDescricao() {
-
-	}
-
-}
 
 	/**
 	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados

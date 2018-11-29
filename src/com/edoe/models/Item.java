@@ -55,9 +55,9 @@ public class Item {
 	public Item(int idItem, String descricaoItem, String tag, int quantidade, Doador doador) {
 		this.idItem = idItem;
 		this.tags = new ArrayList<>();
+		separaTags(tag);
 		this.quantidade = quantidade;
 		this.descricaoItem = descricaoItem;
-		this.tag = tag;
 		this.doador = doador;
 	}
 
@@ -70,6 +70,7 @@ public class Item {
 	 * @param tag
 	 */
 	public void setTags(String tag) {
+		this.tags = new ArrayList<>();
 		separaTags(tag);
 	}
 
@@ -97,7 +98,7 @@ public class Item {
 	private void separaTags(String tag) {
 		String[] array = tag.split(",");
 		for (int i = 0; i < array.length; i++) {
-			tags.add(array[i]);
+			this.tags.add(array[i]);
 		}
 	}
 
@@ -145,7 +146,7 @@ public class Item {
 	 */
 	@Override
 	public String toString() {
-		return this.getidItem() + " - " + this.getDescricao() + ", tags:" + this.getTags() + ", quantidade:"
+		return this.getidItem() + " - " + this.getDescricao() + ", tags: " + this.getTags() + ", quantidade: "
 				+ this.getQuantidade();
 	}
 

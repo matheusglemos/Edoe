@@ -1,7 +1,10 @@
 package com.edoe.models;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Classe que representa um usuario como doador. Esta classe e filha da classe
@@ -71,6 +74,16 @@ public class Doador extends Usuario {
 	public boolean existeItem(int idItem) {
 		return this.itens.containsKey(idItem);
 	}
+	
+	
+	public boolean existeItem(String descricaoItem) {
+		for (Item item : itens.values()) {
+			if(item.getDescricao().equals(descricaoItem)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Metodo responsavel por exibir a sua representação textual de um item
@@ -112,5 +125,9 @@ public class Doador extends Usuario {
 	public void removeItemParaDoacao(int idItem) {
 		this.itens.remove(idItem);
 
+	}
+
+	public Collection<Item> getItens() {
+		return this.itens.values();
 	}
 }
