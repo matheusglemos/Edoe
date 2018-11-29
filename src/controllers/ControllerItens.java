@@ -99,8 +99,10 @@ public class ControllerItens {
 		if (quantidade <= 0) {
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		}
+		Doador doador = controllerUsuario.getDoador(idDoador);
 		controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(++this.contadorItens, descricaoItem, quantidade,
 				tags);
+		this.itens.add(new Item(contadorItens, descricaoItem, tags, quantidade, doador));
 		return this.contadorItens;
 	}
 
@@ -165,41 +167,70 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados no sistema, 
-	 * ordenado em ordem alfabética pela descrição do item
+	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
+	 * no sistema, ordenado em ordem alfabética pela descrição do item
 	 * 
 	 * @return String contendo lista dos descritores em ordem alfabetica
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		String resultado = "";
 		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
-		for (Item item : this.itens) {
-			resultado += item.quantidadeDescricao() + " | ";
+		for (int i = 0; i < itens.size(); i++) {
+			if (i == itens.size() - 1) {
+				resultado += itens.get(i).quantidadeDescricao();
+			} else {
+				resultado += itens.get(i).quantidadeDescricao() + " | ";
+			}
 		}
 		return resultado;
 	}
 
 	/**
-	 * Metodo que permite a listagem de todos os itens inseridos no sistema, 
+	 * Metodo que permite a listagem de todos os itens inseridos no sistema,
 	 * ordenada pela quantidade do item no sistema.
 	 * 
-	 * @return	String contendo lista dos itens em ordem pela quantidade do item 
+	 * @return String contendo lista dos itens em ordem pela quantidade do item
 	 */
 	public String listaItensParaDoacao() {
 		String resultado = "";
 		Collections.sort(this.itens, new OrdemQuantidadeDeItens());
-		for (Item item : this.itens) {
-			resultado += item.quantidadeDoItemNoSistema();
+		for (int i = 0; i < itens.size(); i++) {
+			if (i == itens.size() - 1) {
+				resultado += itens.get(i).quantidadeDoItemNoSistema();
+			} else {
+				resultado += itens.get(i).quantidadeDoItemNoSistema() + " | ";
+			}
 		}
 		return resultado;
 	}
-	
+
 	/**
-	 * Falta fazer
+	 * Metodo que listaa todos os itens relacionados a uma dada string de pesquisa
+	 * 
+	 * @return String contendo uma lista com todos os itens de uma dada string de
+	 *         pesquisa
 	 */
-	
-	public void pesquisaItemParaDoacaoPorDescricao() {
-		
+
+	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+		String resultado = "";
+		int cont = 0;
+		for (Item item : itens) {
+			if (item.getDescricao().equals(descricao)) {
+				cont++;
+			}
+		}
+		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
+		int add = 0;
+		for (Item item : this.itens) {
+			if (add < cont && item.getDescricao().equals(descricao)) {
+				resultado += item.toString() + "|";
+				add++;
+			} else if (add == cont && item.getDescricao().equals(descricao)) {
+				resultado += item.toString();
+				break;
+			}
+		}
+		return resultado;
 	}
 
 }

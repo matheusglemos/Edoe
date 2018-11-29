@@ -175,4 +175,15 @@ public class Facade {
 		return controleDois.listaItensParaDoacao();
 	}
 
+	/**
+	 * Metodo que listaa todos os itens relacionados a uma dada string de pesquisa
+	 * 
+	 * @return String contendo uma lista com todos os itens de uma dada string de
+	 *         pesquisa
+	 */
+
+	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+		return controleDois.pesquisaItemParaDoacaoPorDescricao(descricao);
+	}
+
 }
