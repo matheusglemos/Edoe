@@ -147,7 +147,7 @@ public class ControllerItens {
 	 * @param quantidade Inteiro que representa a quantidade de itens
 	 * @param tags       String que representa as tags de um item
 	 */
-	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		if (idItem < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
@@ -163,6 +163,7 @@ public class ControllerItens {
 		if (controllerUsuario.existeUsuario(idDoador)) {
 			this.controllerUsuario.getDoador(idDoador).atualizaItemParaDoacao(idItem, quantidade, tags);
 		}
+		return this.controllerUsuario.getDoador(idDoador).exibeItem(idItem);
 	}
 
 	/**

@@ -29,7 +29,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt" };
+		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt", "acceptance_tests/use_case_3.txt"};
 		EasyAccept.main(args);
 	}
 
@@ -141,8 +141,8 @@ public class Facade {
 	 * @param quantidade Inteiro que representa a quantidade de itens
 	 * @param tags       String que representa as tags de um item
 	 */
-	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
-		controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		return controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 
 	/**
