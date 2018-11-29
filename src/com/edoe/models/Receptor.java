@@ -24,7 +24,7 @@ public class Receptor extends Usuario {
 	 *            String referente ao telefone do usuario.
 	 * 
 	 * @param id
-	 *            String referente ao id do usuario. 
+	 *            String referente ao id do usuario.
 	 * 
 	 * @param classe
 	 *            String referente a classe do usuario.

@@ -37,7 +37,8 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por ler receptores.
 	 * 
-	 * @param caminho responsavel pelo caminho do arquivo.
+	 * @param caminho
+	 *            responsavel pelo caminho do arquivo.
 	 * 
 	 * @throws IOException
 	 */
@@ -63,7 +64,8 @@ public class ControllerUsuario {
 	 * Metodo responsavel por verificar se existe uma usuario cadastrado no mapa de
 	 * usuarios
 	 * 
-	 * @param id String que representa o id do usuario doador.
+	 * @param id
+	 *            String que representa o id do usuario doador.
 	 * 
 	 * @return um booleano
 	 * 
@@ -75,15 +77,20 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por adicionar um usuario doador.
 	 * 
-	 * @param nome    String que representa o nome do usuario doador.
+	 * @param nome
+	 *            String que representa o nome do usuario doador.
 	 * 
-	 * @param id      String que representa o id do usuario doador.
+	 * @param id
+	 *            String que representa o id do usuario doador.
 	 * 
-	 * @param email   String que representa o email do usuario doador.
+	 * @param email
+	 *            String que representa o email do usuario doador.
 	 * 
-	 * @param celular String que representa o celular do usuario doador.
+	 * @param celular
+	 *            String que representa o celular do usuario doador.
 	 * 
-	 * @param classe  String que representa a classe do usuario doador.
+	 * @param classe
+	 *            String que representa a classe do usuario doador.
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		if (this.existeUsuario(id)) {
@@ -97,7 +104,8 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por pesquisar um usuario atraves de sua identificacao.
 	 * 
-	 * @param id String que representa o nome do usuario.
+	 * @param id
+	 *            String que representa o nome do usuario.
 	 * 
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu nome.
 	 */
@@ -126,7 +134,8 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por pesquisar um usuario atraves de sua identificacao.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 * 
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu id.
 	 */
@@ -143,7 +152,8 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por atualizar um usuario no sistema.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 * 
 	 * @return
 	 */
@@ -170,7 +180,8 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por remover um usuario do sistema.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 */
 	public void removeUsuario(String id) {
 		if (id == null || id.equals("")) {
@@ -185,7 +196,8 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por retornar um doador a partir do id de um usuario
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 * @return Um usuario doador
 	 */
 	public Doador getDoador(String id) {

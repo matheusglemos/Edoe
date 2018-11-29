@@ -111,7 +111,7 @@ class DoadorTest {
 		});
 		assertEquals("Entrada invalida: classe nao pode ser vazia ou nula.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste da classe invalida")
 	void testClasseInvalida() {

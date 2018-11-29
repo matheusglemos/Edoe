@@ -7,22 +7,22 @@ import org.junit.jupiter.api.Test;
 import controllers.ControllerUsuario;
 
 class ControllerUsuarioTest {
-	
+
 	private ControllerUsuario c;
-	
+
 	@BeforeEach
 	void test() {
 		c = new ControllerUsuario();
 		c.adicionaDoador("2", "Rick", "rick@gmail.com", "87979222", "PESSOA_FISICA");
 	}
-	
+
 	@Test
 	@DisplayName("teste adiciona doador")
 	void testAddDoador() {
 		c.adicionaDoador("1", "Rick", "rick@gmail.com", "87979222", "PESSOA_FISICA");
 		assertTrue(c.existeUsuario("1"));
 	}
-	
+
 	@Test
 	@DisplayName("teste adiciona doador ja existente")
 	void testAddDoadorExistente() {
@@ -30,9 +30,9 @@ class ControllerUsuarioTest {
 			c.adicionaDoador("2", "Rick", "rick@gmail.com", "87979222", "PESSOA_FISICA");
 		});
 		assertEquals("Usuario ja existente: 2.", iae.getMessage());
-		
+
 	}
-	
+
 	@Test
 	@DisplayName("teste exibe usuario")
 	void testeExibeUsuario() {
@@ -41,14 +41,15 @@ class ControllerUsuarioTest {
 		assertTrue(c.existeUsuario("2"));
 		assertFalse(c.existeUsuario("5"));
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario por nome")
 	void testPesquisaUsuarioNome() {
 		c.adicionaDoador("104", "Davidson", "davidson@gmail.com", "87979222", "PESSOA_FISICA");
-		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador", c.pesquisaUsuarioPorNome("Davidson"));
+		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador",
+				c.pesquisaUsuarioPorNome("Davidson"));
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario nome vazio")
 	void testPesquisaUsuarioNomeVazio() {
@@ -57,7 +58,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: nome nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario nome nulo")
 	void testPesquisaUsuarioNomeNulo() {
@@ -66,7 +67,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: nome nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario nome nao encontrado")
 	void testPesquisaUsuarioNomeNaoEncontrado() {
@@ -75,14 +76,15 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Usuario nao encontrado: Davidson.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario por ID")
 	void testPesquisaUsuarioID() {
 		c.adicionaDoador("104", "Davidson", "davidson@gmail.com", "87979222", "PESSOA_FISICA");
-		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador", c.pesquisaUsuarioPorNome("Davidson"));
+		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador",
+				c.pesquisaUsuarioPorNome("Davidson"));
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario id vazio")
 	void testPesquisaUsuarioIDVazio() {
@@ -91,7 +93,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario id nulo")
 	void testPesquisaUsuarioIDNulo() {
@@ -100,7 +102,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste pesquisa usuario id nao encontrado")
 	void testPesquisaUsuarioIDNaoEncontrado() {
@@ -109,7 +111,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Usuario nao encontrado: 8.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste atualiza usuario id vazio")
 	void testAtualizaUsuarioIDVazio() {
@@ -120,7 +122,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste atualiza usuario id nulo")
 	void testAtualizaUsuarioIDNulo() {
@@ -131,7 +133,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste atualiza usuario id nao encontrado")
 	void testAtualizaUsuarioIDNaoEncontrado() {
@@ -142,7 +144,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Usuario nao encontrado: 51.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste remove usuario id vazio")
 	void testRemoveUsuarioIDVazio() {
@@ -153,7 +155,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste remove usuario id nulo")
 	void testRemoveUsuarioIDNulo() {
@@ -164,7 +166,7 @@ class ControllerUsuarioTest {
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
-	
+
 	@Test
 	@DisplayName("teste remove usuario id nao encontrado")
 	void testRemoveUsuarioIDNaoEncontrado() {

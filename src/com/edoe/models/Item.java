@@ -46,7 +46,8 @@ public class Item {
 	private Doador doador;
 
 	/**
-	 * Construtor da classe item 
+	 * Construtor da classe item
+	 * 
 	 * @param idItem
 	 * @param tags
 	 * @param quantidade
@@ -64,9 +65,11 @@ public class Item {
 	public List<String> getTags() {
 		return tags;
 	}
+
 	/**
 	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada tag
 	 * e depois atualizar pelo set
+	 * 
 	 * @param tag
 	 */
 	public void setTags(String tag) {
@@ -151,8 +154,8 @@ public class Item {
 	}
 
 	/**
-	 * Metodo que retorna uma String com uma quantidade associada a descrição de um
-	 * item
+	 * Metodo que retorna uma String com uma quantidade associada a descrição de
+	 * um item
 	 * 
 	 * @return String representando um item em quantidade junto a sua descrição
 	 */

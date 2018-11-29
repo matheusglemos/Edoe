@@ -29,7 +29,8 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt", "acceptance_tests/use_case_3.txt"};
+		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt",
+				"acceptance_tests/use_case_3.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -40,15 +41,20 @@ public class Facade {
 	/**
 	 * Metodo que adiciona um usuario doador no sistema.
 	 * 
-	 * @param nome    String que representa o nome do usuario doador.
+	 * @param nome
+	 *            String que representa o nome do usuario doador.
 	 * 
-	 * @param id      String que representa o id do usuario doador.
+	 * @param id
+	 *            String que representa o id do usuario doador.
 	 * 
-	 * @param email   String que representa o email do usuario doador.
+	 * @param email
+	 *            String que representa o email do usuario doador.
 	 * 
-	 * @param celular String que representa o celular do usuario doador.
+	 * @param celular
+	 *            String que representa o celular do usuario doador.
 	 * 
-	 * @param classe  String que representa a classe do usuario doador.
+	 * @param classe
+	 *            String que representa a classe do usuario doador.
 	 */
 	public String adicionaDoador(String nome, String id, String email, String celular, String classe) {
 		return this.controleUm.adicionaDoador(nome, id, email, celular, classe);
@@ -57,7 +63,8 @@ public class Facade {
 	/**
 	 * Metodo que pesquisa determinado usuario atraves de seu id.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 * 
 	 * @return A representacao textual do usuario procurado, se estiver presente no
 	 *         sistema.
@@ -69,7 +76,8 @@ public class Facade {
 	/**
 	 * Metodo que pesquisa determinado usuario atraves do seu nome.
 	 * 
-	 * @param nome String que representa o nome do usuario.
+	 * @param nome
+	 *            String que representa o nome do usuario.
 	 * 
 	 * @return A representacao textual do usuario procurado, se estiver presente no
 	 *         sistema.
@@ -81,7 +89,8 @@ public class Facade {
 	/**
 	 * Metodo que atualiza um usuario atraves de seu id.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 * 
 	 * @return
 	 */
@@ -92,7 +101,8 @@ public class Facade {
 	/**
 	 * Metodo responsavel por remover um usuario do sistema.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id
+	 *            String que representa o id do usuario.
 	 */
 	public void removeUsuario(String id) {
 		controleUm.removeUsuario(id);
@@ -101,7 +111,8 @@ public class Facade {
 	/**
 	 * Metodo que adiciona uma descrição no mapa de descritores
 	 * 
-	 * @param descricao String que representa a descrição de um item
+	 * @param descricao
+	 *            String que representa a descrição de um item
 	 * @return booleano
 	 */
 	public void adicionaDescritor(String descricao) {
@@ -112,10 +123,14 @@ public class Facade {
 	 * Metodo responsavel por adicionar um item para doacao associado a um usuario
 	 * doador
 	 * 
-	 * @param idDoador      String que representa o id de um doador
-	 * @param descricaoItem String que representa a descricao de um item
-	 * @param quantidade    Inteiro que representa a quantidade de itens
-	 * @param tags          String que representa as tags de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param descricaoItem
+	 *            String que representa a descricao de um item
+	 * @param quantidade
+	 *            Inteiro que representa a quantidade de itens
+	 * @param tags
+	 *            String que representa as tags de um item
 	 * @return
 	 */
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
@@ -126,8 +141,10 @@ public class Facade {
 	 * Metodo responsavel por acessar um item de um doador e exibir a sua
 	 * representação textual
 	 * 
-	 * @param idDoador String que representa o id de um doador
-	 * @param idItem   Inteiro que representa o id de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param idItem
+	 *            Inteiro que representa o id de um item
 	 */
 	public String exibeItem(int idItem, String idDoador) {
 		return controleDois.exibeItem(idDoador, idItem);
@@ -136,10 +153,14 @@ public class Facade {
 	/**
 	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
 	 * 
-	 * @param idDoador   String que representa o id de um doador
-	 * @param idItem     Inteiro que representa o id de um item
-	 * @param quantidade Inteiro que representa a quantidade de itens
-	 * @param tags       String que representa as tags de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param idItem
+	 *            Inteiro que representa o id de um item
+	 * @param quantidade
+	 *            Inteiro que representa a quantidade de itens
+	 * @param tags
+	 *            String que representa as tags de um item
 	 */
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		return controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
@@ -148,8 +169,10 @@ public class Facade {
 	/**
 	 * Metodo responsavel por remover um item de um doador
 	 * 
-	 * @param idDoador String que representa o id de um doador
-	 * @param idItem   Inteiro que representa o id de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param idItem
+	 *            Inteiro que representa o id de um item
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		controleDois.removeItemParaDoacao(idItem, idDoador);

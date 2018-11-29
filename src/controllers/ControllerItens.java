@@ -56,7 +56,8 @@ public class ControllerItens {
 	/**
 	 * Metodo que verifica se ja existe uma descricao no hashset de descritores
 	 * 
-	 * @param descricao String que representa a descrição de um item
+	 * @param descricao
+	 *            String que representa a descrição de um item
 	 * @return booleano
 	 */
 	public boolean existeDescritor(String descricao) {
@@ -66,7 +67,8 @@ public class ControllerItens {
 	/**
 	 * Metodo que adiciona um descritor no mapa de descritores
 	 * 
-	 * @param descricao String que representa a descrição de um item
+	 * @param descricao
+	 *            String que representa a descrição de um item
 	 * @return booleano
 	 */
 	public boolean adicionaDescritor(String descricao) {
@@ -84,10 +86,14 @@ public class ControllerItens {
 	 * Metodo responsavel por adicionar um item para doacao associado a um usuario
 	 * doador
 	 * 
-	 * @param idDoador      String que representa o id de um doador
-	 * @param descricaoItem String que representa a descricao de um item
-	 * @param quantidade    Inteiro que representa a quantidade de itens
-	 * @param tags          String que representa as tags de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param descricaoItem
+	 *            String que representa a descricao de um item
+	 * @param quantidade
+	 *            Inteiro que representa a quantidade de itens
+	 * @param tags
+	 *            String que representa as tags de um item
 	 * @return
 	 */
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
@@ -126,8 +132,10 @@ public class ControllerItens {
 	 * Metodo responsavel por acessar um item de um doador e exibir a sua
 	 * representação textual
 	 * 
-	 * @param idDoador String que representa o id de um doador
-	 * @param idItem   Inteiro que representa o id de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param idItem
+	 *            Inteiro que representa o id de um item
 	 */
 	public String exibeItem(String idDoador, int idItem) {
 		if (!controllerUsuario.existeUsuario(idDoador)) {
@@ -142,10 +150,14 @@ public class ControllerItens {
 	/**
 	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
 	 * 
-	 * @param idDoador   String que representa o id de um doador
-	 * @param idItem     Inteiro que representa o id de um item
-	 * @param quantidade Inteiro que representa a quantidade de itens
-	 * @param tags       String que representa as tags de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param idItem
+	 *            Inteiro que representa o id de um item
+	 * @param quantidade
+	 *            Inteiro que representa a quantidade de itens
+	 * @param tags
+	 *            String que representa as tags de um item
 	 */
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		if (idItem < 0) {
@@ -169,8 +181,10 @@ public class ControllerItens {
 	/**
 	 * Metodo responsavel por remover um item de um doador
 	 * 
-	 * @param idDoador String que representa o id de um doador
-	 * @param idItem   Inteiro que representa o id de um item
+	 * @param idDoador
+	 *            String que representa o id de um doador
+	 * @param idItem
+	 *            Inteiro que representa o id de um item
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		if (idItem < 0) {
@@ -234,6 +248,9 @@ public class ControllerItens {
 	 */
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+		if (descricao == null || descricao.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
 		String resultado = "";
 		int cont = 0;
 		for (Item item : itens) {

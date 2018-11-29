@@ -34,7 +34,7 @@ public class ValidadorUsuario {
 	 *            String que representa a classe do usuario doador.
 	 */
 	public static void validaCriacaoDeUsuario(String nome, String email, String celular, String id, String classe) {
-		
+
 		List<String> listaClasses = new ArrayList<String>();
 		listaClasses.add("pessoa_fisica");
 		listaClasses.add("igreja");
@@ -44,7 +44,7 @@ public class ValidadorUsuario {
 		listaClasses.add("ong");
 		listaClasses.add("associacao");
 		listaClasses.add("sociedade");
-		
+
 		if (nome == null || nome.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		}
