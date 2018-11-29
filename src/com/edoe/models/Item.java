@@ -154,10 +154,10 @@ public class Item {
 	}
 
 	/**
-	 * Metodo que retorna uma String com uma quantidade associada a descrição de
+	 * Metodo que retorna uma String com uma quantidade associada a descricao de
 	 * um item
 	 * 
-	 * @return String representando um item em quantidade junto a sua descrição
+	 * @return String representando um item em quantidade junto a sua descricao
 	 */
 	public String quantidadeDescricao() {
 		return this.getQuantidade() + "-" + this.getDescricao();

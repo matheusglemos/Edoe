@@ -30,7 +30,7 @@ public class Facade {
 
 	public static void main(String[] args) {
 		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt",
-				"acceptance_tests/use_case_3.txt" };
+				"acceptance_tests/use_case_3.txt"};
 		EasyAccept.main(args);
 	}
 
@@ -109,7 +109,7 @@ public class Facade {
 	}
 
 	/**
-	 * Metodo que adiciona uma descrição no mapa de descritores
+	 * Metodo que adiciona uma descricao no mapa de descritores
 	 * 
 	 * @param descricao
 	 *            String que representa a descrição de um item
@@ -139,7 +139,7 @@ public class Facade {
 
 	/**
 	 * Metodo responsavel por acessar um item de um doador e exibir a sua
-	 * representação textual
+	 * representacao textual
 	 * 
 	 * @param idDoador
 	 *            String que representa o id de um doador
@@ -180,7 +180,7 @@ public class Facade {
 
 	/**
 	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
-	 * no sistema, ordenado em ordem alfabética pela descrição do item
+	 * no sistema, ordenado em ordem alfabetica pela descricao do item
 	 * 
 	 * @return String contendo lista dos descritores em ordem alfabetica
 	 */

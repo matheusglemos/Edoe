@@ -6,7 +6,7 @@ import com.edoe.models.Item;
 
 /**
  * Classe responsavel por implementar o comparator da classe item, com objetivo
- * de ordenar os itens pela sua descrição
+ * de ordenar os itens pela sua descricao
  *
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -15,7 +15,7 @@ import com.edoe.models.Item;
  */
 public class DescricaoItemOrdemAlfabetica implements Comparator<Item> {
 	/**
-	 * Metodo que compara dois itens pela sua descrição
+	 * Metodo que compara dois itens pela sua descricao
 	 */
 	@Override
 	public int compare(Item o1, Item o2) {
