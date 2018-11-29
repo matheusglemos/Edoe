@@ -130,6 +130,9 @@ public class ControllerItens {
 	 * @param idItem   Inteiro que representa o id de um item
 	 */
 	public String exibeItem(String idDoador, int idItem) {
+		if (!controllerUsuario.existeUsuario(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
@@ -151,16 +154,15 @@ public class ControllerItens {
 		if (idDoador == null || idDoador.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
+		if (!controllerUsuario.existeUsuario(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
-		}
-		if (!controllerUsuario.existeUsuario(idDoador)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador);
 		}
 		if (controllerUsuario.existeUsuario(idDoador)) {
 			this.controllerUsuario.getDoador(idDoador).atualizaItemParaDoacao(idItem, quantidade, tags);
 		}
-
 	}
 
 	/**
@@ -170,14 +172,17 @@ public class ControllerItens {
 	 * @param idItem   Inteiro que representa o id de um item
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
-		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
-		}
 		if (idItem < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (idDoador == null || idDoador.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		if (!controllerUsuario.existeUsuario(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
+		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
 		this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
 	}
