@@ -30,7 +30,7 @@ public class Facade {
 
 	public static void main(String[] args) {
 		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt",
-				"acceptance_tests/use_case_3.txt" };
+				"acceptance_tests/use_case_3.txt", "acceptance_tests/use_case_4.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -198,9 +198,9 @@ public class Facade {
 	 * @param tags          String que representa as tags de um item
 	 * @return
 	 */
-	public int adicionaItemNecessario(int itemNecId, String idReceptor, String descricaoItem, int quantidade,
+	public int adicionaItemNecessario( String idReceptor, String descricaoItem, int quantidade,
 			String tags) {
-		return controleDois.adicionaItemNecessario(itemNecId, idReceptor, descricaoItem, quantidade, tags);
+		return controleDois.adicionaItemNecessario(idReceptor, descricaoItem, quantidade, tags);
 	}
 
 	/**

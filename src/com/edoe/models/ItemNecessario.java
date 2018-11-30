@@ -46,6 +46,7 @@ public class ItemNecessario {
 	public ItemNecessario(int itemNecId, String descricaoItem, int quantidade, String tag, Receptor receptor) {
 		this.itemNecId = itemNecId;
 		this.tags = new ArrayList<>();
+		this.separaTags(tag);
 		this.quantidade = quantidade;
 		this.descricaoItem = descricaoItem;
 		this.tag = tag;
@@ -155,7 +156,7 @@ public class ItemNecessario {
 	 * @return String contendo descricao de um item necessario
 	 */
 	public String itensNecessariosDescricaoCompleta() {
-		return this.toString() + ",receptor: " + receptor.getNome() + "/" + receptor.getId();
+		return this.toString() + ", Receptor: " + receptor.getNome() + "/" + receptor.getId();
 	}
 
 }

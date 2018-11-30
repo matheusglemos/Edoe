@@ -19,7 +19,7 @@ public class OrdemIdItemNecessario implements Comparator<ItemNecessario> {
 	 */
 	@Override
 	public int compare(ItemNecessario o1, ItemNecessario o2) {
-		return o1.getItemNecId() - o1.getItemNecId();
+		return o2.getItemNecId() - o1.getItemNecId();
 	}
 
 }
