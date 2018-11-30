@@ -1,5 +1,6 @@
 package com.edoe.models;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,8 @@ import java.util.Map;
 public class Receptor extends Usuario {
 
 	/**
-	 * 
+	 * Atributo que representa um mapa de itens necessarios que um usuario receptor
+	 * possui.
 	 */
 	private Map<Integer, ItemNecessario> itensNecessarios;
 
@@ -57,6 +59,14 @@ public class Receptor extends Usuario {
 		ItemNecessario item = new ItemNecessario(itemNecId, descricaoItem, quantidade, tags, this);
 		this.itensNecessarios.put(itemNecId, item);
 	}
+	
+	/**
+	 * Metodo responsavel por adicionar um item no mapa de itens necessarios utilizando o objeto Item necessario
+	 * @param i Item necessario
+	 */
+	public void adicionaUmItemNecessario(ItemNecessario i) {
+		this.itensNecessarios.put(i.getItemNecId(), i);
+	}
 
 	/**
 	 * Metodo responsavel por verificar a existencia de um item necessario no mapa
@@ -69,8 +79,25 @@ public class Receptor extends Usuario {
 		return this.itensNecessarios.containsKey(itemNecId);
 	}
 
+	/**
+	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
+	 * necessario
+	 * 
+	 * @param itemNecId  Inteiro que representa um id de um item necessario
+	 * @param quantidade Inteiro que representa a quantidade de itens necessarios
+	 * @param tags       String que representa as tags de um item necessario
+	 */
 	public void atualizaItemNecessario(int itemNecId, int quantidade, String tags) {
-		
+		if (this.existeItemNecessario(itemNecId)) {
+			if (quantidade > 0) {
+				this.itensNecessarios.get(itemNecId).setQuantidade(quantidade);
+			}
+			if (tags != null) {
+				this.itensNecessarios.get(itemNecId).setTags(tags);
+			}
+		} else {
+			throw new IllegalArgumentException("Item nao encontrado: " + itemNecId);
+		}
 	}
 
 	/**
@@ -82,6 +109,24 @@ public class Receptor extends Usuario {
 	public void removeItemNecessario(int itemNecId) {
 		this.itensNecessarios.remove(itemNecId);
 
+	}
+
+	/**
+	 * Metodo responsavel por verificar se um usuario possui itens cadastrados.
+	 * 
+	 * @return booleano que confirma se o usuario tem ou nao itens cadastrados.
+	 */
+	public boolean temItensCadastrados() {
+		return this.itensNecessarios.size() != 0;
+	}
+
+	/**
+	 * Metodo responsavel por retorna os valores do mapa de itens necessarios
+	 * 
+	 * @return
+	 */
+	public Collection<ItemNecessario> getItensNecessarios() {
+		return this.itensNecessarios.values();
 	}
 
 }

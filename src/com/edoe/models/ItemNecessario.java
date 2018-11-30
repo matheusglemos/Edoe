@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemNecessario {
-	
+
 	/**
 	 * Atributo que representa o id de um item necessario.
 	 */
@@ -147,9 +147,9 @@ public class ItemNecessario {
 		return this.getItemNecId() + " - " + this.getDescricaoItem() + ", tags: " + this.getTags() + ", quantidade: "
 				+ this.getQuantidade();
 	}
-	
+
 	/**
-	 * Metodo que retorna uma String contendo a descricao completo de um item
+	 * Metodo que retorna uma String contendo a descricao completa de um item
 	 * necessario
 	 * 
 	 * @return String contendo descricao de um item necessario

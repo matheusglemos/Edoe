@@ -11,9 +11,11 @@ import java.util.Set;
 
 import com.edoe.models.Doador;
 import com.edoe.models.Item;
+import com.edoe.models.ItemNecessario;
 
 import comparators.DescricaoItemOrdemAlfabetica;
 import comparators.ItemOrdemAlfabetica;
+import comparators.OrdemIdItemNecessario;
 import comparators.OrdemQuantidadeDeItens;
 
 /**
@@ -43,6 +45,14 @@ public class ControllerItens {
 	 * Lista de itens
 	 */
 	private List<Item> itens;
+	/**
+	 * Contador responsavel por incrementar o id de um item necessario
+	 */
+	private int contadorItensNecessarios;
+	/**
+	 * Lista de itens Necessarios
+	 */
+	private List<ItemNecessario> listaDeItensNecessarios;
 
 	/**
 	 * Construtor do controlador de itens.
@@ -52,6 +62,8 @@ public class ControllerItens {
 		this.descritores = new HashSet<>();
 		this.contadorItens = 0;
 		this.itens = new ArrayList<>();
+		this.contadorItensNecessarios = 0;
+		this.listaDeItensNecessarios = listaDeItensNecessarios;
 	}
 
 	/**
@@ -107,7 +119,7 @@ public class ControllerItens {
 		if (!this.descritores.contains(descricaoItem.toLowerCase().trim())) {
 			this.descritores.add(descricaoItem.toLowerCase().trim());
 		}
-		
+
 		Item i = new Item(++this.contadorItens, descricaoItem, tags, quantidade,
 				this.controllerUsuario.getDoador(idDoador));
 		if (this.controllerUsuario.getDoador(idDoador).existeItem(descricaoItem)) {
@@ -214,7 +226,7 @@ public class ControllerItens {
 
 		for (int i = 0; i < lista.size(); i++) {
 			boolean entrou = false;
-			for (Item item : itens) {	
+			for (Item item : itens) {
 				if (item.getDescricao().toLowerCase().trim().equals(lista.get(i))) {
 					if (i == lista.size() - 1) {
 						resultado += item.getQuantidade() + " - " + lista.get(i);
@@ -251,9 +263,34 @@ public class ControllerItens {
 	}
 
 	/*
-	 <6 - camiseta, tags: [outfit, algodao], quantidade: 25, doador: Cave Johnson/183.047.152-42 | 7 - cadeira de praia, tags: [dobravel], quantidade: 15, doador: Elizabeth Ashe/705.133.729-11 | 3 - cobertor, tags: [lencol, conforto], quantidade: 15, doador: Aramis Araujo/498.471.033-31 | 4 - travesseiro, tags: [travesseiro de pena], quantidade: 10, doador: Satya Vaswani/592.386.501-11 | 8 - cadeira de alimentacao, tags: [35kg, infantil], quantidade: 5, doador: Cave Johnson/183.047.152-42 | 2 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 5, doador: Elizabeth Ashe/705.133.729-11 | 5 - jaqueta de couro, tags: [outfit, couro de cobra], quantidade: 5, doador: Carlos Eduardo/120.949.124-84 | 9 - cadeira reclinavel, tags: [couro], quantidade: 4, doador: Arthur Morgan/526.419.476-13 | 11 - calca jeans, tags: [], quantidade: 3, doador: Arthur Morgan/526.419.476-13 | 1 - cadeira de rodas, tags: [roda grande, cadeira], quantidade: 2, doador: Claudio Campelo/587.910.934-99>
-	 <6 - camiseta, tags: [outfit, algodao], quantidade: 25, doador: Cave Johnson/18304715242 | 7 - cadeira de praia, tags: [dobravel], quantidade: 15, doador: Elizabeth Ashe/70513372911 | 3 - cobertor, tags: [lencol, conforto], quantidade: 15, doador: Aramis Araujo/49847103331 | 4 - travesseiro, tags: [travesseiro de pena], quantidade: 10, doador: Satya Vaswani/59238650111 | 8 - cadeira de alimentacao, tags: [35kg, infantil], quantidade: 5, doador: Cave Johnson/18304715242 | 2 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 5, doador: Elizabeth Ashe/70513372911 | 5 - jaqueta de couro, tags: [outfit, couro de cobra], quantidade: 5, doador: Carlos Eduardo/12094912484 | 9 - cadeira reclinavel, tags: [couro], quantidade: 4, doador: Arthur Morgan/52641947613 | 11 - calca jeans, tags: [], quantidade: 3, doador: Arthur Morgan/52641947613 | 1 - cadeira de rodas, tags: [roda grande, cadeira], quantidade: 2, doador: Claudio Campelo/58791093499>
-
+	 * <6 - camiseta, tags: [outfit, algodao], quantidade: 25, doador: Cave
+	 * Johnson/183.047.152-42 | 7 - cadeira de praia, tags: [dobravel], quantidade:
+	 * 15, doador: Elizabeth Ashe/705.133.729-11 | 3 - cobertor, tags: [lencol,
+	 * conforto], quantidade: 15, doador: Aramis Araujo/498.471.033-31 | 4 -
+	 * travesseiro, tags: [travesseiro de pena], quantidade: 10, doador: Satya
+	 * Vaswani/592.386.501-11 | 8 - cadeira de alimentacao, tags: [35kg, infantil],
+	 * quantidade: 5, doador: Cave Johnson/183.047.152-42 | 2 - colchao, tags:
+	 * [colchao kingsize, conforto, dormir], quantidade: 5, doador: Elizabeth
+	 * Ashe/705.133.729-11 | 5 - jaqueta de couro, tags: [outfit, couro de cobra],
+	 * quantidade: 5, doador: Carlos Eduardo/120.949.124-84 | 9 - cadeira
+	 * reclinavel, tags: [couro], quantidade: 4, doador: Arthur
+	 * Morgan/526.419.476-13 | 11 - calca jeans, tags: [], quantidade: 3, doador:
+	 * Arthur Morgan/526.419.476-13 | 1 - cadeira de rodas, tags: [roda grande,
+	 * cadeira], quantidade: 2, doador: Claudio Campelo/587.910.934-99> <6 -
+	 * camiseta, tags: [outfit, algodao], quantidade: 25, doador: Cave
+	 * Johnson/18304715242 | 7 - cadeira de praia, tags: [dobravel], quantidade: 15,
+	 * doador: Elizabeth Ashe/70513372911 | 3 - cobertor, tags: [lencol, conforto],
+	 * quantidade: 15, doador: Aramis Araujo/49847103331 | 4 - travesseiro, tags:
+	 * [travesseiro de pena], quantidade: 10, doador: Satya Vaswani/59238650111 | 8
+	 * - cadeira de alimentacao, tags: [35kg, infantil], quantidade: 5, doador: Cave
+	 * Johnson/18304715242 | 2 - colchao, tags: [colchao kingsize, conforto,
+	 * dormir], quantidade: 5, doador: Elizabeth Ashe/70513372911 | 5 - jaqueta de
+	 * couro, tags: [outfit, couro de cobra], quantidade: 5, doador: Carlos
+	 * Eduardo/12094912484 | 9 - cadeira reclinavel, tags: [couro], quantidade: 4,
+	 * doador: Arthur Morgan/52641947613 | 11 - calca jeans, tags: [], quantidade:
+	 * 3, doador: Arthur Morgan/52641947613 | 1 - cadeira de rodas, tags: [roda
+	 * grande, cadeira], quantidade: 2, doador: Claudio Campelo/58791093499>
+	 * 
 	 */
 	/**
 	 * Metodo que listaa todos os itens relacionados a uma dada string de pesquisa
@@ -284,4 +321,125 @@ public class ControllerItens {
 		}
 		return resultado;
 	}
+
+	/**
+	 * Metodo responsavel por cadastrar novos itens necessários associados a
+	 * usuários receptores
+	 * 
+	 * @param itemNecId     Inteiro que representa o id de um item necessario
+	 * @param idReceptor    String que representa o id de um receptor
+	 * @param descricaoItem String que representa a descricao de um item necessario
+	 * @param quantidade    Inteiro que representa a quantidade de itens necessarios
+	 * @param tags          String que representa as tags de um item
+	 * @return
+	 */
+	public int adicionaItemNecessario(int itemNecId, String idReceptor, String descricaoItem, int quantidade,
+			String tags) {
+		if (descricaoItem == null || descricaoItem.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+		}
+		if (idReceptor == null || idReceptor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		if (quantidade <= 0) {
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+		}
+		if (!this.controllerUsuario.existeUsuario(idReceptor)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+		}
+		ItemNecessario i = new ItemNecessario(++this.contadorItensNecessarios, descricaoItem, quantidade, tags,
+				controllerUsuario.getReceptor(idReceptor));
+		if (this.controllerUsuario.getReceptor(idReceptor).existeItemNecessario(itemNecId)) {
+			Collection<ItemNecessario> itens = this.controllerUsuario.getReceptor(idReceptor).getItensNecessarios();
+			int id = 0;
+			for (ItemNecessario itemNecessario : itens) {
+				if (itemNecessario.getDescricaoItem().equals(descricaoItem)) {
+					itemNecessario.setQuantidade(quantidade);
+					itemNecessario.setTags(tags);
+					id = itemNecessario.getItemNecId();
+				}
+			}
+			return id;
+		} else {
+			controllerUsuario.getReceptor(idReceptor).adicionaUmItemNecessario(i);
+			this.listaDeItensNecessarios.add(i);
+			return this.contadorItensNecessarios;
+		}
+
+	}
+
+	/**
+	 * Metodo responsavel por listar todos os itens necessário cadastrados no
+	 * eDoe.com ordenados pelo identificador único dos itens
+	 * 
+	 * @return String contendo uma lista de itens necessarios
+	 */
+	public String listaItensNecessarios() {
+		String resultado = "";
+		Collections.sort(this.listaDeItensNecessarios, new OrdemIdItemNecessario());
+		for (int i = 0; i < listaDeItensNecessarios.size(); i++) {
+			if (i == listaDeItensNecessarios.size() - 1) {
+				resultado += listaDeItensNecessarios.get(i).itensNecessariosDescricaoCompleta();
+			} else {
+				resultado += listaDeItensNecessarios.get(i).itensNecessariosDescricaoCompleta() + " | ";
+			}
+		}
+		return resultado;
+
+	}
+
+	/**
+	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
+	 * necessario
+	 * 
+	 * @param itemNecId  Inteiro que representa o id de um item necessario
+	 * @param idReceptor String que representa o id de um receptor
+	 * @param quantidade Inteiro que representa a quantidade de itens necessarios
+	 * @param tags       String que representa as tags de um item
+	 */
+	public void atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) {
+		if (itemNecId < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		if (idReceptor == null || idReceptor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		if (!controllerUsuario.existeUsuario(idReceptor)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+		}
+		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(itemNecId)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + itemNecId + ".");
+		}
+		if (controllerUsuario.existeUsuario(idReceptor)) {
+			this.controllerUsuario.getReceptor(idReceptor).atualizaItemNecessario(itemNecId, quantidade, tags);
+		}
+
+	}
+
+	/**
+	 * Metodo responsavel por remover um item necessario de um receptor
+	 * 
+	 * @param idReceptor String que representa o id de um usuario receptor
+	 * @param idItem     Inteiro que representa um id de um item necessario
+	 */
+	public void removeItemNecessario(String idReceptor, int idItem) {
+		if (idItem < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		if (idReceptor == null || idReceptor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		if (!controllerUsuario.existeUsuario(idReceptor)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+		}
+		if (!controllerUsuario.getReceptor(idReceptor).temItensCadastrados()) {
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+		}
+		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
+		this.controllerUsuario.getReceptor(idReceptor).removeItemNecessario(idItem);
+
+	}
+
 }
