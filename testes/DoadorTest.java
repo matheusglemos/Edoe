@@ -9,9 +9,9 @@ import com.edoe.models.Doador;
 
 class DoadorTest {
 
-	Doador doadorUm;
-	Doador doadorDois;
-	Doador doadorTres;
+	private Doador doadorUm;
+	private Doador doadorDois;
+	private Doador doadorTres;
 
 	@BeforeEach
 	void setUp() throws Exception {

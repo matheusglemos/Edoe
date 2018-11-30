@@ -11,7 +11,7 @@ class ControllerUsuarioTest {
 	private ControllerUsuario c;
 
 	@BeforeEach
-	void test() {
+	void setUp() {
 		c = new ControllerUsuario();
 		c.adicionaDoador("2", "Rick", "rick@gmail.com", "87979222", "PESSOA_FISICA");
 	}
@@ -34,8 +34,8 @@ class ControllerUsuarioTest {
 	}
 
 	@Test
-	@DisplayName("teste exibe usuario")
-	void testeExibeUsuario() {
+	@DisplayName("teste existe usuario")
+	void testExisteUsuario() {
 		c.adicionaDoador("1", "Rick", "rick@gmail.com", "87979222", "PESSOA_FISICA");
 		assertTrue(c.existeUsuario("1"));
 		assertTrue(c.existeUsuario("2"));
@@ -81,8 +81,7 @@ class ControllerUsuarioTest {
 	@DisplayName("teste pesquisa usuario por ID")
 	void testPesquisaUsuarioID() {
 		c.adicionaDoador("104", "Davidson", "davidson@gmail.com", "87979222", "PESSOA_FISICA");
-		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador",
-				c.pesquisaUsuarioPorNome("Davidson"));
+		assertEquals("Davidson/104, davidson@gmail.com, 87979222, status: doador", c.pesquisaUsuarioPorNome("Davidson"));
 	}
 
 	@Test
@@ -110,6 +109,15 @@ class ControllerUsuarioTest {
 			c.pesquisaUsuarioPorId("8");
 		});
 		assertEquals("Usuario nao encontrado: 8.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste atualiza usuario")
+	void testAtualizaUsuario() {
+		c.adicionaDoador("80", "Paulo", "paulo@gmail.com", "81864626", "PESSOA_FISICA");
+		assertTrue(c.existeUsuario("80"));
+		c.atualizaUsuario("80", "Cayan", "cayan@outlook.com", "88445577");
+		assertEquals("Cayan/80, cayan@outlook.com, 88445577, status: doador", c.pesquisaUsuarioPorNome("Cayan"));
 	}
 
 	@Test
@@ -143,6 +151,15 @@ class ControllerUsuarioTest {
 			c.atualizaUsuario("51", "Pereira", "pereira@gmail.com", "88842556");
 		});
 		assertEquals("Usuario nao encontrado: 51.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste remove usuario")
+	void testRemoveUsuario() {
+		c.adicionaDoador("80", "Paulo", "paulo@gmail.com", "81864626", "PESSOA_FISICA");
+		assertTrue(c.existeUsuario("80"));
+		c.removeUsuario("80");
+		assertFalse(c.existeUsuario("80"));
 	}
 
 	@Test
