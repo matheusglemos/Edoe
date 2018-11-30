@@ -73,6 +73,10 @@ public class Doador extends Usuario {
 		this.itens.put(idItem, item);
 
 	}
+	
+	public void adicionaItemParaDoacao(Item i) {
+		this.itens.put(i.getidItem(), i);
+	}
 
 	/**
 	 * Metodo responsavel por verificar a existencia de um item no mapa de itens.
@@ -136,8 +140,8 @@ public class Doador extends Usuario {
 	 * @param idItem
 	 *            Inteiro que representa um id de um item
 	 */
-	public void removeItemParaDoacao(int idItem) {
-		this.itens.remove(idItem);
+	public Item removeItemParaDoacao(int idItem) {
+		return this.itens.remove(idItem);
 
 	}
 

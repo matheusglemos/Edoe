@@ -13,6 +13,7 @@ import com.edoe.models.Doador;
 import com.edoe.models.Item;
 
 import comparators.DescricaoItemOrdemAlfabetica;
+import comparators.ItemOrdemAlfabetica;
 import comparators.OrdemQuantidadeDeItens;
 
 /**
@@ -103,6 +104,12 @@ public class ControllerItens {
 		if (!this.controllerUsuario.existeUsuario(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
+		if (!this.descritores.contains(descricaoItem.toLowerCase().trim())) {
+			this.descritores.add(descricaoItem.toLowerCase().trim());
+		}
+		
+		Item i = new Item(++this.contadorItens, descricaoItem, tags, quantidade,
+				this.controllerUsuario.getDoador(idDoador));
 		if (this.controllerUsuario.getDoador(idDoador).existeItem(descricaoItem)) {
 			Collection<Item> itens = this.controllerUsuario.getDoador(idDoador).getItens();
 			int id = 0;
@@ -115,8 +122,8 @@ public class ControllerItens {
 			}
 			return id;
 		} else {
-			controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(++this.contadorItens, descricaoItem,
-					quantidade, tags);
+			controllerUsuario.getDoador(idDoador).adicionaItemParaDoacao(i);
+			this.itens.add(i);
 			return this.contadorItens;
 		}
 
@@ -182,29 +189,43 @@ public class ControllerItens {
 		if (!controllerUsuario.existeUsuario(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
-		if (!controllerUsuario.getDoador(idDoador).temItensParaDoacao()) {
+		if (!this.controllerUsuario.getDoador(idDoador).temItensParaDoacao()) {
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
-		this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
+		Item aux = this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
+		this.itens.remove(aux);
+		aux.setQuantidade(0);
 	}
 
 	/**
 	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
-	 * no sistema, ordenado em ordem alfabetica pela descricao do item
+	 * no sistema, ordenado em ordem alfabética pela descrição do item
 	 * 
 	 * @return String contendo lista dos descritores em ordem alfabetica
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		String resultado = "";
-		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
-		for (int i = 0; i < itens.size(); i++) {
-			if (i == itens.size() - 1) {
-				resultado += itens.get(i).quantidadeDescricao();
-			} else {
-				resultado += itens.get(i).quantidadeDescricao() + " | ";
+		List<String> lista = new ArrayList<>();
+		lista.addAll(this.descritores);
+		Collections.sort(lista, new DescricaoItemOrdemAlfabetica());
+
+		for (int i = 0; i < lista.size(); i++) {
+			boolean entrou = false;
+			for (Item item : itens) {	
+				if (item.getDescricao().toLowerCase().trim().equals(lista.get(i))) {
+					if (i == lista.size() - 1) {
+						resultado += item.getQuantidade() + " - " + lista.get(i);
+					} else {
+						resultado += item.getQuantidade() + " - " + lista.get(i) + " | ";
+					}
+					entrou = true;
+				}
+			}
+			if (!entrou) {
+				resultado += "0 - " + lista.get(i) + " | ";
 			}
 		}
 		return resultado;
@@ -229,6 +250,11 @@ public class ControllerItens {
 		return resultado;
 	}
 
+	/*
+	 <6 - camiseta, tags: [outfit, algodao], quantidade: 25, doador: Cave Johnson/183.047.152-42 | 7 - cadeira de praia, tags: [dobravel], quantidade: 15, doador: Elizabeth Ashe/705.133.729-11 | 3 - cobertor, tags: [lencol, conforto], quantidade: 15, doador: Aramis Araujo/498.471.033-31 | 4 - travesseiro, tags: [travesseiro de pena], quantidade: 10, doador: Satya Vaswani/592.386.501-11 | 8 - cadeira de alimentacao, tags: [35kg, infantil], quantidade: 5, doador: Cave Johnson/183.047.152-42 | 2 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 5, doador: Elizabeth Ashe/705.133.729-11 | 5 - jaqueta de couro, tags: [outfit, couro de cobra], quantidade: 5, doador: Carlos Eduardo/120.949.124-84 | 9 - cadeira reclinavel, tags: [couro], quantidade: 4, doador: Arthur Morgan/526.419.476-13 | 11 - calca jeans, tags: [], quantidade: 3, doador: Arthur Morgan/526.419.476-13 | 1 - cadeira de rodas, tags: [roda grande, cadeira], quantidade: 2, doador: Claudio Campelo/587.910.934-99>
+	 <6 - camiseta, tags: [outfit, algodao], quantidade: 25, doador: Cave Johnson/18304715242 | 7 - cadeira de praia, tags: [dobravel], quantidade: 15, doador: Elizabeth Ashe/70513372911 | 3 - cobertor, tags: [lencol, conforto], quantidade: 15, doador: Aramis Araujo/49847103331 | 4 - travesseiro, tags: [travesseiro de pena], quantidade: 10, doador: Satya Vaswani/59238650111 | 8 - cadeira de alimentacao, tags: [35kg, infantil], quantidade: 5, doador: Cave Johnson/18304715242 | 2 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 5, doador: Elizabeth Ashe/70513372911 | 5 - jaqueta de couro, tags: [outfit, couro de cobra], quantidade: 5, doador: Carlos Eduardo/12094912484 | 9 - cadeira reclinavel, tags: [couro], quantidade: 4, doador: Arthur Morgan/52641947613 | 11 - calca jeans, tags: [], quantidade: 3, doador: Arthur Morgan/52641947613 | 1 - cadeira de rodas, tags: [roda grande, cadeira], quantidade: 2, doador: Claudio Campelo/58791093499>
+
+	 */
 	/**
 	 * Metodo que listaa todos os itens relacionados a uma dada string de pesquisa
 	 * 
@@ -243,39 +269,19 @@ public class ControllerItens {
 		String resultado = "";
 		int cont = 0;
 		for (Item item : itens) {
-			if (item.getDescricao().equals(descricao)) {
+			if (item.getDescricao().contains(descricao)) {
 				cont++;
 			}
 		}
-		Collections.sort(this.itens, new DescricaoItemOrdemAlfabetica());
-		int add = 0;
+		Collections.sort(this.itens, new ItemOrdemAlfabetica());
 		for (Item item : this.itens) {
-			if (add < cont && item.getDescricao().equals(descricao)) {
-				resultado += item.toString() + "|";
-				add++;
-			} else if (add == cont && item.getDescricao().equals(descricao)) {
+			if (cont > 1 && item.getDescricao().contains(descricao)) {
+				resultado += item.toString() + " | ";
+				cont--;
+			} else if (cont == 1 && item.getDescricao().contains(descricao)) {
 				resultado += item.toString();
-				break;
 			}
 		}
 		return resultado;
 	}
-
-	public void adicionaItemNecessario(int itemNecId, String idReceptor, String descricaoItem, int quantidade,
-			String tags) {
-
-	}
-	
-	public void listaItensNecessarios() {
-		
-	}
-	
-	public void atualizaItemNecessario() {
-		
-	}
-	
-	public void removeItemNecessario(String idReceptor, int idItem) {
-		
-	}
-
 }

@@ -20,10 +20,10 @@ public class OrdemQuantidadeDeItens implements Comparator<Item> {
 	 */
 	@Override
 	public int compare(Item o1, Item o2) {
-		if ((o1.getQuantidade() - o2.getQuantidade()) == 0) {
+		if ((o2.getQuantidade() - o1.getQuantidade()) == 0) {
 			return o1.getDescricao().compareTo(o2.getDescricao());
 		}
-		return o1.getQuantidade() - o2.getQuantidade();
+		return o2.getQuantidade() - o1.getQuantidade();
 	}
 
 }

@@ -13,13 +13,13 @@ import com.edoe.models.Item;
  * @author Caroliny Silva
  * @author Almir Crispiniano
  */
-public class DescricaoItemOrdemAlfabetica implements Comparator<Item> {
+public class DescricaoItemOrdemAlfabetica implements Comparator<String> {
 	/**
 	 * Metodo que compara dois itens pela sua descricao
 	 */
 	@Override
-	public int compare(Item o1, Item o2) {
-		return o1.getDescricao().compareToIgnoreCase(o2.getDescricao());
+	public int compare(String o1, String o2) {
+		return o1.compareTo(o2);
 	}
 
 }
