@@ -196,6 +196,9 @@ public class ControllerItens {
 		if (!controllerUsuario.existeUsuario(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
+		if (!controllerUsuario.getDoador(idDoador).temItensParaDoacao()) {
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
@@ -204,7 +207,7 @@ public class ControllerItens {
 
 	/**
 	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
-	 * no sistema, ordenado em ordem alfabética pela descrição do item
+	 * no sistema, ordenado em ordem alfabetica pela descricao do item
 	 * 
 	 * @return String contendo lista dos descritores em ordem alfabetica
 	 */

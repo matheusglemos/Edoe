@@ -141,6 +141,15 @@ public class Doador extends Usuario {
 
 	}
 
+	/**
+	 * Metodo responsavel por verificar se um usuario possui itens para doacao.
+	 * 
+	 * @return booleano que confirma se o usuario tem ou nao itens para doacao.
+	 */
+	public boolean temItensParaDoacao() {
+		return this.itens.size() != 0;
+	}
+
 	public Collection<Item> getItens() {
 		return this.itens.values();
 	}
