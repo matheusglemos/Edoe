@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,7 +64,7 @@ public class ControllerItens {
 		this.contadorItens = 0;
 		this.itens = new ArrayList<>();
 		this.contadorItensNecessarios = 0;
-		this.listaDeItensNecessarios = new ArrayList<>();
+		this.listaDeItensNecessarios = new LinkedList<>();
 	}
 
 	/**
@@ -92,6 +93,12 @@ public class ControllerItens {
 		throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao.toLowerCase().trim() + ".");
 
 	}
+	
+	/*
+	 <1 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044 | 2 - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - toalha de banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 4 - frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 6 - frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 8 - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037 | 9 - livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 10 - cadeira de rodas, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 | 11 - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz/51567490000143 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
+	 <1 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044 | 2 - Toalha de Banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - Toalha de Banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 4 - Frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - Frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 6 - Frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - Alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 8 - Sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037 | 9 - Livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 10 - cAdEiRa de RoDaS, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 | 11 - COLCHAO, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz /51567490000143 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
+
+	 */
 
 	/**
 	 * Metodo responsavel por adicionar um item para doacao associado a um usuario
@@ -316,13 +323,16 @@ public class ControllerItens {
 		if (!this.controllerUsuario.existeUsuario(idReceptor)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
 		}
-		ItemNecessario i = new ItemNecessario(++this.contadorItensNecessarios, descricaoItem, quantidade, tags,
+		if (!this.descritores.contains(descricaoItem.toLowerCase().trim())) {
+			this.descritores.add(descricaoItem.toLowerCase().trim());
+		}
+		ItemNecessario i = new ItemNecessario(++this.contadorItensNecessarios, descricaoItem.toLowerCase().trim(), quantidade, tags,
 				controllerUsuario.getReceptor(idReceptor));
-		if (this.controllerUsuario.getReceptor(idReceptor).existeItemNecessario(contadorItensNecessarios)) {
+		if (this.controllerUsuario.getReceptor(idReceptor).existeItemNecessario(i)) {
 			Collection<ItemNecessario> itens = this.controllerUsuario.getReceptor(idReceptor).getItensNecessarios();
 			int id = 0;
 			for (ItemNecessario itemNecessario : itens) {
-				if (itemNecessario.getDescricaoItem().equals(descricaoItem)) {
+				if (itemNecessario.getDescricaoItem().equals(descricaoItem.toLowerCase())) {
 					itemNecessario.setQuantidade(quantidade);
 					itemNecessario.setTags(tags);
 					id = itemNecessario.getItemNecId();
@@ -337,11 +347,6 @@ public class ControllerItens {
 
 	}
 	
-	/*
-	 <15 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044 | 2 - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - toalha de banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 4 - frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 6 - frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 8 - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037 | 9 - livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 10 - cadeira de rodas, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 | 11 - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz/51567490000143 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
-	 <15 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 3,receptor: Murilo Luiz Brito/84473712044 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11,receptor: Murilo Luiz Brito/84473712044 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2,receptor: Rafaela Beatriz /51567490000143 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3,receptor: Antonella Sonia Moraes/32719454000103 | 11 - COLCHAO, tags: [colchao kingsize, conforto], quantidade: 6,receptor: Murilo Luiz Brito/84473712044 | 10 - cAdEiRa de RoDaS, tags: [roda grande, 80kg, conforto], quantidade: 7,receptor: Luiza Elisa Lopes/72859801000118 | 9 - Livro, tags: [], quantidade: 1,receptor: Sara Jennifer Vieira/24875800037 | 8 - Sabonete, tags: [Higiene], quantidade: 8,receptor: Sara Jennifer Vieira/24875800037 | 7 - Alimento, tags: [Alimentacao, Saude], quantidade: 5,receptor: Lucca Iago/57091431030 | 6 - Frauda, tags: [Higiene, Adulto, GG], quantidade: 30,receptor: Luiza Elisa Lopes/72859801000118 | 5 - Frauda, tags: [Higiene, Infantil, M], quantidade: 10,receptor: Cristiane Isabella Caldeira/87831113000117 | 4 - Frauda, tags: [Higiene, Infantil, P], quantidade: 15,receptor: Luiza Elisa Lopes/72859801000118 | 3 - Toalha de Banho, tags: [Adulto, TAM G, Branca], quantidade: 1,receptor: Sara Jennifer Vieira/24875800037 | 2 - Toalha de Banho, tags: [Adulto, TAM G, Azul], quantidade: 2,receptor: Sonia Daniela/31862316040 | 1 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 1,receptor: Murilo Luiz Brito/84473712044>
-	 */
-
 	/**
 	 * Metodo responsavel por listar todos os itens necessário cadastrados no
 	 * eDoe.com ordenados pelo identificador único dos itens
@@ -350,7 +355,6 @@ public class ControllerItens {
 	 */
 	public String listaItensNecessarios() {
 		String resultado = "";
-		Collections.sort(this.listaDeItensNecessarios, new OrdemIdItemNecessario());
 		for (int i = 0; i < listaDeItensNecessarios.size(); i++) {
 			if (i == listaDeItensNecessarios.size() - 1) {
 				resultado += listaDeItensNecessarios.get(i).itensNecessariosDescricaoCompleta();
@@ -361,13 +365,6 @@ public class ControllerItens {
 		return resultado;
 
 	}
-	
-	/**
-	 <15 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044 | 2 - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - toalha de banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 4 - frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 6 - frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 8 - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037 | 9 - livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 10 - cadeira de rodas, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 | 11 - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz/51567490000143 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
-	 <15 - Livro, tags: [], quantidade: 3,receptor: Murilo Luiz Brito/84473712044 | 14 - camiseta, tags: [], quantidade: 11,receptor: Murilo Luiz Brito/84473712044 | 13 - travesseiro, tags: [], quantidade: 2,receptor: Rafaela Beatriz /51567490000143 | 12 - jaqueta de couro, tags: [], quantidade: 3,receptor: Antonella Sonia Moraes/32719454000103 | 11 - COLCHAO, tags: [], quantidade: 6,receptor: Murilo Luiz Brito/84473712044 | 10 - cAdEiRa de RoDaS, tags: [], quantidade: 7,receptor: Luiza Elisa Lopes/72859801000118 | 9 - Livro, tags: [], quantidade: 1,receptor: Sara Jennifer Vieira/24875800037 | 8 - Sabonete, tags: [], quantidade: 8,receptor: Sara Jennifer Vieira/24875800037 | 7 - Alimento, tags: [], quantidade: 5,receptor: Lucca Iago/57091431030 | 6 - Frauda, tags: [], quantidade: 30,receptor: Luiza Elisa Lopes/72859801000118 | 5 - Frauda, tags: [], quantidade: 10,receptor: Cristiane Isabella Caldeira/87831113000117 | 4 - Frauda, tags: [], quantidade: 15,receptor: Luiza Elisa Lopes/72859801000118 | 3 - Toalha de Banho, tags: [], quantidade: 1,receptor: Sara Jennifer Vieira/24875800037 | 2 - Toalha de Banho, tags: [], quantidade: 2,receptor: Sonia Daniela/31862316040 | 1 - Livro, tags: [], quantidade: 1,receptor: Murilo Luiz Brito/84473712044>
- 
-	 
-	 */
 
 	/**
 	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
@@ -378,7 +375,7 @@ public class ControllerItens {
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios
 	 * @param tags       String que representa as tags de um item
 	 */
-	public void atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) {
+	public String atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) {
 		if (itemNecId < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
@@ -392,8 +389,9 @@ public class ControllerItens {
 			throw new IllegalArgumentException("Item nao encontrado: " + itemNecId + ".");
 		}
 		if (controllerUsuario.existeUsuario(idReceptor)) {
-			this.controllerUsuario.getReceptor(idReceptor).atualizaItemNecessario(itemNecId, quantidade, tags);
+			return this.controllerUsuario.getReceptor(idReceptor).atualizaItemNecessario(itemNecId, quantidade, tags);
 		}
+		return "";
 
 	}
 

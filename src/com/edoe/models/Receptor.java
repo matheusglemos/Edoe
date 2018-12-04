@@ -75,8 +75,17 @@ public class Receptor extends Usuario {
 	 * @param idItem Inteiro que representa um id de um item necessario
 	 * @return booleano
 	 */
-	public boolean existeItemNecessario(int itemNecId) {
-		return this.itensNecessarios.containsKey(itemNecId);
+	public boolean existeItemNecessario(ItemNecessario i) {
+		for (ItemNecessario item : itensNecessarios.values()) {
+			if (item.equals(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean existeItemNecessario(int idItem) {
+		return this.itensNecessarios.containsKey(idItem);
 	}
 
 	/**
@@ -87,14 +96,15 @@ public class Receptor extends Usuario {
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios
 	 * @param tags       String que representa as tags de um item necessario
 	 */
-	public void atualizaItemNecessario(int itemNecId, int quantidade, String tags) {
+	public String atualizaItemNecessario(int itemNecId, int quantidade, String tags) {
 		if (this.existeItemNecessario(itemNecId)) {
 			if (quantidade > 0) {
 				this.itensNecessarios.get(itemNecId).setQuantidade(quantidade);
 			}
-			if (tags != null) {
+			if (tags != null && !tags.equals("")) {
 				this.itensNecessarios.get(itemNecId).setTags(tags);
 			}
+			return this.itensNecessarios.get(itemNecId).toString();
 		} else {
 			throw new IllegalArgumentException("Item nao encontrado: " + itemNecId);
 		}

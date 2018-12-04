@@ -93,6 +93,7 @@ public class ItemNecessario {
 	 * @param tag
 	 */
 	private void separaTags(String tag) {
+		this.tags = new ArrayList<>();
 		String[] array = tag.split(",");
 		for (int i = 0; i < array.length; i++) {
 			this.tags.add(array[i]);
