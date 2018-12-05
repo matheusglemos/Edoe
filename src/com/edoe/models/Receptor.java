@@ -59,9 +59,11 @@ public class Receptor extends Usuario {
 		ItemNecessario item = new ItemNecessario(itemNecId, descricaoItem, quantidade, tags, this);
 		this.itensNecessarios.put(itemNecId, item);
 	}
-	
+
 	/**
-	 * Metodo responsavel por adicionar um item no mapa de itens necessarios utilizando o objeto Item necessario
+	 * Metodo responsavel por adicionar um item no mapa de itens necessarios
+	 * utilizando o objeto Item necessario
+	 * 
 	 * @param i Item necessario
 	 */
 	public void adicionaUmItemNecessario(ItemNecessario i) {
@@ -83,7 +85,7 @@ public class Receptor extends Usuario {
 		}
 		return false;
 	}
-	
+
 	public boolean existeItemNecessario(int idItem) {
 		return this.itensNecessarios.containsKey(idItem);
 	}
@@ -137,6 +139,26 @@ public class Receptor extends Usuario {
 	 */
 	public Collection<ItemNecessario> getItensNecessarios() {
 		return this.itensNecessarios.values();
+	}
+
+	/**
+	 * Metodo incompleto
+	 * 
+	 * @param idReceptor
+	 * @param idItemNecessario
+	 * @return
+	 */
+	public String match(String idReceptor, int idItemNecessario) {
+		if (idReceptor == null || idReceptor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		if (idItemNecessario < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		if (!itensNecessarios.containsKey(idItemNecessario)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario);
+		}
+
 	}
 
 }
