@@ -36,6 +36,11 @@ public class ItemNecessario {
 	private Receptor receptor;
 
 	/**
+	 * Atributo que representa os pontos de um match
+	 */
+	private int pontosMatch;
+
+	/**
 	 * 
 	 * @param itemNecId
 	 * @param descricaoItem
@@ -51,6 +56,7 @@ public class ItemNecessario {
 		this.descricaoItem = descricaoItem;
 		this.tag = tag;
 		this.receptor = receptor;
+		this.pontosMatch = 0;
 	}
 
 	public List<String> getTags() {
@@ -85,6 +91,14 @@ public class ItemNecessario {
 
 	public String getTag() {
 		return tag;
+	}
+
+	public int getPontosMatch() {
+		return pontosMatch;
+	}
+
+	public void setPontosMatch(int pontosMatch) {
+		this.pontosMatch = pontosMatch;
 	}
 
 	/**

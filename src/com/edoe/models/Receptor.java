@@ -141,24 +141,4 @@ public class Receptor extends Usuario {
 		return this.itensNecessarios.values();
 	}
 
-	/**
-	 * Metodo incompleto
-	 * 
-	 * @param idReceptor
-	 * @param idItemNecessario
-	 * @return
-	 */
-	public String match(String idReceptor, int idItemNecessario) {
-		if (idReceptor == null || idReceptor.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		}
-		if (idItemNecessario < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		}
-		if (!itensNecessarios.containsKey(idItemNecessario)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario);
-		}
-
-	}
-
 }

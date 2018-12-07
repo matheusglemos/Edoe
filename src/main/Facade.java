@@ -18,12 +18,51 @@ import easyaccept.EasyAccept;
 public class Facade {
 
 	/*
-	 15 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044 | 2 - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - toalha de banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 4 - frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 6 - frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 8 - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037 | 9 - livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 10 - cadeira de rodas, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 | 11 - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz/51567490000143 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
-	<15 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044 | 14 - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044 | 13 - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz /51567490000143 | 12 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 11 - COLCHAO, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 10 - cAdEiRa de RoDaS, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 | 9 - Livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 8 - Sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037 | 7 - Alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 6 - Frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - Frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 4 - Frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118 | 3 - Toalha de Banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 2 - Toalha de Banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 1 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044>
-
+	 * 15 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor:
+	 * Murilo Luiz Brito/84473712044 | 2 - toalha de banho, tags: [Adulto, TAM G,
+	 * Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - toalha de
+	 * banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer
+	 * Vieira/24875800037 | 4 - frauda, tags: [Higiene, Infantil, P], quantidade:
+	 * 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - frauda, tags: [Higiene,
+	 * Infantil, M], quantidade: 10, Receptor: Cristiane Isabella
+	 * Caldeira/87831113000117 | 6 - frauda, tags: [Higiene, Adulto, GG],
+	 * quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - alimento,
+	 * tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 |
+	 * 8 - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer
+	 * Vieira/24875800037 | 9 - livro, tags: [], quantidade: 1, Receptor: Sara
+	 * Jennifer Vieira/24875800037 | 10 - cadeira de rodas, tags: [roda grande,
+	 * 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 |
+	 * 11 - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor:
+	 * Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro
+	 * de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13
+	 * - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2,
+	 * Receptor: Rafaela Beatriz/51567490000143 | 14 - camiseta, tags: [outfit,
+	 * poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
+	 * <15 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor:
+	 * Murilo Luiz Brito/84473712044 | 14 - camiseta, tags: [outfit, poliester,
+	 * roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044 | 13 -
+	 * travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2,
+	 * Receptor: Rafaela Beatriz /51567490000143 | 12 - jaqueta de couro, tags:
+	 * [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia
+	 * Moraes/32719454000103 | 11 - COLCHAO, tags: [colchao kingsize, conforto],
+	 * quantidade: 6, Receptor: Murilo Luiz Brito/84473712044 | 10 - cAdEiRa de
+	 * RoDaS, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza
+	 * Elisa Lopes/72859801000118 | 9 - Livro, tags: [], quantidade: 1, Receptor:
+	 * Sara Jennifer Vieira/24875800037 | 8 - Sabonete, tags: [Higiene], quantidade:
+	 * 8, Receptor: Sara Jennifer Vieira/24875800037 | 7 - Alimento, tags:
+	 * [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 | 6 -
+	 * Frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa
+	 * Lopes/72859801000118 | 5 - Frauda, tags: [Higiene, Infantil, M], quantidade:
+	 * 10, Receptor: Cristiane Isabella Caldeira/87831113000117 | 4 - Frauda, tags:
+	 * [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa
+	 * Lopes/72859801000118 | 3 - Toalha de Banho, tags: [Adulto, TAM G, Branca],
+	 * quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037 | 2 - Toalha de
+	 * Banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia
+	 * Daniela/31862316040 | 1 - Livro, tags: [Infantil, Matematica, Didatico],
+	 * quantidade: 1, Receptor: Murilo Luiz Brito/84473712044>
+	 * 
 	 */
-	
-	
+
 	/**
 	 * Atributo referente ao controle de usuarios.
 	 */
@@ -238,6 +277,10 @@ public class Facade {
 	 */
 	public void removeItemNecessario(String idReceptor, int idItem) {
 		controleDois.removeItemNecessario(idReceptor, idItem);
+	}
+
+	public void match(String idReceptor, int idItemNecessario) {
+		controleUm.getReceptor(idReceptor).match(idReceptor, idItemNecessario);
 	}
 
 }
