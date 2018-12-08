@@ -135,10 +135,20 @@ public class Receptor extends Usuario {
 	/**
 	 * Metodo responsavel por retorna os valores do mapa de itens necessarios
 	 * 
-	 * @return
+	 * @return valores do mapa de itensNecessarios
 	 */
 	public Collection<ItemNecessario> getItensNecessarios() {
 		return this.itensNecessarios.values();
+	}
+
+	/**
+	 * Metodo que retorna um item necessario pelo id do mesmo
+	 * 
+	 * @param id inteiro que representa o id de um item necessario
+	 * @return item necessario
+	 */
+	public ItemNecessario getItemNecessario(int id) {
+		return this.itensNecessarios.get(id);
 	}
 
 }

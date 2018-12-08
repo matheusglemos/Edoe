@@ -46,6 +46,12 @@ public class Item {
 	private Doador doador;
 
 	/**
+	 * Atributo que representa os pontos de um match
+	 *
+	 */
+	private int pontosMatch;
+
+	/**
 	 * Construtor da classe item
 	 * 
 	 * @param idItem
@@ -60,6 +66,7 @@ public class Item {
 		this.quantidade = quantidade;
 		this.descricaoItem = descricaoItem;
 		this.doador = doador;
+		this.pontosMatch = 0;
 	}
 
 	public List<String> getTags() {
@@ -154,8 +161,8 @@ public class Item {
 	}
 
 	/**
-	 * Metodo que retorna uma String com uma quantidade associada a descricao de
-	 * um item
+	 * Metodo que retorna uma String com uma quantidade associada a descricao de um
+	 * item
 	 * 
 	 * @return String representando um item em quantidade junto a sua descricao
 	 */
@@ -171,6 +178,33 @@ public class Item {
 	 */
 	public String quantidadeDoItemNoSistema() {
 		return toString() + ", doador: " + this.doador.getNome() + "/" + this.doador.getId();
+	}
+
+	/**
+	 * Metodo que incrementa pontos no atributo pontosMatch
+	 * 
+	 * @param valor inteiro que adiciona pontos
+	 */
+	public void incremetarPontos(int valor) {
+		this.pontosMatch += valor;
+	}
+
+	/**
+	 * Metodo que descrementa pontos no atributo pontosMatch
+	 * 
+	 * @param valor inteiro que retira pontos
+	 */
+	public void decremetarPontos(int valor) {
+		this.pontosMatch -= valor;
+	}
+
+	/**
+	 * Metodo que retorna a quantidade de pontos do atributo pontosMatch
+	 * 
+	 * @return inteiro contendo os pontos de um match
+	 */
+	public int getPontos() {
+		return this.pontosMatch;
 	}
 
 }

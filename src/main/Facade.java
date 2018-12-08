@@ -76,7 +76,8 @@ public class Facade {
 
 	public static void main(String[] args) {
 		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt",
-				"acceptance_tests/use_case_3.txt", "acceptance_tests/use_case_4.txt" };
+				"acceptance_tests/use_case_3.txt", "acceptance_tests/use_case_4.txt",
+				"acceptance_tests/use_case_5.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -279,8 +280,17 @@ public class Facade {
 		controleDois.removeItemNecessario(idReceptor, idItem);
 	}
 
-	public void match(String idReceptor, int idItemNecessario) {
-		controleUm.getReceptor(idReceptor).match(idReceptor, idItemNecessario);
+	/**
+	 * Metodo responsavel por encontrar casamentos (matches) entre itens a serem
+	 * doados e itens necessários.
+	 * 
+	 * @param idReceptor       String que representa o id de um usuario receptor
+	 * @param idItemNecessario Inteiro que representa um id de um item necessario
+	 * @return String contendo Matches
+	 */
+	public String match(String idReceptor, int idItemNecessario) {
+		return this.controleDois.match(idReceptor, idItemNecessario);
+		// controleUm.getReceptor(idReceptor).match(idReceptor, idItemNecessario);
 	}
 
 }

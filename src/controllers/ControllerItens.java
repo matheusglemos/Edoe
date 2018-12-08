@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,11 +14,13 @@ import java.util.Set;
 import com.edoe.models.Doador;
 import com.edoe.models.Item;
 import com.edoe.models.ItemNecessario;
+import com.edoe.models.Receptor;
 
 import comparators.DescricaoItemOrdemAlfabetica;
 import comparators.ItemOrdemAlfabetica;
 import comparators.OrdemIdItemNecessario;
 import comparators.OrdemQuantidadeDeItens;
+import comparators.OrdenarPorPontosMatch;
 
 /**
  * Classe que controla os itens de um usuario. Adiciona, pesquisa, atualiza e
@@ -458,28 +461,60 @@ public class ControllerItens {
 		this.controllerUsuario.getReceptor(idReceptor).removeItemNecessario(idItem);
 
 	}
-	
-	public boolean pecorreItensNecessariosReceptor(String idReceptor, String descricao, String tags) {
-		List<ItemNecessario> itens = new ArrayList<>(controllerUsuario.getReceptor(idReceptor).getItensNecessarios());
-		for (ItemNecessario itemNecessario : itens) {
-			if (itemNecessario.getDescricaoItem().equals(descricao)) {
-				itemNecessario.setPontosMatch(itemNecessario.getPontosMatch() + 20);
-				if(itemNecessario.getTags().equals(tags)) {
-					itemNecessario.setPontosMatch(itemNecessario.getPontosMatch()+10);
-				}
+
+	/**
+	 * Metodo responsavel por pecorrer um ArrayList de itens e comparar se a
+	 * descrição desse item é igual a do item necessario, se for incrementa 20
+	 * pontos ao atributo pontosMatch, depois ele compara as tags fazendo uso do
+	 * metodo privado comparaTagsESoma e por fim adiciona os itens que deram match
+	 * no Array de itensMatch
+	 * 
+	 * @param itemN que representa um Item Necessario
+	 * @return um ArrayList de matchs
+	 */
+	private List<Item> pecorreItensNecessariosReceptor(ItemNecessario itemN) {
+		List<Item> itensMatch = new ArrayList<>();
+		for (Item item : this.itens) {
+			if (item.getDescricao().equals(itemN.getDescricaoItem())) {
+				item.incremetarPontos(20);
+				this.comparaTagsESoma(item, itemN.getTag());
+				itensMatch.add(item);
 			}
-			return true;
-		}return false;
+		}
+		return itensMatch;
 	}
 
 	/**
-	 * Metodo incompleto
+	 * Metodo responsavel por comparar tags, se elas forem iguais na mesma posição
+	 * somam 10 pontos, mas se forem iguais em posições diferentes somam 5 pontos
 	 * 
-	 * @param idReceptor
-	 * @param idItemNecessario
-	 * @return
+	 * @param item que representa um Item
+	 * @param tags que representam uma tag em String
 	 */
-	public void match(String idReceptor, int idItemNecessario) {
+	private void comparaTagsESoma(Item item, String tags) {
+		List<String> tags1 = Arrays.asList(tags.split(","));
+		int i = 0;
+		while (i < item.getTags().size() && i < tags1.size()) {
+			if (item.getTags().get(i).equals(tags1.get(i))) {
+				item.incremetarPontos(10);
+			} else if (item.getTags().contains(tags1.get(i))) {
+				item.incremetarPontos(5);
+			}
+			i++;
+		}
+	}
+
+	/**
+	 * Metodo que encontra casamentos (matches) entre itens a serem doados e itens
+	 * necessários. A partir de um Receptor e de um Item necessario o metodo cria
+	 * uma lista que usa o pecorreItensNecessariosReceptor e depois ordena a mesma
+	 * pelo pontos de Match
+	 * 
+	 * @param idReceptor       String que representa o id de um usuario receptor
+	 * @param idItemNecessario Inteiro que representa o id de um item necessario
+	 * @return String contendo uma lista de matches
+	 */
+	public String match(String idReceptor, int idItemNecessario) {
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
@@ -489,8 +524,20 @@ public class ControllerItens {
 		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(idItemNecessario)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario);
 		}
+		Receptor receptor = this.controllerUsuario.getReceptor(idReceptor);
+		ItemNecessario itemN = receptor.getItemNecessario(idItemNecessario);
 
+		List<Item> lista = pecorreItensNecessariosReceptor(itemN);
+		Collections.sort(lista, new OrdenarPorPontosMatch());
+		String saida = "";
+		for (int i = 0; i < lista.size(); i++) {
+			if (i == lista.size() - 1) {
+				saida += lista.get(i).quantidadeDoItemNoSistema();
+			} else {
+				saida += lista.get(i).quantidadeDoItemNoSistema() + " | ";
+			}
+		}
+		return saida;
 	}
-	
 
 }
