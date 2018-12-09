@@ -518,11 +518,14 @@ public class ControllerItens {
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
+		if(!(controllerUsuario.existeUsuario(idReceptor))) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+		}
 		if (idItemNecessario < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(idItemNecessario)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario);
+			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario + ".");
 		}
 		Receptor receptor = this.controllerUsuario.getReceptor(idReceptor);
 		ItemNecessario itemN = receptor.getItemNecessario(idItemNecessario);

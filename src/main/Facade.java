@@ -250,8 +250,8 @@ public class Facade {
 	}
 
 	/**
-	 * Metodo responsavel por listar todos os itens necessário cadastrados no
-	 * eDoe.com ordenados pelo identificador único dos itens
+	 * Metodo responsavel por listar todos os itens necessario cadastrados no
+	 * eDoe.com ordenados pelo identificador unico dos itens
 	 */
 	public String listaItensNecessarios() {
 		return controleDois.listaItensNecessarios();
