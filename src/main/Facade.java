@@ -293,4 +293,11 @@ public class Facade {
 		// controleUm.getReceptor(idReceptor).match(idReceptor, idItemNecessario);
 	}
 
+	public void realizaDoacao(int idItemNec, int idItemDoado, String data) {
+	}
+
+	public String listaDoacoes() {
+		return "";
+	}
+
 }

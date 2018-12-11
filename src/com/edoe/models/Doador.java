@@ -161,4 +161,14 @@ public class Doador extends Usuario {
 	public Collection<Item> getItens() {
 		return this.itens.values();
 	}
+	
+	/**
+	 * Metodo que retorna um item pelo id do mesmo
+	 * 
+	 * @param id inteiro que representa o id de um item
+	 * @return item
+	 */
+	public Item getItem(int id) {
+		return this.itens.get(id);
+	}
 }

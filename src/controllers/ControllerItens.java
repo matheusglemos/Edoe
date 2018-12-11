@@ -518,7 +518,7 @@ public class ControllerItens {
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
-		if(!(controllerUsuario.existeUsuario(idReceptor))) {
+		if (!(controllerUsuario.existeUsuario(idReceptor))) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
 		}
 		if (idItemNecessario < 0) {
@@ -541,6 +541,46 @@ public class ControllerItens {
 			}
 		}
 		return saida;
+	}
+
+	/**
+	 * Metodo responsavel por retornar um item a partir do id do item
+	 * 
+	 * @param id Inteiro que representa o id de um item.
+	 * @return Um item
+	 */
+	public Item getItem(int idItem) {
+		return (Item) this.itens.get(idItem);
+	}
+
+	/**
+	 * Metodo responsavel por retornar um item necessario a partir do id do item
+	 * 
+	 * @param id Inteiro que representa o id de um item necessario.
+	 * @return Um item necessario
+	 */
+	public ItemNecessario getItemNecessario(int itemNecId) {
+		return (ItemNecessario) this.listaDeItensNecessarios.get(itemNecId);
+	}
+
+	public void realizaDoacao(int idItemNec, int idItemDoado, String data) {
+		if (idItemNec < 0 || idItemDoado < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		if (data == null || data.trim().isEmpty()) {
+			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+		}
+		if (!this.getItemNecessario(idItemNec).getDescricaoItem().equals(this.getItem(idItemDoado).getDescricao())) {
+			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
+		}
+		if (this.getItemNecessario(idItemNec).getDescricaoItem().equals(this.getItem(idItemDoado).getDescricao())) {
+
+		}
+
+	}
+
+	public String listaDoacoes() {
+		return "0";
 	}
 
 }

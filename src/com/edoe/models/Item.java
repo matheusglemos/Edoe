@@ -206,5 +206,6 @@ public class Item {
 	public int getPontos() {
 		return this.pontosMatch;
 	}
+	
 
 }
