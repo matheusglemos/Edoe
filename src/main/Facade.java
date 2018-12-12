@@ -39,8 +39,8 @@ public class Facade {
 	 */
 	public static void main(String[] args) {
 		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt",
-				"acceptance_tests/use_case_3.txt", "acceptance_tests/use_case_4.txt",
-				"acceptance_tests/use_case_5.txt", "acceptance_tests/use_case_6.txt"};
+				"acceptance_tests/use_case_3.txt", "acceptance_tests/use_case_4.txt", "acceptance_tests/use_case_5.txt",
+				"acceptance_tests/use_case_6.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -66,6 +66,8 @@ public class Facade {
 	 * @param celular String que representa o celular do usuario doador.
 	 * 
 	 * @param classe  String que representa a classe do usuario doador.
+	 * 
+	 * @return Adicao de um doador no sistema.
 	 */
 	public String adicionaDoador(String nome, String id, String email, String celular, String classe) {
 		return this.controleUm.adicionaDoador(nome, id, email, celular, classe);
@@ -98,9 +100,12 @@ public class Facade {
 	/**
 	 * Metodo que atualiza um usuario atraves de seu id.
 	 * 
-	 * @param id String que representa o id do usuario.
+	 * @param id      String que representa o id do usuario.
+	 * @param nome    String que representa o nome do usuario.
+	 * @param email   String que representa o email do usuario.
+	 * @param celular String que representa o celular do usuario.
 	 * 
-	 * @return
+	 * @return A atualizacao de um usuario no sistema.
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		return controleUm.atualizaUsuario(id, nome, email, celular);
@@ -144,6 +149,8 @@ public class Facade {
 	 * 
 	 * @param idDoador String que representa o id de um doador.
 	 * @param idItem   Inteiro que representa o id de um item.
+	 * 
+	 * @return exibicao o item.
 	 */
 	public String exibeItem(int idItem, String idDoador) {
 		return controleDois.exibeItem(idDoador, idItem);
@@ -156,6 +163,8 @@ public class Facade {
 	 * @param idItem     Inteiro que representa o id de um item.
 	 * @param quantidade Inteiro que representa a quantidade de itens.
 	 * @param tags       String que representa as tags de um item.
+	 * 
+	 * @return Atualizacao do item para doacao.
 	 */
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		return controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
@@ -194,10 +203,11 @@ public class Facade {
 	/**
 	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
 	 * 
+	 * @param descricao String correspondente a descricao do item para doacao.
+	 * 
 	 * @return String contendo uma lista com todos os itens de uma dada string de
 	 *         pesquisa.
 	 */
-
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
 		return controleDois.pesquisaItemParaDoacaoPorDescricao(descricao);
 	}
@@ -206,7 +216,6 @@ public class Facade {
 	 * Metodo responsavel por cadastrar novos itens necessarios associados a
 	 * usuarios receptores.
 	 * 
-	 * @param itemNecId     Inteiro que representa o id de um item necessario.
 	 * @param idReceptor    String que representa o id de um receptor.
 	 * @param descricaoItem String que representa a descricao de um item necessario.
 	 * @param quantidade    Inteiro que representa a quantidade de itens

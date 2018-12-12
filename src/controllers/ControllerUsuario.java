@@ -85,6 +85,8 @@ public class ControllerUsuario {
 	 * @param celular String que representa o celular do usuario doador.
 	 * 
 	 * @param classe  String que representa a classe do usuario doador.
+	 * 
+	 * @return id do doador adicionado.
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		if (this.existeUsuario(id)) {
@@ -98,7 +100,7 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por pesquisar um usuario atraves de sua identificacao.
 	 * 
-	 * @param id String que representa o nome do usuario.
+	 * @param nome String que representa o nome do usuario.
 	 * 
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu nome.
 	 */
@@ -145,6 +147,9 @@ public class ControllerUsuario {
 	 * Metodo responsavel por atualizar um usuario no sistema.
 	 * 
 	 * @param id String que representa o id do usuario.
+	 * @param nome String que representa o nome do usuario.
+	 * @param email String que representa o email do usuario.
+	 * @param celular String que representa o celular do usuario.
 	 * 
 	 * @return a representacao textual atualizada do usuario.
 	 */

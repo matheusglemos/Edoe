@@ -60,6 +60,8 @@ public class ControllerItens {
 
 	/**
 	 * Construtor do controlador de itens.
+	 * 
+	 * @param controllerUsuario referente a o controller de usuarios do sistema.
 	 */
 	public ControllerItens(ControllerUsuario controllerUsuario) {
 		this.controllerUsuario = controllerUsuario;
@@ -152,6 +154,8 @@ public class ControllerItens {
 	 * 
 	 * @param idDoador String que representa o id de um doador.
 	 * @param idItem   Inteiro que representa o id de um item.
+	 * 
+	 * @return String contendo a exibicao de um item.
 	 */
 	public String exibeItem(String idDoador, int idItem) {
 		if (!controllerUsuario.existeUsuario(idDoador)) {
@@ -170,6 +174,8 @@ public class ControllerItens {
 	 * @param idItem     Inteiro que representa o id de um item.
 	 * @param quantidade Inteiro que representa a quantidade de itens.
 	 * @param tags       String que representa as tags de um item.
+	 * 
+	 * @return String correspondente a o item atualizado.
 	 */
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		if (idItem < 0) {
@@ -270,6 +276,8 @@ public class ControllerItens {
 	/**
 	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
 	 * 
+	 * @param descricao String referente a descricao do item.
+	 * 
 	 * @return String contendo uma lista com todos os itens de uma dada string de
 	 *         pesquisa.
 	 */
@@ -301,10 +309,10 @@ public class ControllerItens {
 	 * Metodo responsavel por cadastrar novos itens necessarios associados a
 	 * usuarios receptores.
 	 * 
-	 * @param itemNecId     Inteiro que representa o id de um item necessario.
 	 * @param idReceptor    String que representa o id de um receptor.
 	 * @param descricaoItem String que representa a descricao de um item necessario.
-	 * @param quantidade    Inteiro que representa a quantidade de itens necessarios.
+	 * @param quantidade    Inteiro que representa a quantidade de itens
+	 *                      necessarios.
 	 * @param tags          String que representa as tags de um item.
 	 * 
 	 * @return id do item necessitado adicionado.
@@ -373,6 +381,8 @@ public class ControllerItens {
 	 * @param idReceptor String que representa o id de um receptor.
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios.
 	 * @param tags       String que representa as tags de um item.
+	 * 
+	 * @return String vazia.
 	 */
 	public String atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) {
 		if (itemNecId < 0) {
@@ -506,7 +516,7 @@ public class ControllerItens {
 	/**
 	 * Metodo responsavel por retornar um item a partir do id do item.
 	 * 
-	 * @param id Inteiro que representa o id de um item.
+	 * @param idItem Inteiro que representa o id de um item.
 	 * @return Um item.
 	 */
 	public Item getItem(int idItem) {
@@ -516,7 +526,7 @@ public class ControllerItens {
 	/**
 	 * Metodo responsavel por retornar um item necessario a partir do id do item.
 	 * 
-	 * @param id Inteiro que representa o id de um item necessario.
+	 * @param itemNecId Inteiro que representa o id de um item necessario.
 	 * 
 	 * @return Um item necessario.
 	 */

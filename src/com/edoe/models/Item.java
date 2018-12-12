@@ -54,10 +54,11 @@ public class Item {
 	/**
 	 * Construtor da classe item.
 	 * 
-	 * @param idItem     Inteiro referente a identificacao do item.
-	 * @param tags       String referente as tags do item.
-	 * @param quantidade Inteiro referente a quantidade do item.
-	 * @param descricao  String referente a descricao do item.
+	 * @param idItem        Inteiro referente a identificacao do item.
+	 * @param tag           String referente as tags do item.
+	 * @param quantidade    Inteiro referente a quantidade do item.
+	 * @param descricaoItem String referente a descricao do item.
+	 * @param doador        Do tipo Doador referente a o doador do item.
 	 */
 	public Item(int idItem, String descricaoItem, String tag, int quantidade, Doador doador) {
 		this.idItem = idItem;

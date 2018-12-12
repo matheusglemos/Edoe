@@ -140,6 +140,8 @@ public class Doador extends Usuario {
 	 * Metodo responsavel por remover um item do mapa de itens.
 	 * 
 	 * @param idItem Inteiro que representa um id de um item.
+	 * 
+	 * @return remove o item para doacao.
 	 */
 	public Item removeItemParaDoacao(int idItem) {
 		return this.itens.remove(idItem);

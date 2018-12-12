@@ -78,7 +78,7 @@ public class Receptor extends Usuario {
 	 * Metodo responsavel por verificar a existencia de um item necessario no mapa
 	 * de itens necessarios.
 	 * 
-	 * @param ItemNecessario i correspondente a um item necessario.
+	 * @param i correspondente a um item necessario.
 	 * 
 	 * @return booleano.
 	 */
@@ -110,6 +110,9 @@ public class Receptor extends Usuario {
 	 * @param itemNecId  Inteiro que representa um id de um item necessario.
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios.
 	 * @param tags       String que representa as tags de um item necessario.
+	 * 
+	 * @return String referente a representacao textual do item necessario
+	 *         atualizado.
 	 */
 	public String atualizaItemNecessario(int itemNecId, int quantidade, String tags) {
 		if (this.existeItemNecessario(itemNecId)) {
