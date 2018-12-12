@@ -457,10 +457,19 @@ class ControllerItensTest {
 	}
 	
 	@Test
+	@DisplayName("teste remove item necessario.")
+	void testRemoveItemNecessario() {
+		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103", item2.listaItensNecessarios());
+		item2.removeItemNecessario("32719454000103", 1);
+		assertEquals("", item2.listaItensNecessarios());
+	}
+	
+	@Test
 	@DisplayName("teste remove item necessario, item nao encontrado.")
 	void testRemoveItemNecessarioItemNaoEcontrado() {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
-		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103", item2.listaItensNecessarios());
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
 			item2.removeItemNecessario("32719454000103", 50);
 		});
@@ -511,5 +520,59 @@ class ControllerItensTest {
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
 	}
 	
+	@Test
+	@DisplayName("teste identifica matches, id do usuario vazio.")
+	void testIdentificaMatchIdVazio() {
+		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			item2.match("", 1);
+		});
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste identifica matches, id do usuario nulo.")
+	void testIdentificaMatchIdNulo() {
+		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			item2.match(null, 1);
+		});
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste identifica matches, usuario nao encontrado.")
+	void testIdentificaMatchUsuarioNaoEncontrado() {
+		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			item2.match("1555", 1);
+		});
+		assertEquals("Usuario nao encontrado: 1555.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste identifica matches, id id do item negativo.")
+	void testIdentificaMatchIdNegativo() {
+		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			item2.match("32719454000103", -1);
+		});
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("teste identifica matches, item nao encontrado.")
+	void testIdentificaMatchItemNaoEncontrado() {
+		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
+		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			item2.match("32719454000103", 144);
+		});
+		assertEquals("Item nao encontrado: 144.", iae.getMessage());
+	}
 	
 }

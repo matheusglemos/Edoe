@@ -1,24 +1,21 @@
 package controllers;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import com.edoe.models.Doador;
 import com.edoe.models.Item;
 import com.edoe.models.ItemNecessario;
 import com.edoe.models.Receptor;
 
 import comparators.DescricaoItemOrdemAlfabetica;
 import comparators.ItemOrdemAlfabetica;
-import comparators.OrdemIdItemNecessario;
 import comparators.OrdemQuantidadeDeItens;
 import comparators.OrdenarPorPontosMatch;
 
@@ -411,6 +408,7 @@ public class ControllerItens {
 	 * @param idItem     Inteiro que representa um id de um item necessario.
 	 */
 	public void removeItemNecessario(String idReceptor, int idItem) {
+		ItemNecessario resultado;
 		if (idItem < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
@@ -426,7 +424,9 @@ public class ControllerItens {
 		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
+		resultado = this.controllerUsuario.getReceptor(idReceptor).getItemNecessario(idItem);
 		this.controllerUsuario.getReceptor(idReceptor).removeItemNecessario(idItem);
+		this.listaDeItensNecessarios.remove(resultado);
 
 	}
 
