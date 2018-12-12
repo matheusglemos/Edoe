@@ -206,6 +206,23 @@ public class Item {
 	public int getPontos() {
 		return this.pontosMatch;
 	}
-	
+
+	/**
+	 * Metodo que retorna o nome de um Usuario doador
+	 * 
+	 * @return String contendo nome do usuario doador
+	 */
+	public String nomeDoador() {
+		return doador.getNome();
+	}
+
+	/**
+	 * Metodo que retorna o id de um usuario doador
+	 * 
+	 * @return String contendo id do usuario doador
+	 */
+	public String idDoador() {
+		return doador.getId();
+	}
 
 }

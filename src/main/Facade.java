@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 
+import controllers.ControllerDoacao;
 import controllers.ControllerItens;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
@@ -64,14 +65,16 @@ public class Facade {
 	 */
 
 	/**
-	 * Atributo referente ao controle de usuarios.
+	 * Atributo referente aos controles do projeto.
 	 */
 	private ControllerUsuario controleUm;
 	private ControllerItens controleDois;
+	private ControllerDoacao controleTres;
 
 	public Facade() {
 		controleUm = new ControllerUsuario();
 		controleDois = new ControllerItens(controleUm);
+		controleTres = new ControllerDoacao(controleDois);
 	}
 
 	public static void main(String[] args) {

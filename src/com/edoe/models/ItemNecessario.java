@@ -174,4 +174,22 @@ public class ItemNecessario {
 		return this.toString() + ", Receptor: " + receptor.getNome() + "/" + receptor.getId();
 	}
 
+	/**
+	 * Metodo que retorna o nome de um Usuario receptor
+	 * 
+	 * @return String contendo nome do usuario receptor
+	 */
+	public String nomeReceptor() {
+		return receptor.getNome();
+	}
+
+	/**
+	 * Metodo que retorna o id de um usuario receptor
+	 * 
+	 * @return String contendo id do usuario receptor
+	 */
+	public String idReceptor() {
+		return receptor.getId();
+	}
+
 }

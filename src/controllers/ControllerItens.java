@@ -542,7 +542,7 @@ public class ControllerItens {
 		}
 		return saida;
 	}
-
+	
 	/**
 	 * Metodo responsavel por retornar um item a partir do id do item
 	 * 
@@ -561,26 +561,6 @@ public class ControllerItens {
 	 */
 	public ItemNecessario getItemNecessario(int itemNecId) {
 		return (ItemNecessario) this.listaDeItensNecessarios.get(itemNecId);
-	}
-
-	public void realizaDoacao(int idItemNec, int idItemDoado, String data) {
-		if (idItemNec < 0 || idItemDoado < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		}
-		if (data == null || data.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
-		}
-		if (!this.getItemNecessario(idItemNec).getDescricaoItem().equals(this.getItem(idItemDoado).getDescricao())) {
-			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
-		}
-		if (this.getItemNecessario(idItemNec).getDescricaoItem().equals(this.getItem(idItemDoado).getDescricao())) {
-
-		}
-
-	}
-
-	public String listaDoacoes() {
-		return "0";
 	}
 
 }
