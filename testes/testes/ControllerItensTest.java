@@ -21,7 +21,7 @@ class ControllerItensTest {
 	@BeforeEach
 	void setUp() throws IOException {
 		usuario2 = new ControllerUsuario();
-		item = new ControllerItens(usuario2);
+		item2 = new ControllerItens(usuario2);
 		usuario2.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		item2 = new ControllerItens(usuario2);
 		
@@ -523,8 +523,6 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, id do usuario vazio.")
 	void testIdentificaMatchIdVazio() {
-		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
-		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
 			item2.match("", 1);
 		});
@@ -534,8 +532,6 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, id do usuario nulo.")
 	void testIdentificaMatchIdNulo() {
-		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
-		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
 			item2.match(null, 1);
 		});
@@ -543,10 +539,18 @@ class ControllerItensTest {
 	}
 	
 	@Test
+	@DisplayName("teste identifica matches, usuario nao e um receptor.")
+	void testIdentificaMatchUsuarioReceptor() {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+			item.match("17", 1);
+		});
+		assertEquals("O Usuario deve ser um receptor: 17.", iae.getMessage());
+	}
+	
+	
+	@Test
 	@DisplayName("teste identifica matches, usuario nao encontrado.")
 	void testIdentificaMatchUsuarioNaoEncontrado() {
-		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
-		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
 			item2.match("1555", 1);
 		});
@@ -556,8 +560,6 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, id id do item negativo.")
 	void testIdentificaMatchIdNegativo() {
-		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
-		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
 			item2.match("32719454000103", -1);
 		});
@@ -567,8 +569,6 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, item nao encontrado.")
 	void testIdentificaMatchItemNaoEncontrado() {
-		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
-		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
 			item2.match("32719454000103", 144);
 		});
