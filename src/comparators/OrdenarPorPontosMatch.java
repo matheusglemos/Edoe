@@ -7,7 +7,7 @@ import com.edoe.models.Item;
 /**
  * Classe responsavel por implementar o comparator para o metodo match, com
  * objetivo de retorna os itens a serem doados que pontuarem nesse processo,
- * ordenados da maior para a menor pontuação.
+ * ordenados da maior para a menor pontucao.
  * 
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -16,9 +16,10 @@ import com.edoe.models.Item;
  */
 public class OrdenarPorPontosMatch implements Comparator<Item> {
 	/**
-	 * Metodo que compara a pontuação de dois itens, se os dois itens tiverem uma
-	 * pontuação maior que 0 retorna 1 se tiverem uma pontuação menor que 0 retorna
-	 * -1 se não o mesmo retorna a pontuacao pelo id do item
+	 * Metodo que compara a pontuacao de dois itens, se os dois itens tiverem uma
+	 * pontuacao maior que 0 retorna 1 se tiverem uma pontuacao menor que 0 retorna.
+	 * 
+	 * -1 se nao o mesmo retorna a pontuacao pelo id do item.
 	 */
 	@Override
 	public int compare(Item o1, Item o2) {

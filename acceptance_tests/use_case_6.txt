@@ -43,4 +43,3 @@ expect "30/06/2013 - doador: Aramis Araujo/49847103331, item: jaqueta de couro, 
  | 15/09/2016 - doador: Lucas Fernandes/13507190272, item: camiseta, quantidade: 100, receptor: Murilo Luiz Brito/84473712044\
  | 15/09/2016 - doador: Satya Vaswani/59238650111, item: travesseiro, quantidade: 10, receptor: Rafaela Beatriz/51567490000143\
  | 11/10/2018 - doador: Cave Johnson/18304715242, item: cadeira de rodas, quantidade: 7, receptor: Luiza Elisa Lopes/72859801000118" listaDoacoes
- 

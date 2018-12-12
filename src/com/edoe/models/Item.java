@@ -41,23 +41,23 @@ public class Item {
 	private String tag;
 
 	/**
-	 * Atributo que representa um Doador
+	 * Atributo que representa um Doador.
 	 */
 	private Doador doador;
 
 	/**
-	 * Atributo que representa os pontos de um match
+	 * Atributo que representa os pontos de um match.
 	 *
 	 */
 	private int pontosMatch;
 
 	/**
-	 * Construtor da classe item
+	 * Construtor da classe item.
 	 * 
-	 * @param idItem
-	 * @param tags
-	 * @param quantidade
-	 * @param descricao
+	 * @param idItem     Inteiro referente a identificacao do item.
+	 * @param tags       String referente as tags do item.
+	 * @param quantidade Inteiro referente a quantidade do item.
+	 * @param descricao  String referente a descricao do item.
 	 */
 	public Item(int idItem, String descricaoItem, String tag, int quantidade, Doador doador) {
 		this.idItem = idItem;
@@ -75,35 +75,55 @@ public class Item {
 
 	/**
 	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada tag
-	 * e depois atualizar pelo set
+	 * e depois atualizar pelo set.
 	 * 
-	 * @param tag
+	 * @param tag String referente as tags do item.
 	 */
 	public void setTags(String tag) {
 		this.tags = new ArrayList<>();
 		separaTags(tag);
 	}
 
+	/**
+	 * Metodo que retorna a quantidade do item.
+	 * 
+	 * @return Inteiro referente a quantidade.
+	 */
 	public int getQuantidade() {
 		return quantidade;
 	}
 
+	/**
+	 * Metodo responsavel por alterar a quantidade do item.
+	 * 
+	 * @param quantidade Inteiro referente a quantidade do item.
+	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
+	/**
+	 * Metodo que retorna a identificacao do item.
+	 * 
+	 * @return Inteiro id referente a identificacao do item.
+	 */
 	public int getidItem() {
 		return idItem;
 	}
 
+	/**
+	 * Metodo que retorna a descricao de um item.
+	 * 
+	 * @return String referente a descricao do item.
+	 */
 	public String getDescricao() {
 		return descricaoItem;
 	}
 
 	/**
-	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista
+	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista.
 	 * 
-	 * @param tag
+	 * @param tag String referente a/as tags de um item.
 	 */
 	private void separaTags(String tag) {
 		String[] array = tag.split(",");
@@ -114,7 +134,7 @@ public class Item {
 
 	/**
 	 * Metodo que gera o hashcode de um Item. Dois itens sao iguais se possurem a
-	 * mesma descricao e as mesmas tags
+	 * mesma descricao e as mesmas tags.
 	 */
 	@Override
 	public int hashCode() {
@@ -127,7 +147,7 @@ public class Item {
 
 	/**
 	 * Metodo responsavel por comparar um Item com outro a partir da sua descricao e
-	 * tags
+	 * tags.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -162,9 +182,9 @@ public class Item {
 
 	/**
 	 * Metodo que retorna uma String com uma quantidade associada a descricao de um
-	 * item
+	 * item.
 	 * 
-	 * @return String representando um item em quantidade junto a sua descricao
+	 * @return String representando um item em quantidade junto a sua descricao.
 	 */
 	public String quantidadeDescricao() {
 		return this.getQuantidade() + "-" + this.getDescricao();
@@ -172,40 +192,39 @@ public class Item {
 
 	/**
 	 * Metodo que retorna uma String contendo o toString() da classe item,
-	 * adicionando o doador e o seu id
+	 * adicionando o doador e o seu id.
 	 * 
-	 * @return String representando o item de um doador
+	 * @return String representando o item de um doador.
 	 */
 	public String quantidadeDoItemNoSistema() {
 		return toString() + ", doador: " + this.doador.getNome() + "/" + this.doador.getId();
 	}
 
 	/**
-	 * Metodo que incrementa pontos no atributo pontosMatch
+	 * Metodo que incrementa pontos no atributo pontosMatch.
 	 * 
-	 * @param valor inteiro que adiciona pontos
+	 * @param valor inteiro que adiciona pontos.
 	 */
 	public void incremetarPontos(int valor) {
 		this.pontosMatch += valor;
 	}
 
 	/**
-	 * Metodo que descrementa pontos no atributo pontosMatch
+	 * Metodo que descrementa pontos no atributo pontosMatch.
 	 * 
-	 * @param valor inteiro que retira pontos
+	 * @param valor inteiro que retira pontos.
 	 */
 	public void decremetarPontos(int valor) {
 		this.pontosMatch -= valor;
 	}
 
 	/**
-	 * Metodo que retorna a quantidade de pontos do atributo pontosMatch
+	 * Metodo que retorna a quantidade de pontos do atributo pontosMatch.
 	 * 
-	 * @return inteiro contendo os pontos de um match
+	 * @return inteiro contendo os pontos de um match.
 	 */
 	public int getPontos() {
 		return this.pontosMatch;
 	}
-	
 
 }
