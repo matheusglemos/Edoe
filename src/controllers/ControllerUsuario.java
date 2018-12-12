@@ -40,7 +40,7 @@ public class ControllerUsuario {
 	 * 
 	 * @param caminho responsavel pelo caminho do arquivo.
 	 * 
-	 * @throws IOException
+	 * @throws IOException referente a uma excecao que podera ser lancada.
 	 */
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
@@ -62,11 +62,11 @@ public class ControllerUsuario {
 
 	/**
 	 * Metodo responsavel por verificar se existe uma usuario cadastrado no mapa de
-	 * usuarios
+	 * usuarios.
 	 * 
 	 * @param id String que representa o id do usuario doador.
 	 * 
-	 * @return um booleano
+	 * @return um booleano.
 	 * 
 	 */
 	public boolean existeUsuario(String id) {
@@ -85,6 +85,8 @@ public class ControllerUsuario {
 	 * @param celular String que representa o celular do usuario doador.
 	 * 
 	 * @param classe  String que representa a classe do usuario doador.
+	 * 
+	 * @return id do doador adicionado.
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		if (this.existeUsuario(id)) {
@@ -98,7 +100,7 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por pesquisar um usuario atraves de sua identificacao.
 	 * 
-	 * @param id String que representa o nome do usuario.
+	 * @param nome String que representa o nome do usuario.
 	 * 
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu nome.
 	 */
@@ -145,8 +147,11 @@ public class ControllerUsuario {
 	 * Metodo responsavel por atualizar um usuario no sistema.
 	 * 
 	 * @param id String que representa o id do usuario.
+	 * @param nome String que representa o nome do usuario.
+	 * @param email String que representa o email do usuario.
+	 * @param celular String que representa o celular do usuario.
 	 * 
-	 * @return
+	 * @return a representacao textual atualizada do usuario.
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		if (id == null || id.equals("")) {
@@ -184,23 +189,27 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * Metodo responsavel por retornar um doador a partir do id de um usuario
+	 * Metodo responsavel por retornar um doador a partir do id de um usuario.
 	 * 
 	 * @param id String que representa o id do usuario.
-	 * @return Um usuario doador
+	 * @return Um usuario doador.
 	 */
 	public Doador getDoador(String id) {
 		return (Doador) this.usuarios.get(id);
 	}
 
 	/**
-	 * Metodo responsavel por retornar um receptor a partir do id de um usuario
+	 * Metodo responsavel por retornar um receptor a partir do id de um usuario.
 	 * 
 	 * @param id String que representa o id do usuario.
-	 * @return Um usuario receptor
+	 * @return Um usuario receptor.
 	 */
 	public Receptor getReceptor(String id) {
-		return (Receptor) this.usuarios.get(id);
+		Usuario user = this.usuarios.get(id);
+		if (user instanceof Receptor) {
+			return (Receptor) user;
+		}
+		throw new IllegalArgumentException("O Usuario deve ser um receptor: " + id + ".");
 	}
 
 }

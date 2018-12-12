@@ -48,7 +48,7 @@ public abstract class Usuario {
 	 * @param email
 	 *            String que representa o email do usuario.
 	 * 
-	 * @param telefone
+	 * @param celular
 	 *            String que representa o telefone do usuario.
 	 * 
 	 * @param id

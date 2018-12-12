@@ -20,7 +20,6 @@ public class Doador extends Usuario {
 	/**
 	 * Atributo que represnta um mapa de itens que um usuario doador possui.
 	 */
-
 	private Map<Integer, Item> itens;
 
 	/**
@@ -52,12 +51,12 @@ public class Doador extends Usuario {
 	}
 
 	/**
-	 * Metodo responsavel por adicionar um item para doacao no mapa de itens
+	 * Metodo responsavel por adicionar um item para doacao no mapa de itens.
 	 * 
-	 * @param idItem        Inteiro que representa um id de um item
-	 * @param descricaoItem String que representa a descricao de um item
-	 * @param quantidade    Inteiro que representa a quantidade de itens
-	 * @param tags          String que representa as tags de um item
+	 * @param idItem        Inteiro que representa um id de um item.
+	 * @param descricaoItem String que representa a descricao de um item.
+	 * @param quantidade    Inteiro que representa a quantidade de itens.
+	 * @param tags          String que representa as tags de um item.
 	 */
 	public void adicionaItemParaDoacao(int idItem, String descricaoItem, int quantidade, String tags) {
 		Item item = new Item(idItem, descricaoItem, tags, quantidade, this);
@@ -67,9 +66,9 @@ public class Doador extends Usuario {
 
 	/**
 	 * Metodo responsavel por adicionar um item para doacao no mapa de itens
-	 * utilizando o objeto Item
+	 * utilizando o objeto Item.
 	 * 
-	 * @param i Item
+	 * @param i Item.
 	 */
 	public void adicionaItemParaDoacao(Item i) {
 		this.itens.put(i.getidItem(), i);
@@ -79,8 +78,9 @@ public class Doador extends Usuario {
 	 * Metodo responsavel por verificar a existencia de um item no mapa de itens
 	 * utilizando o id do item.
 	 * 
-	 * @param idItem Inteiro que representa um id de um item
-	 * @return
+	 * @param idItem Inteiro que representa um id de um item.
+	 * 
+	 * @return Boolean caso o item exista.
 	 */
 	public boolean existeItem(int idItem) {
 		return this.itens.containsKey(idItem);
@@ -90,8 +90,9 @@ public class Doador extends Usuario {
 	 * Metodo responsavel por verificar a existencia de um item no mapa de itens
 	 * utilizando a descricao do item.
 	 * 
-	 * @param descricaoItem String que representa a descricao de um item
-	 * @return
+	 * @param descricaoItem String que representa a descricao de um item.
+	 * 
+	 * @return Boolean caso o item exista ou nao.
 	 */
 	public boolean existeItem(String descricaoItem) {
 		for (Item item : itens.values()) {
@@ -103,10 +104,11 @@ public class Doador extends Usuario {
 	}
 
 	/**
-	 * Metodo responsavel por exibir a sua representação textual de um item
+	 * Metodo responsavel por exibir a sua representacao textual de um item.
 	 * 
-	 * @param idItem Inteiro que representa um id de um item
-	 * @return
+	 * @param idItem Inteiro que representa um id de um item.
+	 * 
+	 * @return String contendo a representacao textual de um item.
 	 */
 	public String exibeItem(int idItem) {
 		return this.itens.get(idItem).toString();
@@ -114,11 +116,11 @@ public class Doador extends Usuario {
 	}
 
 	/**
-	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
+	 * Metodo responsavel por atualizar as tags ou a quantidade de um item.
 	 * 
-	 * @param idItem     Inteiro que representa um id de um item
-	 * @param quantidade Inteiro que representa a quantidade de itens
-	 * @param tags       String que representa as tags de um item
+	 * @param idItem     Inteiro que representa um id de um item.
+	 * @param quantidade Inteiro que representa a quantidade de itens.
+	 * @param tags       String que representa as tags de um item.
 	 */
 	public void atualizaItemParaDoacao(int idItem, int quantidade, String tags) {
 		if (this.existeItem(idItem)) {
@@ -135,9 +137,11 @@ public class Doador extends Usuario {
 	}
 
 	/**
-	 * Metodo responsavel por remover um item do mapa de itens
+	 * Metodo responsavel por remover um item do mapa de itens.
 	 * 
-	 * @param idItem Inteiro que representa um id de um item
+	 * @param idItem Inteiro que representa um id de um item.
+	 * 
+	 * @return remove o item para doacao.
 	 */
 	public Item removeItemParaDoacao(int idItem) {
 		return this.itens.remove(idItem);
@@ -154,12 +158,12 @@ public class Doador extends Usuario {
 	}
 
 	/**
-	 * Metodo responsavel por retorna os valores do mapa de itens
+	 * Metodo responsavel por retorna os valores do mapa de itens.
 	 * 
-	 * @return
+	 * @return Uma colecao de itens.
 	 */
 	public Collection<Item> getItens() {
 		return this.itens.values();
 	}
-	
+
 }

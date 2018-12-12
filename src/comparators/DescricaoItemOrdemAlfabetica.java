@@ -5,7 +5,7 @@ import java.util.Comparator;
 import com.edoe.models.Item;
 
 /**
- * Classe responsavel por implementar o comparator
+ * Classe responsavel por implementar o comparator.
  *
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -14,7 +14,7 @@ import com.edoe.models.Item;
  */
 public class DescricaoItemOrdemAlfabetica implements Comparator<String> {
 	/**
-	 * Metodo que compara duas strings
+	 * Metodo que compara duas strings.
 	 */
 	@Override
 	public int compare(String o1, String o2) {

@@ -34,32 +34,34 @@ import comparators.OrdenarPorPontosMatch;
  */
 public class ControllerItens {
 	/**
-	 * Atributo responsavel por ligar um Usuario doador a um item
+	 * Atributo responsavel por ligar um Usuario doador a um item.
 	 */
 	private ControllerUsuario controllerUsuario;
 	/**
-	 * HashSet formada por descritores
+	 * HashSet formada por descritores.
 	 */
 	private Set<String> descritores;
 	/**
-	 * Contador responsavel por incrementar o id de um item
+	 * Contador responsavel por incrementar o id de um item.
 	 */
 	private int contadorItens;
 	/**
-	 * Lista de itens
+	 * Lista de itens.
 	 */
 	private List<Item> itens;
 	/**
-	 * Contador responsavel por incrementar o id de um item necessario
+	 * Contador responsavel por incrementar o id de um item necessario.
 	 */
 	private int contadorItensNecessarios;
 	/**
-	 * Lista de itens Necessarios
+	 * Lista de itens Necessarios.
 	 */
 	private List<ItemNecessario> listaDeItensNecessarios;
 
 	/**
 	 * Construtor do controlador de itens.
+	 * 
+	 * @param controllerUsuario referente a o controller de usuarios do sistema.
 	 */
 	public ControllerItens(ControllerUsuario controllerUsuario) {
 		this.controllerUsuario = controllerUsuario;
@@ -73,18 +75,18 @@ public class ControllerItens {
 	/**
 	 * Metodo que verifica se ja existe uma descricao no hashset de descritores
 	 * 
-	 * @param descricao String que representa a descrição de um item
-	 * @return booleano
+	 * @param descricao String que representa a descricao de um item.
+	 * @return booleano.
 	 */
 	public boolean existeDescritor(String descricao) {
 		return this.descritores.contains(descricao);
 	}
 
 	/**
-	 * Metodo que adiciona um descritor no mapa de descritores
+	 * Metodo que adiciona um descritor no mapa de descritores.
 	 * 
-	 * @param descricao String que representa a descrição de um item
-	 * @return booleano
+	 * @param descricao String que representa a descricao de um item.
+	 * @return booleano.
 	 */
 	public boolean adicionaDescritor(String descricao) {
 		if (descricao == null || descricao.trim().isEmpty()) {
@@ -97,59 +99,16 @@ public class ControllerItens {
 
 	}
 
-	/*
-	 * <1 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor:
-	 * Murilo Luiz Brito/84473712044 | 2 - toalha de banho, tags: [Adulto, TAM G,
-	 * Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - toalha de
-	 * banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer
-	 * Vieira/24875800037 | 4 - frauda, tags: [Higiene, Infantil, P], quantidade:
-	 * 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - frauda, tags: [Higiene,
-	 * Infantil, M], quantidade: 10, Receptor: Cristiane Isabella
-	 * Caldeira/87831113000117 | 6 - frauda, tags: [Higiene, Adulto, GG],
-	 * quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - alimento,
-	 * tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 |
-	 * 8 - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer
-	 * Vieira/24875800037 | 9 - livro, tags: [], quantidade: 1, Receptor: Sara
-	 * Jennifer Vieira/24875800037 | 10 - cadeira de rodas, tags: [roda grande,
-	 * 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 |
-	 * 11 - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor:
-	 * Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro
-	 * de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13
-	 * - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2,
-	 * Receptor: Rafaela Beatriz/51567490000143 | 14 - camiseta, tags: [outfit,
-	 * poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
-	 * <1 - Livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor:
-	 * Murilo Luiz Brito/84473712044 | 2 - Toalha de Banho, tags: [Adulto, TAM G,
-	 * Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040 | 3 - Toalha de
-	 * Banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer
-	 * Vieira/24875800037 | 4 - Frauda, tags: [Higiene, Infantil, P], quantidade:
-	 * 15, Receptor: Luiza Elisa Lopes/72859801000118 | 5 - Frauda, tags: [Higiene,
-	 * Infantil, M], quantidade: 10, Receptor: Cristiane Isabella
-	 * Caldeira/87831113000117 | 6 - Frauda, tags: [Higiene, Adulto, GG],
-	 * quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118 | 7 - Alimento,
-	 * tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030 |
-	 * 8 - Sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer
-	 * Vieira/24875800037 | 9 - Livro, tags: [], quantidade: 1, Receptor: Sara
-	 * Jennifer Vieira/24875800037 | 10 - cAdEiRa de RoDaS, tags: [roda grande,
-	 * 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118 |
-	 * 11 - COLCHAO, tags: [colchao kingsize, conforto], quantidade: 6, Receptor:
-	 * Murilo Luiz Brito/84473712044 | 12 - jaqueta de couro, tags: [outfit, couro
-	 * de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103 | 13
-	 * - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2,
-	 * Receptor: Rafaela Beatriz /51567490000143 | 14 - camiseta, tags: [outfit,
-	 * poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044>
-	 * 
-	 */
-
 	/**
 	 * Metodo responsavel por adicionar um item para doacao associado a um usuario
-	 * doador
+	 * doador.
 	 * 
-	 * @param idDoador      String que representa o id de um doador
-	 * @param descricaoItem String que representa a descricao de um item
-	 * @param quantidade    Inteiro que representa a quantidade de itens
-	 * @param tags          String que representa as tags de um item
-	 * @return
+	 * @param idDoador      String que representa o id de um doador.
+	 * @param descricaoItem String que representa a descricao de um item.
+	 * @param quantidade    Inteiro que representa a quantidade de itens.
+	 * @param tags          String que representa as tags de um item.
+	 * 
+	 * @return id do item adicionado para doacao.
 	 */
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
 		if (descricaoItem == null || descricaoItem.trim().isEmpty()) {
@@ -191,10 +150,12 @@ public class ControllerItens {
 
 	/**
 	 * Metodo responsavel por acessar um item de um doador e exibir a sua
-	 * representação textual
+	 * representacao textual.
 	 * 
-	 * @param idDoador String que representa o id de um doador
-	 * @param idItem   Inteiro que representa o id de um item
+	 * @param idDoador String que representa o id de um doador.
+	 * @param idItem   Inteiro que representa o id de um item.
+	 * 
+	 * @return String contendo a exibicao de um item.
 	 */
 	public String exibeItem(String idDoador, int idItem) {
 		if (!controllerUsuario.existeUsuario(idDoador)) {
@@ -207,12 +168,14 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
+	 * Metodo responsavel por atualizar as tags ou a quantidade de um item.
 	 * 
-	 * @param idDoador   String que representa o id de um doador
-	 * @param idItem     Inteiro que representa o id de um item
-	 * @param quantidade Inteiro que representa a quantidade de itens
-	 * @param tags       String que representa as tags de um item
+	 * @param idDoador   String que representa o id de um doador.
+	 * @param idItem     Inteiro que representa o id de um item.
+	 * @param quantidade Inteiro que representa a quantidade de itens.
+	 * @param tags       String que representa as tags de um item.
+	 * 
+	 * @return String correspondente a o item atualizado.
 	 */
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		if (idItem < 0) {
@@ -234,10 +197,10 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo responsavel por remover um item de um doador
+	 * Metodo responsavel por remover um item de um doador.
 	 * 
-	 * @param idDoador String que representa o id de um doador
-	 * @param idItem   Inteiro que representa o id de um item
+	 * @param idDoador String que representa o id de um doador.
+	 * @param idItem   Inteiro que representa o id de um item.
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		if (idItem < 0) {
@@ -262,9 +225,9 @@ public class ControllerItens {
 
 	/**
 	 * Metodo que permite uma listagem de todos os descritores de itens cadastrados
-	 * no sistema, ordenado em ordem alfabética pela descrição do item
+	 * no sistema, ordenado em ordem alfabetica pela descricao do item.
 	 * 
-	 * @return String contendo lista dos descritores em ordem alfabetica
+	 * @return String contendo lista dos descritores em ordem alfabetica.
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		String resultado = "";
@@ -311,10 +274,12 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo que listaa todos os itens relacionados a uma dada string de pesquisa
+	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
+	 * 
+	 * @param descricao String referente a descricao do item.
 	 * 
 	 * @return String contendo uma lista com todos os itens de uma dada string de
-	 *         pesquisa
+	 *         pesquisa.
 	 */
 
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
@@ -341,15 +306,16 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo responsavel por cadastrar novos itens necessários associados a
-	 * usuários receptores
+	 * Metodo responsavel por cadastrar novos itens necessarios associados a
+	 * usuarios receptores.
 	 * 
-	 * @param itemNecId     Inteiro que representa o id de um item necessario
-	 * @param idReceptor    String que representa o id de um receptor
-	 * @param descricaoItem String que representa a descricao de um item necessario
-	 * @param quantidade    Inteiro que representa a quantidade de itens necessarios
-	 * @param tags          String que representa as tags de um item
-	 * @return
+	 * @param idReceptor    String que representa o id de um receptor.
+	 * @param descricaoItem String que representa a descricao de um item necessario.
+	 * @param quantidade    Inteiro que representa a quantidade de itens
+	 *                      necessarios.
+	 * @param tags          String que representa as tags de um item.
+	 * 
+	 * @return id do item necessitado adicionado.
 	 */
 	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
 		if (descricaoItem == null || descricaoItem.trim().isEmpty()) {
@@ -389,10 +355,10 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo responsavel por listar todos os itens necessário cadastrados no
-	 * eDoe.com ordenados pelo identificador único dos itens
+	 * Metodo responsavel por listar todos os itens necessario cadastrados no
+	 * eDoe.com ordenados pelo identificador unico dos itens.
 	 * 
-	 * @return String contendo uma lista de itens necessarios
+	 * @return String contendo uma lista de itens necessarios.
 	 */
 	public String listaItensNecessarios() {
 		String resultado = "";
@@ -409,12 +375,14 @@ public class ControllerItens {
 
 	/**
 	 * Metodo responsavel por atualizar as tags ou a quantidade de um item
-	 * necessario
+	 * necessario.
 	 * 
-	 * @param itemNecId  Inteiro que representa o id de um item necessario
-	 * @param idReceptor String que representa o id de um receptor
-	 * @param quantidade Inteiro que representa a quantidade de itens necessarios
-	 * @param tags       String que representa as tags de um item
+	 * @param itemNecId  Inteiro que representa o id de um item necessario.
+	 * @param idReceptor String que representa o id de um receptor.
+	 * @param quantidade Inteiro que representa a quantidade de itens necessarios.
+	 * @param tags       String que representa as tags de um item.
+	 * 
+	 * @return String vazia.
 	 */
 	public String atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) {
 		if (itemNecId < 0) {
@@ -437,10 +405,10 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo responsavel por remover um item necessario de um receptor
+	 * Metodo responsavel por remover um item necessario de um receptor.
 	 * 
-	 * @param idReceptor String que representa o id de um usuario receptor
-	 * @param idItem     Inteiro que representa um id de um item necessario
+	 * @param idReceptor String que representa o id de um usuario receptor.
+	 * @param idItem     Inteiro que representa um id de um item necessario.
 	 */
 	public void removeItemNecessario(String idReceptor, int idItem) {
 		if (idItem < 0) {
@@ -464,13 +432,14 @@ public class ControllerItens {
 
 	/**
 	 * Metodo responsavel por pecorrer um ArrayList de itens e comparar se a
-	 * descrição desse item é igual a do item necessario, se for incrementa 20
+	 * descricao desse item e igual a do item necessario, se for incrementa 20
 	 * pontos ao atributo pontosMatch, depois ele compara as tags fazendo uso do
 	 * metodo privado comparaTagsESoma e por fim adiciona os itens que deram match
-	 * no Array de itensMatch
+	 * no Array de itensMatch.
 	 * 
-	 * @param itemN que representa um Item Necessario
-	 * @return um ArrayList de matchs
+	 * @param itemN que representa um Item Necessario.
+	 * 
+	 * @return um ArrayList de matchs.
 	 */
 	private List<Item> pecorreItensNecessariosReceptor(ItemNecessario itemN) {
 		List<Item> itensMatch = new ArrayList<>();
@@ -485,11 +454,11 @@ public class ControllerItens {
 	}
 
 	/**
-	 * Metodo responsavel por comparar tags, se elas forem iguais na mesma posição
-	 * somam 10 pontos, mas se forem iguais em posições diferentes somam 5 pontos
+	 * Metodo responsavel por comparar tags, se elas forem iguais na mesma posicao
+	 * somam 10 pontos, mas se forem iguais em posicoes diferentes somam 5 pontos.
 	 * 
-	 * @param item que representa um Item
-	 * @param tags que representam uma tag em String
+	 * @param item que representa um Item.
+	 * @param tags que representam uma tag em String.
 	 */
 	private void comparaTagsESoma(Item item, String tags) {
 		List<String> tags1 = Arrays.asList(tags.split(","));
@@ -506,13 +475,14 @@ public class ControllerItens {
 
 	/**
 	 * Metodo que encontra casamentos (matches) entre itens a serem doados e itens
-	 * necessários. A partir de um Receptor e de um Item necessario o metodo cria
+	 * necessarios. A partir de um Receptor e de um Item necessario o metodo cria
 	 * uma lista que usa o pecorreItensNecessariosReceptor e depois ordena a mesma
-	 * pelo pontos de Match
+	 * pelo pontos de Match.
 	 * 
-	 * @param idReceptor       String que representa o id de um usuario receptor
-	 * @param idItemNecessario Inteiro que representa o id de um item necessario
-	 * @return String contendo uma lista de matches
+	 * @param idReceptor       String que representa o id de um usuario receptor.
+	 * @param idItemNecessario Inteiro que representa o id de um item necessario.
+	 * 
+	 * @return String contendo uma lista de matches.
 	 */
 	public String match(String idReceptor, int idItemNecessario) {
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
@@ -544,20 +514,21 @@ public class ControllerItens {
 	}
 	
 	/**
-	 * Metodo responsavel por retornar um item a partir do id do item
+	 * Metodo responsavel por retornar um item a partir do id do item.
 	 * 
-	 * @param id Inteiro que representa o id de um item.
-	 * @return Um item
+	 * @param idItem Inteiro que representa o id de um item.
+	 * @return Um item.
 	 */
 	public Item getItem(int idItem) {
 		return (Item) this.itens.get(idItem);
 	}
 
 	/**
-	 * Metodo responsavel por retornar um item necessario a partir do id do item
+	 * Metodo responsavel por retornar um item necessario a partir do id do item.
 	 * 
-	 * @param id Inteiro que representa o id de um item necessario.
-	 * @return Um item necessario
+	 * @param itemNecId Inteiro que representa o id de um item necessario.
+	 * 
+	 * @return Um item necessario.
 	 */
 	public ItemNecessario getItemNecessario(int itemNecId) {
 		return (ItemNecessario) this.listaDeItensNecessarios.get(itemNecId);

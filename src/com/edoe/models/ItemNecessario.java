@@ -31,22 +31,25 @@ public class ItemNecessario {
 	private String tag;
 
 	/**
-	 * Atributo que representa um receptor
+	 * Atributo que representa um receptor.
 	 */
 	private Receptor receptor;
 
 	/**
-	 * Atributo que representa os pontos de um match
+	 * Atributo que representa os pontos de um match.
 	 */
 	private int pontosMatch;
 
 	/**
+	 * Construtor de um item necessario.
 	 * 
-	 * @param itemNecId
-	 * @param descricaoItem
-	 * @param quantidade
-	 * @param tag
-	 * @param receptor
+	 * @param itemNecId     Inteiro que corresponde a identificacao de um item
+	 *                      necessario.
+	 * @param descricaoItem String referente a descricao de um item.
+	 * @param quantidade    Inteiro que corresponde a quantidade de um item
+	 *                      necessario.
+	 * @param tag           String que corresponde a/as tags de um item necessario.
+	 * @param receptor      referente ao receptor que necessita do(s) item(s).
 	 */
 	public ItemNecessario(int itemNecId, String descricaoItem, int quantidade, String tag, Receptor receptor) {
 		this.itemNecId = itemNecId;
@@ -65,46 +68,81 @@ public class ItemNecessario {
 
 	/**
 	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada tag
-	 * e depois atualizar pelo set
+	 * e depois atualizar pelo set.
 	 * 
-	 * @param tag
+	 * @param tag String correspondente a/as tags de um item necessario.
 	 */
 	public void setTags(String tag) {
 		separaTags(tag);
 	}
 
+	/**
+	 * Metodo responsavel por retornar a quantidade do item necessario.
+	 * 
+	 * @return Inteiro referente a quantidade do item necessario.
+	 */
 	public int getQuantidade() {
 		return quantidade;
 	}
 
+	/**
+	 * Metodo responsavel por atualizar a quantidade de um item necessario.
+	 * 
+	 * @param quantidade Inteiro correspondente a quantidade do item necessario.
+	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
+	/**
+	 * Metodo responsavel por retornar a identificacao de um item necessario.
+	 * 
+	 * @return Inteiro correspondente ao id do item necessario.
+	 */
 	public int getItemNecId() {
 		return itemNecId;
 	}
 
+	/**
+	 * Metodo responsavel por retornar a descricao de um item necessario.
+	 * 
+	 * @return String correspondente a descricao do item necessario.
+	 */
 	public String getDescricaoItem() {
 		return descricaoItem;
 	}
 
+	/**
+	 * Metodo responsavel por retornar a/as tags do item necessario.
+	 * 
+	 * @return String correspondente a/as tags do item necessario.
+	 */
 	public String getTag() {
 		return tag;
 	}
 
+	/**
+	 * Metodo responsavel por retornar os pontos do match.
+	 * 
+	 * @return Inteiro correspondente aos pontos do match.
+	 */
 	public int getPontosMatch() {
 		return pontosMatch;
 	}
 
+	/**
+	 * Metodo responsavel por alterar os pontos do match.
+	 * 
+	 * @param pontosMatch Inteiro correspondente aos pontos do match.
+	 */
 	public void setPontosMatch(int pontosMatch) {
 		this.pontosMatch = pontosMatch;
 	}
 
 	/**
-	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista
+	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista.
 	 * 
-	 * @param tag
+	 * @param tag String correspondente a/as tags do item necessario.
 	 */
 	private void separaTags(String tag) {
 		this.tags = new ArrayList<>();
@@ -115,8 +153,8 @@ public class ItemNecessario {
 	}
 
 	/**
-	 * Metodo que gera o hashcode de um item necessario. Dois itens necessários são
-	 * iguais se eles tiverem o mesmo descritor genérico de item e as mesmas tags
+	 * Metodo que gera o hashcode de um item necessario. Dois itens necessarios sao
+	 * iguais se eles tiverem o mesmo descritor generico de item e as mesmas tags
 	 * (na mesma ordem).
 	 */
 	@Override
@@ -130,7 +168,7 @@ public class ItemNecessario {
 
 	/**
 	 * Metodo responsavel por comparar um item necessario com outro a partir da sua
-	 * descricao e tags
+	 * descricao e tags.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -166,9 +204,9 @@ public class ItemNecessario {
 
 	/**
 	 * Metodo que retorna uma String contendo a descricao completa de um item
-	 * necessario
+	 * necessario.
 	 * 
-	 * @return String contendo descricao de um item necessario
+	 * @return String contendo descricao de um item necessario.
 	 */
 	public String itensNecessariosDescricaoCompleta() {
 		return this.toString() + ", Receptor: " + receptor.getNome() + "/" + receptor.getId();
