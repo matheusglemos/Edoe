@@ -259,12 +259,14 @@ public class ControllerItens {
 	 */
 	public String listaItensParaDoacao() {
 		String resultado = "";
-		Collections.sort(this.itens, new OrdemQuantidadeDeItens());
-		for (int i = 0; i < itens.size(); i++) {
-			if (i == itens.size() - 1) {
-				resultado += itens.get(i).quantidadeDoItemNoSistema();
+		List<Item> lista = new ArrayList<>();
+		lista.addAll(this.itens);
+		Collections.sort(lista, new OrdemQuantidadeDeItens());
+		for (int i = 0; i < lista.size(); i++) {
+			if (i == lista.size() - 1) {
+				resultado += lista.get(i).quantidadeDoItemNoSistema();
 			} else {
-				resultado += itens.get(i).quantidadeDoItemNoSistema() + " | ";
+				resultado += lista.get(i).quantidadeDoItemNoSistema() + " | ";
 			}
 		}
 		return resultado;
@@ -285,13 +287,15 @@ public class ControllerItens {
 		}
 		String resultado = "";
 		int cont = 0;
+		List<Item> lista = new ArrayList<>();
+		lista.addAll(this.itens);
 		for (Item item : itens) {
 			if (item.getDescricao().contains(descricao)) {
 				cont++;
 			}
 		}
-		Collections.sort(this.itens, new ItemOrdemAlfabetica());
-		for (Item item : this.itens) {
+		Collections.sort(lista, new ItemOrdemAlfabetica());
+		for (Item item : lista) {
 			if (cont > 1 && item.getDescricao().contains(descricao)) {
 				resultado += item.toString() + " | ";
 				cont--;
@@ -532,6 +536,24 @@ public class ControllerItens {
 	 */
 	public ItemNecessario getItemNecessario(int itemNecId) {
 		return (ItemNecessario) this.listaDeItensNecessarios.get(itemNecId);
+	}
+
+	public Item pesquisaItem(int idItemDoado) {
+		for (Item i : this.itens) {
+			if (i.getidItem() == idItemDoado) {
+				return i;
+			}
+		}
+		return null;
+	}
+
+	public ItemNecessario pesquisaItemNecessario(int idItemNec) {
+		for (ItemNecessario i : this.listaDeItensNecessarios) {
+			if (i.getItemNecId() == idItemNec) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 }
