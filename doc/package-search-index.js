@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"com.edoe.models"},{"l":"comparators"},{"l":"controllers"},{"l":"main"},{"l":"testes"},{"l":"validador"}]
+packageSearchIndex = [{"l":"com.edoe.models"},{"l":"comparators"},{"l":"controllers"},{"l":"excecoes"},{"l":"main"},{"l":"testes"},{"l":"validador"}]

@@ -17,6 +17,12 @@ import com.edoe.models.Doador;
 import com.edoe.models.Receptor;
 import com.edoe.models.Usuario;
 
+import excecoes.IdInvalidoException;
+import excecoes.NomeInvalidoException;
+import excecoes.UsuarioDeveSerReceptorException;
+import excecoes.UsuarioJaExistenteException;
+import excecoes.UsuarioNaoEncontradoException;
+
 /**
  * Classe que controla o usuario. Adiciona, pesquisa atualiza e remove usuarios.
  * 
@@ -91,11 +97,13 @@ public class ControllerUsuario {
 	 * 
 	 * @param classe  String que representa a classe do usuario doador.
 	 * 
+	 * @throws UsuarioJaExistenteException excecao que podera ser lancada.
+	 * 
 	 * @return id do doador adicionado.
 	 */
-	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
+	public String adicionaDoador(String id, String nome, String email, String celular, String classe) throws UsuarioJaExistenteException {
 		if (this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
+			throw new UsuarioJaExistenteException("Usuario ja existente: " + id + ".");
 		}
 		Doador doador = new Doador(nome, email, celular, id, classe);
 		this.usuarios.put(id, doador);
@@ -107,12 +115,16 @@ public class ControllerUsuario {
 	 * 
 	 * @param nome String que representa o nome do usuario.
 	 * 
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws NomeInvalidoException excecao que podera ser lancada.
+	 * 
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu nome.
+	 * 
 	 */
-	public String pesquisaUsuarioPorNome(String nome) {
+	public String pesquisaUsuarioPorNome(String nome) throws UsuarioNaoEncontradoException, NomeInvalidoException {
 		String res = "";
 		if (nome == null || nome.equals("")) {
-			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
+			throw new NomeInvalidoException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		}
 		int i = 0;
 		for (Usuario usuarios : usuarios.values()) {
@@ -126,7 +138,7 @@ public class ControllerUsuario {
 			}
 		}
 		if (res.equals("")) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + nome + ".");
 		}
 		return res;
 	}
@@ -136,14 +148,17 @@ public class ControllerUsuario {
 	 * 
 	 * @param id String que representa o id do usuario.
 	 * 
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return A representacao textual do usuario, por meio da pesquisa de seu id.
 	 */
-	public String pesquisaUsuarioPorId(String id) {
+	public String pesquisaUsuarioPorId(String id) throws IdInvalidoException, UsuarioNaoEncontradoException {
 		if (id == null || id.equals("")) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + id + ".");
 		}
 		return this.usuarios.get(id).toString();
 	}
@@ -156,11 +171,14 @@ public class ControllerUsuario {
 	 * @param email   String que representa o email do usuario.
 	 * @param celular String que representa o celular do usuario.
 	 * 
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return a representacao textual atualizada do usuario.
 	 */
-	public String atualizaUsuario(String id, String nome, String email, String celular) {
+	public String atualizaUsuario(String id, String nome, String email, String celular) throws IdInvalidoException, UsuarioNaoEncontradoException {
 		if (id == null || id.equals("")) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (this.existeUsuario(id)) {
 			if (nome != null && !"".equals(nome)) {
@@ -174,7 +192,7 @@ public class ControllerUsuario {
 			}
 			return this.usuarios.get(id).toString();
 		}
-		throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
+		throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + id + ".");
 
 	}
 
@@ -182,13 +200,16 @@ public class ControllerUsuario {
 	 * Metodo responsavel por remover um usuario do sistema.
 	 * 
 	 * @param id String que representa o id do usuario.
+	 * 
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
 	 */
-	public void removeUsuario(String id) {
+	public void removeUsuario(String id) throws IdInvalidoException, UsuarioNaoEncontradoException {
 		if (id == null || id.equals("")) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!this.existeUsuario(id)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + id + ".");
 		}
 		this.usuarios.remove(id);
 	}
@@ -209,14 +230,16 @@ public class ControllerUsuario {
 	 * 
 	 * @param id String que representa o id do usuario.
 	 * 
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
+	 * 
 	 * @return Um usuario receptor.
 	 */
-	public Receptor getReceptor(String id) {
+	public Receptor getReceptor(String id) throws UsuarioDeveSerReceptorException {
 		Usuario user = this.usuarios.get(id);
 		if (user instanceof Receptor) {
 			return (Receptor) user;
 		}
-		throw new IllegalArgumentException("O Usuario deve ser um receptor: " + id + ".");
+		throw new UsuarioDeveSerReceptorException("O Usuario deve ser um receptor: " + id + ".");
 	}
 
 	/**

@@ -10,6 +10,16 @@ import org.junit.jupiter.api.Test;
 
 import controllers.ControllerItens;
 import controllers.ControllerUsuario;
+import excecoes.DescitorJaExistenteException;
+import excecoes.DescricaoInvalidaException;
+import excecoes.IdInvalidoException;
+import excecoes.ItemNaoEncontradoException;
+import excecoes.QuantidadeInvalidaException;
+import excecoes.TextoInvalidoException;
+import excecoes.UsuarioDeveSerReceptorException;
+import excecoes.UsuarioJaExistenteException;
+import excecoes.UsuarioNaoEncontradoException;
+import excecoes.UsuarioNaoPossuiItensCadastradosException;
 
 class ControllerItensTest {
 	
@@ -19,7 +29,7 @@ class ControllerItensTest {
 	private ControllerUsuario usuario2;
 
 	@BeforeEach
-	void setUp() throws IOException {
+	void setUp() throws IOException, UsuarioJaExistenteException, DescricaoInvalidaException, DescitorJaExistenteException {
 		usuario2 = new ControllerUsuario();
 		item2 = new ControllerItens(usuario2);
 		usuario2.lerReceptores("arquivos_sistema/novosReceptores.csv");
@@ -34,17 +44,17 @@ class ControllerItensTest {
 
 	@Test
 	@DisplayName("teste adiciona descritor.")
-	void testAddDescritor() {
+	void testAddDescritor() throws DescricaoInvalidaException, DescitorJaExistenteException {
 		item.adicionaDescritor("playstation 4");
 		assertTrue(item.existeDescritor("playstation 4"));
 	}
 	
 	@Test
 	@DisplayName("teste adiciona descritor existente.")
-	void testAddDescritorExistente() {
+	void testAddDescritorExistente() throws DescricaoInvalidaException, DescitorJaExistenteException {
 		item.adicionaDescritor("playstation 4");
 		assertTrue(item.existeDescritor("playstation 4"));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescitorJaExistenteException iae = assertThrows(DescitorJaExistenteException.class, () -> {
 			item.adicionaDescritor("playstation 4");
 		});
 		assertEquals("Descritor de Item ja existente: playstation 4.", iae.getMessage());
@@ -53,7 +63,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona descritor vazio.")
 	void testAddDescritorVazio() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescricaoInvalidaException iae = assertThrows(DescricaoInvalidaException.class, () -> {
 			item.adicionaDescritor("");
 		});
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.", iae.getMessage());
@@ -62,7 +72,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona descritor nulo.")
 	void testAddDescritorNulo() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescricaoInvalidaException iae = assertThrows(DescricaoInvalidaException.class, () -> {
 			item.adicionaDescritor(null);
 		});
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.", iae.getMessage());
@@ -70,7 +80,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste adiciona item.")
-	void testAdicionaItem() {
+	void testAdicionaItem() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "curso de programacao", 300, "300 vagas poo java");
 		assertEquals("1 - curso de programacao, tags: [300 vagas poo java], quantidade: 300", item.exibeItem("17", 1));
 	}
@@ -79,7 +89,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item vazio.")
 	void testAddItemVazio() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescricaoInvalidaException iae = assertThrows(DescricaoInvalidaException.class, () -> {
 			item.adicionaItemParaDoacao("17", "", 2, "roda grande");
 		});
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.", iae.getMessage());
@@ -88,7 +98,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item nulo.")
 	void testAddItemNulo() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescricaoInvalidaException iae = assertThrows(DescricaoInvalidaException.class, () -> {
 			item.adicionaItemParaDoacao("17", null, 4, "colchao kingsize,conforto,dormir");
 		});
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.", iae.getMessage());
@@ -97,7 +107,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item, quantidade zero.")
 	void testAddQtdZero() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		QuantidadeInvalidaException iae = assertThrows(QuantidadeInvalidaException.class, () -> {
 			item.adicionaItemParaDoacao("17", "colchao", 0, "colchao kingsize,conforto,dormir");
 		});
 		assertEquals("Entrada invalida: quantidade deve ser maior que zero.", iae.getMessage());
@@ -106,7 +116,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item, quantidade negativa.")
 	void testAddQtdNegativa() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		QuantidadeInvalidaException iae = assertThrows(QuantidadeInvalidaException.class, () -> {
 			item.adicionaItemParaDoacao("17", "colchao", -1, "colchao kingsize,conforto,dormir");
 		});
 		assertEquals("Entrada invalida: quantidade deve ser maior que zero.", iae.getMessage());
@@ -115,7 +125,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item, id usuario vazio.")
 	void testAddIdUsuarioVazio() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.adicionaItemParaDoacao("", "colchao", 1, "colchao kingsize,conforto,dormir");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -124,7 +134,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item, id usuario nulo.")
 	void testAddIdUsuarioNulo() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.adicionaItemParaDoacao(null, "colchao", 1, "colchao kingsize,conforto,dormir");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -133,7 +143,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item, id usuario nao encontrado.")
 	void testAddIdUsuarioNaoEncontrato() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioNaoEncontradoException iae = assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			item.adicionaItemParaDoacao("42323", "colchao", 1, "colchao kingsize,conforto,dormir");
 		});
 		assertEquals("Usuario nao encontrado: 42323.", iae.getMessage());
@@ -141,7 +151,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste exibe item")
-	void testExibeItem() {
+	void testExibeItem() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
 		
@@ -149,9 +159,9 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste exibe item, usuario nao encontrado.")
-	void testExibeItemUsuarioNaoEncontrado() {
+	void testExibeItemUsuarioNaoEncontrado() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioNaoEncontradoException iae = assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			item.exibeItem("21", 1);
 		});
 		assertEquals("Usuario nao encontrado: 21.", iae.getMessage());	
@@ -159,9 +169,9 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste exibe item, item nao encontrado.")
-	void testExibeItemIdItemNaoEncontrado() {
+	void testExibeItemIdItemNaoEncontrado() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		ItemNaoEncontradoException iae = assertThrows(ItemNaoEncontradoException.class, () -> {
 			item.exibeItem("17", 4);
 		});
 		assertEquals("Item nao encontrado: 4.", iae.getMessage());
@@ -169,7 +179,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item.")
-	void testAtualizaItem() {
+	void testAtualizaItem() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "xbox one", 50, "1tb e fifa 2019");
 		assertEquals("1 - xbox one, tags: [1tb e fifa 2019], quantidade: 50", item.exibeItem("17", 1));
 		item.atualizaItemParaDoacao(1, "17", 30, "xbox one e gta v");
@@ -178,10 +188,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item, id do item negativo.")
-	void testAtualizaItemIdNegativo() {
+	void testAtualizaItemIdNegativo() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.atualizaItemParaDoacao(-1, "17", 500, "pluma de ganso");
 		});
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
@@ -189,10 +199,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item, id do usuario vazio.")
-	void testAtualizaItemIdVazio() {
+	void testAtualizaItemIdVazio() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.atualizaItemParaDoacao(1, "", 500, "pluma de ganso");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -200,10 +210,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item, id do usuario nulo.")
-	void testAtualizaItemIdNulo() {
+	void testAtualizaItemIdNulo() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.atualizaItemParaDoacao(1, null, 500, "pluma de ganso");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -211,10 +221,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item, item nao encontrado.")
-	void testAtualizaItemNaoEncontrado() {
+	void testAtualizaItemNaoEncontrado() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		ItemNaoEncontradoException iae = assertThrows(ItemNaoEncontradoException.class, () -> {
 			item.atualizaItemParaDoacao(5, "17", 500, "pluma de ganso");
 		});
 		assertEquals("Item nao encontrado: 5.", iae.getMessage());
@@ -222,10 +232,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste item para doacao, item nao encontrado.")
-	void testRemoveItemParaDoacaoItemNaoEncontrado() {
+	void testRemoveItemParaDoacaoItemNaoEncontrado() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		ItemNaoEncontradoException iae = assertThrows(ItemNaoEncontradoException.class, () -> {
 			item.removeItemParaDoacao(5, "17");
 		});
 		assertEquals("Item nao encontrado: 5.", iae.getMessage());
@@ -233,10 +243,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste item para doacao, id negativo.")
-	void testRemoveItemParaDoacaoIdNegativo() {
+	void testRemoveItemParaDoacaoIdNegativo() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.removeItemParaDoacao(-3, "17");
 		});
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
@@ -244,10 +254,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste item para doacao, id do usuario vazio.")
-	void testRemoveItemParaDoacaoIdUsuarioVazio() {
+	void testRemoveItemParaDoacaoIdUsuarioVazio() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.removeItemParaDoacao(1, "");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -255,10 +265,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste item para doacao, id do usuario nulo.")
-	void testRemoveItemParaDoacaoIdUsuarioNulo() {
+	void testRemoveItemParaDoacaoIdUsuarioNulo() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item.removeItemParaDoacao(1, null);
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -266,10 +276,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste item para doacao, usuario nao encontrado.")
-	void testRemoveItemParaDoacaoUsuarioNaoEncontrado() {
+	void testRemoveItemParaDoacaoUsuarioNaoEncontrado() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, ItemNaoEncontradoException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
 		assertEquals("1 - travesseiro, tags: [pena de cegonha], quantidade: 500", item.exibeItem("17", 1));
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioNaoEncontradoException iae = assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			item.removeItemParaDoacao(1, "13");
 		});
 		assertEquals("Usuario nao encontrado: 13.", iae.getMessage());
@@ -277,7 +287,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste lista descritor de item para doacao.")
-	void testListaDescritorDeItens() {
+	void testListaDescritorDeItens() throws DescricaoInvalidaException, DescitorJaExistenteException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		item.adicionaDescritor("Toalha de Banho");
 		item.adicionaDescritor("Frauda");
 		item.adicionaDescritor("Video Game");
@@ -287,23 +297,23 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste lista itens para doacao.")
-	void testListaItens() {
+	void testListaItens() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		item.adicionaItemParaDoacao("17", "curso de programacao", 300, "300 vagas poo java");
 		assertEquals("300 - curso de programacao | 0 - xbox | ", item.listaDescritorDeItensParaDoacao());
 	}
 	
 	@Test
 	@DisplayName("teste pesquisando itens.")
-	void testPesquisaItem() {
+	void testPesquisaItem() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException, TextoInvalidoException {
 		item.adicionaItemParaDoacao("17", "curso de programacao", 300, "300 vagas poo java");
 		assertEquals("1 - curso de programacao, tags: [300 vagas poo java], quantidade: 300", item.pesquisaItemParaDoacaoPorDescricao("curso de programacao"));	
 	}
 	
 	@Test
 	@DisplayName("teste pesquisa item descricao vazia.")
-	void testPesquisaItemDescricaoVazia() {
+	void testPesquisaItemDescricaoVazia() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		TextoInvalidoException iae = assertThrows(TextoInvalidoException.class, () -> {
 			item.pesquisaItemParaDoacaoPorDescricao("");
 		});
 		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", iae.getMessage());
@@ -311,9 +321,9 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste pesquisa item descricao nula.")
-	void testPesquisaItemDescricaoNula() {
+	void testPesquisaItemDescricaoNula() throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		item.adicionaItemParaDoacao("17", "travesseiro", 500, "pena de cegonha");
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		TextoInvalidoException iae = assertThrows(TextoInvalidoException.class, () -> {
 			item.pesquisaItemParaDoacaoPorDescricao(null);
 		});
 		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", iae.getMessage());
@@ -321,7 +331,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste adiciona item necessario.")
-	void testAdicionaItemNecessario() {
+	void testAdicionaItemNecessario() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("84473712044", "Toalha de Banho", 2, "Adulto,TAM G,Azul");
 		assertEquals("1 - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Murilo Luiz Brito/84473712044",item2.listaItensNecessarios());
 	}
@@ -329,7 +339,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item necessario, descricao vazia.")
 	void testAdicionaItemNecessarioDescricaoVazia() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescricaoInvalidaException iae = assertThrows(DescricaoInvalidaException.class, () -> {
 			item2.adicionaItemNecessario("84473712044", "", 2, "Adulto,TAM G,Azul");
 		});
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.", iae.getMessage());
@@ -338,7 +348,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item necessario, descricao nula.")
 	void testAdicionaItemNecessarioDescricaoNula() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		DescricaoInvalidaException iae = assertThrows(DescricaoInvalidaException.class, () -> {
 			item2.adicionaItemNecessario("84473712044", null, 2, "Adulto,TAM G,Azul");
 		});
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.", iae.getMessage());
@@ -347,7 +357,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item necessario, quantidade menor que zero.")
 	void testAdicionaItemNecessarioQtdNegativa() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		QuantidadeInvalidaException iae = assertThrows(QuantidadeInvalidaException.class, () -> {
 			item2.adicionaItemNecessario("84473712044", "Toalha de Banho", -1, "Adulto,TAM G,Azul");
 		});
 		assertEquals("Entrada invalida: quantidade deve ser maior que zero.", iae.getMessage());
@@ -356,7 +366,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item necessario, quantidade igual a zero.")
 	void testAdicionaItemNecessarioQtdZero() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		QuantidadeInvalidaException iae = assertThrows(QuantidadeInvalidaException.class, () -> {
 			item2.adicionaItemNecessario("84473712044", "Toalha de Banho", 0, "Adulto,TAM G,Azul");
 		});
 		assertEquals("Entrada invalida: quantidade deve ser maior que zero.", iae.getMessage());
@@ -365,7 +375,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item necessario, id vazio.")
 	void testAdicionaItemNecessarioIdVazio() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.adicionaItemNecessario("", "Toalha de Banho", 0, "Adulto,TAM G,Azul");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -374,7 +384,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste adiciona item necessario, id nulo.")
 	void testAdicionaItemNecessarioIdNulo() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.adicionaItemNecessario(null, "Toalha de Banho", 0, "Adulto,TAM G,Azul");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -382,7 +392,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste listagem de itens necessarios.")
-	void testListaItemNecessario() {
+	void testListaItemNecessario() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("84473712044", "Toalha de Banho", 2, "Adulto,TAM G,Azul");
 		item2.adicionaItemNecessario("31862316040", "Alimento", 5, "Alimentacao,Saude");
 		item2.adicionaItemNecessario("24875800037", "Sabonete", 8, "Higiene");
@@ -394,7 +404,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item necessario.")
-	void testAtualizaItemNecessario() {
+	void testAtualizaItemNecessario() throws ItemNaoEncontradoException, DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("84473712044", "Toalha de Banho", 2, "Adulto,TAM G,Azul");
 		assertEquals("1 - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Murilo Luiz Brito/84473712044",item2.listaItensNecessarios());
 		item2.atualizaItemNecessario(1, "84473712044", 8, "Infantil, TAM PP, Rosa");
@@ -403,10 +413,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item necessario, usuario nao encontrado.")
-	void testAtualizaItemNecessarioUsuarioNaoEncontrado() {
+	void testAtualizaItemNecessarioUsuarioNaoEncontrado() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioNaoEncontradoException iae = assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			item2.atualizaItemNecessario(1, "454545", 5, "couro de jacaré");
 		});
 		assertEquals("Usuario nao encontrado: 454545.", iae.getMessage());
@@ -414,10 +424,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item necessario, id do item negativo.")
-	void testAtualizaItemNecessarioIdNegativo() {
+	void testAtualizaItemNecessarioIdNegativo() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.atualizaItemNecessario(-3, "32719454000103", 5, "couro de jacaré");
 		});
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
@@ -425,10 +435,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item necessario, id do item nao encontrado.")
-	void testAtualizaItemNecessarioItemNaoEcnontrado() {
+	void testAtualizaItemNecessarioItemNaoEcnontrado() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		ItemNaoEncontradoException iae = assertThrows(ItemNaoEncontradoException.class, () -> {
 			item2.atualizaItemNecessario(150, "32719454000103", 5, "couro de jacaré");
 		});
 		assertEquals("Item nao encontrado: 150.", iae.getMessage());
@@ -436,10 +446,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item necessario, id do usuario vazio.")
-	void testAtualizaItemNecessarioIdVazio() {
+	void testAtualizaItemNecessarioIdVazio() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.atualizaItemNecessario(1, "", 5, "couro de jacaré");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -447,10 +457,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste atualiza item necessario, id do usuario nulo.")
-	void testAtualizaItemNecessarioIdNulo() {
+	void testAtualizaItemNecessarioIdNulo() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.atualizaItemNecessario(1, null, 5, "couro de jacaré");
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -458,7 +468,7 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste remove item necessario.")
-	void testRemoveItemNecessario() {
+	void testRemoveItemNecessario() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException, ItemNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103", item2.listaItensNecessarios());
 		item2.removeItemNecessario("32719454000103", 1);
@@ -467,10 +477,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste remove item necessario, item nao encontrado.")
-	void testRemoveItemNecessarioItemNaoEcontrado() {
+	void testRemoveItemNecessarioItemNaoEcontrado() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103", item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		ItemNaoEncontradoException iae = assertThrows(ItemNaoEncontradoException.class, () -> {
 			item2.removeItemNecessario("32719454000103", 50);
 		});
 		assertEquals("Item nao encontrado: 50.", iae.getMessage());
@@ -478,10 +488,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste remove item necessario, usuario nao encontrado.")
-	void testRemoveItemNecessarioUsuarioNaoEcontrado() {
+	void testRemoveItemNecessarioUsuarioNaoEcontrado() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioNaoEncontradoException iae = assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			item2.removeItemNecessario("12121212121", 1);
 		});
 		assertEquals("Usuario nao encontrado: 12121212121.", iae.getMessage());
@@ -489,10 +499,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste remove item necessario, id negativo.")
-	void testRemoveItemNecessarioIdNegativo() {
+	void testRemoveItemNecessarioIdNegativo() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.removeItemNecessario("32719454000103", -2);
 		});
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
@@ -500,10 +510,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste remove item necessario, id do usuario vazio.")
-	void testRemoveItemNecessarioIdVazio() {
+	void testRemoveItemNecessarioIdVazio() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.removeItemNecessario("", 1);
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -511,10 +521,10 @@ class ControllerItensTest {
 	
 	@Test
 	@DisplayName("teste remove item necessario, id do usuario nulo.")
-	void testRemoveItemNecessarioIdNulo() {
+	void testRemoveItemNecessarioIdNulo() throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		item2.adicionaItemNecessario("32719454000103", "jaqueta de couro", 3, "outfit,couro de bode");
 		assertEquals("1 - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103",item2.listaItensNecessarios());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.removeItemNecessario(null, 1);
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -523,7 +533,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, id do usuario vazio.")
 	void testIdentificaMatchIdVazio() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.match("", 1);
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -532,7 +542,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, id do usuario nulo.")
 	void testIdentificaMatchIdNulo() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.match(null, 1);
 		});
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", iae.getMessage());
@@ -541,7 +551,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, usuario nao e um receptor.")
 	void testIdentificaMatchUsuarioReceptor() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioDeveSerReceptorException iae = assertThrows(UsuarioDeveSerReceptorException.class, () -> {
 			item.match("17", 1);
 		});
 		assertEquals("O Usuario deve ser um receptor: 17.", iae.getMessage());
@@ -551,7 +561,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, usuario nao encontrado.")
 	void testIdentificaMatchUsuarioNaoEncontrado() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		UsuarioNaoEncontradoException iae = assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			item2.match("1555", 1);
 		});
 		assertEquals("Usuario nao encontrado: 1555.", iae.getMessage());
@@ -560,7 +570,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, id id do item negativo.")
 	void testIdentificaMatchIdNegativo() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		IdInvalidoException iae = assertThrows(IdInvalidoException.class, () -> {
 			item2.match("32719454000103", -1);
 		});
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
@@ -569,7 +579,7 @@ class ControllerItensTest {
 	@Test
 	@DisplayName("teste identifica matches, item nao encontrado.")
 	void testIdentificaMatchItemNaoEncontrado() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+		ItemNaoEncontradoException iae = assertThrows(ItemNaoEncontradoException.class, () -> {
 			item2.match("32719454000103", 144);
 		});
 		assertEquals("Item nao encontrado: 144.", iae.getMessage());

@@ -18,6 +18,13 @@ import com.edoe.models.Item;
 import com.edoe.models.ItemNecessario;
 
 import comparators.OrdenarDoacaoPelaData;
+import excecoes.DataInvalidaException;
+import excecoes.IdInvalidoException;
+import excecoes.ItemNaoEncontradoException;
+import excecoes.ItensIguaisException;
+import excecoes.UsuarioDeveSerReceptorException;
+import excecoes.UsuarioNaoEncontradoException;
+import excecoes.UsuarioNaoPossuiItensCadastradosException;
 
 /**
  * Classe que controla as doacoes entre usuarios. Realiza doacoes e lista
@@ -63,22 +70,29 @@ public class ControllerDoacao {
 	 * @param data        String representando a data da doacao.
 	 * 
 	 * @throws ParseException excecao que podera ser lancada.
+	 * @throws DataInvalidaException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws ItensIguaisException excecao que podera ser lancada.	 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoPossuiItensCadastradosException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
 	 * 
-	 * @return Doacao.
+	 * @return Doacao. 
 	 */
-	public Doacao realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
+	public Doacao realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException, DataInvalidaException, IdInvalidoException, ItensIguaisException, ItemNaoEncontradoException, UsuarioNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException, UsuarioDeveSerReceptorException {
 		if (idItemNec < 0 || idItemDoado < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IdInvalidoException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (data == null || data.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+			throw new DataInvalidaException("Entrada invalida: data nao pode ser vazia ou nula.");
 		}
 
 		Item itemDoado = controllerItens.pesquisaItem(idItemDoado);
 		ItemNecessario itemNecessario = controllerItens.pesquisaItemNecessario(idItemNec);
 
 		if (!itemNecessario.getDescricaoItem().equals(itemDoado.getDescricao())) {
-			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
+			throw new ItensIguaisException("Os itens nao tem descricoes iguais.");
 		}
 
 		int quantItensDoados = itemNecessario.getQuantidade();

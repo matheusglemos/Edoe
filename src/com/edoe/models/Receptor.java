@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import excecoes.ItemNaoEncontradoException;
+
 /**
  * Classe que representa um usuario como receptor. Esta classe e filha da classe
  * usuario.
@@ -110,11 +112,13 @@ public class Receptor extends Usuario {
 	 * @param itemNecId  Inteiro que representa um id de um item necessario.
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios.
 	 * @param tags       String que representa as tags de um item necessario.
+	 *
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
 	 * 
 	 * @return String referente a representacao textual do item necessario
 	 *         atualizado.
 	 */
-	public String atualizaItemNecessario(int itemNecId, int quantidade, String tags) {
+	public String atualizaItemNecessario(int itemNecId, int quantidade, String tags) throws ItemNaoEncontradoException {
 		if (this.existeItemNecessario(itemNecId)) {
 			if (quantidade > 0) {
 				this.itensNecessarios.get(itemNecId).setQuantidade(quantidade);
@@ -124,7 +128,7 @@ public class Receptor extends Usuario {
 			}
 			return this.itensNecessarios.get(itemNecId).toString();
 		} else {
-			throw new IllegalArgumentException("Item nao encontrado: " + itemNecId);
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + itemNecId);
 		}
 	}
 

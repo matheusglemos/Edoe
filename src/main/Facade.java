@@ -7,6 +7,19 @@ import controllers.ControllerDoacao;
 import controllers.ControllerItens;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
+import excecoes.DataInvalidaException;
+import excecoes.DescitorJaExistenteException;
+import excecoes.DescricaoInvalidaException;
+import excecoes.IdInvalidoException;
+import excecoes.ItemNaoEncontradoException;
+import excecoes.ItensIguaisException;
+import excecoes.NomeInvalidoException;
+import excecoes.QuantidadeInvalidaException;
+import excecoes.TextoInvalidoException;
+import excecoes.UsuarioDeveSerReceptorException;
+import excecoes.UsuarioJaExistenteException;
+import excecoes.UsuarioNaoEncontradoException;
+import excecoes.UsuarioNaoPossuiItensCadastradosException;
 
 /**
  * Classe que ira se comunicar com os controllers. Facilitando assim a
@@ -68,9 +81,11 @@ public class Facade {
 	 * @param celular String que representa o celular do usuario doador.
 	 * @param classe  String que representa a classe do usuario doador.
 	 * 
+	 * @throws UsuarioJaExistenteException excecao que podera ser lancada.
+	 * 
 	 * @return Adicao de um doador no sistema.
 	 */
-	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
+	public String adicionaDoador(String id, String nome, String email, String celular, String classe) throws UsuarioJaExistenteException {
 		return this.controleDeUsuarios.adicionaDoador(id, nome, email, celular, classe);
 	}
 
@@ -79,10 +94,13 @@ public class Facade {
 	 * 
 	 * @param id String que representa o id do usuario.
 	 * 
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * 
 	 * @return A representacao textual do usuario procurado, se estiver presente no
 	 *         sistema.
 	 */
-	public String pesquisaUsuarioPorId(String id) {
+	public String pesquisaUsuarioPorId(String id) throws IdInvalidoException, UsuarioNaoEncontradoException {
 		return controleDeUsuarios.pesquisaUsuarioPorId(id);
 	}
 
@@ -91,10 +109,13 @@ public class Facade {
 	 * 
 	 * @param nome String que representa o nome do usuario.
 	 * 
+	 * @throws NomeInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return A representacao textual do usuario procurado, se estiver presente no
 	 *         sistema.
 	 */
-	public String pesquisaUsuarioPorNome(String nome) {
+	public String pesquisaUsuarioPorNome(String nome) throws UsuarioNaoEncontradoException, NomeInvalidoException {
 		return controleDeUsuarios.pesquisaUsuarioPorNome(nome);
 	}
 
@@ -106,9 +127,12 @@ public class Facade {
 	 * @param email   String que representa o email do usuario.
 	 * @param celular String que representa o celular do usuario.
 	 * 
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * 
 	 * @return A atualizacao de um usuario no sistema.
 	 */
-	public String atualizaUsuario(String id, String nome, String email, String celular) {
+	public String atualizaUsuario(String id, String nome, String email, String celular) throws IdInvalidoException, UsuarioNaoEncontradoException {
 		return controleDeUsuarios.atualizaUsuario(id, nome, email, celular);
 	}
 
@@ -116,8 +140,11 @@ public class Facade {
 	 * Metodo responsavel por remover um usuario do sistema.
 	 * 
 	 * @param id String que representa o id do usuario.
+	 * 
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
 	 */
-	public void removeUsuario(String id) {
+	public void removeUsuario(String id) throws IdInvalidoException, UsuarioNaoEncontradoException {
 		controleDeUsuarios.removeUsuario(id);
 	}
 
@@ -125,8 +152,11 @@ public class Facade {
 	 * Metodo que adiciona uma descricao no mapa de descritores.
 	 * 
 	 * @param descricao String que representa a descricao de um item.
+	 * 
+	 * @throws DescitorJaExistenteException excecao que podera ser lancada.
+	 * @throws DescricaoInvalidaException excecao que podera ser lancada.
 	 */
-	public void adicionaDescritor(String descricao) {
+	public void adicionaDescritor(String descricao) throws DescricaoInvalidaException, DescitorJaExistenteException {
 		controleDeItens.adicionaDescritor(descricao);
 	}
 
@@ -139,9 +169,14 @@ public class Facade {
 	 * @param quantidade    Inteiro que representa a quantidade de itens.
 	 * @param tags          String que representa as tags de um item.
 	 * 
+	 * @throws QuantidadeInvalidaException  excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws DescricaoInvalidaException excecao que podera ser lancada.
+	 * 
 	 * @return o id do item adicionado para a doacao.
 	 */
-	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		return controleDeItens.adicionaItemParaDoacao(idDoador, descricaoItem, quantidade, tags);
 	}
 
@@ -152,9 +187,12 @@ public class Facade {
 	 * @param idDoador String que representa o id de um doador.
 	 * @param idItem   Inteiro que representa o id de um item.
 	 * 
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return exibicao o item.
 	 */
-	public String exibeItem(int idItem, String idDoador) {
+	public String exibeItem(int idItem, String idDoador) throws ItemNaoEncontradoException, UsuarioNaoEncontradoException {
 		return controleDeItens.exibeItem(idDoador, idItem);
 	}
 
@@ -166,9 +204,13 @@ public class Facade {
 	 * @param quantidade Inteiro que representa a quantidade de itens.
 	 * @param tags       String que representa as tags de um item.
 	 * 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada. 
+	 * 
 	 * @return Atualizacao do item para doacao.
 	 */
-	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException {
 		return controleDeItens.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 
@@ -177,8 +219,13 @@ public class Facade {
 	 * 
 	 * @param idDoador String que representa o id de um doador.
 	 * @param idItem   Inteiro que representa o id de um item.
+	 * 
+	 * @throws UsuarioNaoPossuiItensCadastradosException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
 	 */
-	public void removeItemParaDoacao(int idItem, String idDoador) {
+	public void removeItemParaDoacao(int idItem, String idDoador) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException {
 		controleDeItens.removeItemParaDoacao(idItem, idDoador);
 	}
 
@@ -207,10 +254,12 @@ public class Facade {
 	 * 
 	 * @param descricao String correspondente a descricao do item para doacao.
 	 * 
+	 * @throws TextoInvalidoException excecao que podera ser lancada.
+	 * 
 	 * @return String contendo uma lista com todos os itens de uma dada string de
 	 *         pesquisa.
 	 */
-	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+	public String pesquisaItemParaDoacaoPorDescricao(String descricao) throws TextoInvalidoException {
 		return controleDeItens.pesquisaItemParaDoacaoPorDescricao(descricao);
 	}
 
@@ -224,9 +273,15 @@ public class Facade {
 	 *                      necessarios.
 	 * @param tags          String que representa as tags de um item.
 	 * 
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws QuantidadeInvalidaException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws DescricaoInvalidaException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
+	 * 
 	 * @return o id do item necessitado adicionado.
 	 */
-	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
+	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		return controleDeItens.adicionaItemNecessario(idReceptor, descricaoItem, quantidade, tags);
 	}
 
@@ -249,9 +304,14 @@ public class Facade {
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios.
 	 * @param tags       String que representa as tags de um item.
 	 * 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
+	 * 
 	 * @return String vazia.
 	 */
-	public String atualizaItemNecessario(String idReceptor, int itemNecId, int quantidade, String tags) {
+	public String atualizaItemNecessario(String idReceptor, int itemNecId, int quantidade, String tags) throws ItemNaoEncontradoException, IdInvalidoException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		return controleDeItens.atualizaItemNecessario(itemNecId, idReceptor, quantidade, tags);
 	}
 
@@ -260,8 +320,14 @@ public class Facade {
 	 * 
 	 * @param idReceptor String que representa o id de um usuario receptor.
 	 * @param idItem     Inteiro que representa um id de um item necessario.
+	 * 
+	 * @throws UsuarioNaoPossuiItensCadastradosException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
 	 */
-	public void removeItemNecessario(String idReceptor, int idItem) {
+	public void removeItemNecessario(String idReceptor, int idItem) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException, UsuarioDeveSerReceptorException {
 		controleDeItens.removeItemNecessario(idReceptor, idItem);
 	}
 
@@ -272,9 +338,14 @@ public class Facade {
 	 * @param idReceptor       String que representa o id de um usuario receptor.
 	 * @param idItemNecessario Inteiro que representa um id de um item necessario.
 	 * 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
+	 * 
 	 * @return String contendo Matches.
 	 */
-	public String match(String idReceptor, int idItemNecessario) {
+	public String match(String idReceptor, int idItemNecessario) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException, UsuarioDeveSerReceptorException {
 		return this.controleDeItens.match(idReceptor, idItemNecessario);
 	}
 
@@ -288,8 +359,15 @@ public class Facade {
 	 * @return Exibicao das informacoes da doacao como uma String.
 	 * 
 	 * @throws ParseException excecao que podera ser lancada.
+	 * @throws DataInvalidaException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws ItensIguaisException excecao que podera ser lancada.
+	 * @throws UsuarioNaoPossuiItensCadastradosException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
 	 */
-	public String realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
+	public String realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException, DataInvalidaException, IdInvalidoException, ItensIguaisException, ItemNaoEncontradoException, UsuarioNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException, UsuarioDeveSerReceptorException {
 		return this.controleDeDoacao.realizaDoacao(idItemNec, idItemDoado, data).toString();
 	}
 

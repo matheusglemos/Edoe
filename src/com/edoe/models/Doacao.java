@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import excecoes.DataInvalidaException;
+
 /**
  * Classe que ira representar uma doacao entre um usuario doador e um usuario
  * receptor atraves dos seus itens necessarios.
@@ -53,10 +55,11 @@ public class Doacao implements Serializable {
 	 * @param totalDoado     Inteiro referente ao total de itens doados.
 	 * 
 	 * @throws ParseException excecao que podera ser lancada.
+	 * @throws DataInvalidaException excecao que podera ser lancada.
 	 */
-	public Doacao(String data, Item itemDoado, ItemNecessario itemNecessario, int totalDoado) throws ParseException {
+	public Doacao(String data, Item itemDoado, ItemNecessario itemNecessario, int totalDoado) throws ParseException, DataInvalidaException {
 		if (data == null || data.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+			throw new DataInvalidaException("Entrada invalida: data nao pode ser vazia ou nula.");
 		}
 
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");

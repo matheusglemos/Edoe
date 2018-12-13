@@ -27,6 +27,15 @@ import comparators.DescricaoItemOrdemAlfabetica;
 import comparators.ItemOrdemAlfabetica;
 import comparators.OrdemQuantidadeDeItens;
 import comparators.OrdenarPorPontosMatch;
+import excecoes.DescitorJaExistenteException;
+import excecoes.DescricaoInvalidaException;
+import excecoes.IdInvalidoException;
+import excecoes.ItemNaoEncontradoException;
+import excecoes.QuantidadeInvalidaException;
+import excecoes.TextoInvalidoException;
+import excecoes.UsuarioDeveSerReceptorException;
+import excecoes.UsuarioNaoEncontradoException;
+import excecoes.UsuarioNaoPossuiItensCadastradosException;
 
 /**
  * Classe que controla os itens de um usuario. Adiciona, pesquisa, atualiza e
@@ -92,16 +101,20 @@ public class ControllerItens {
 	 * Metodo que adiciona um descritor no mapa de descritores.
 	 * 
 	 * @param descricao String que representa a descricao de um item.
+	 * 
+	 * @throws excecoes.DescricaoInvalidaException excecao que podera ser lancada.
+	 * @throws DescitorJaExistenteException excecao que podera ser lancada.
+	 * 
 	 * @return booleano.
 	 */
-	public boolean adicionaDescritor(String descricao) {
+	public boolean adicionaDescritor(String descricao) throws excecoes.DescricaoInvalidaException, DescitorJaExistenteException {
 		if (descricao == null || descricao.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+			throw new excecoes.DescricaoInvalidaException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
 		if (!this.existeDescritor(descricao.toLowerCase().trim())) {
 			return this.descritores.add(descricao.toLowerCase().trim());
 		}
-		throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao.toLowerCase().trim() + ".");
+		throw new DescitorJaExistenteException("Descritor de Item ja existente: " + descricao.toLowerCase().trim() + ".");
 
 	}
 
@@ -114,20 +127,25 @@ public class ControllerItens {
 	 * @param quantidade    Inteiro que representa a quantidade de itens.
 	 * @param tags          String que representa as tags de um item.
 	 * 
+	 * @throws DescricaoInvalidaException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws QuantidadeInvalidaException excecao que podera ser lancada.
+	 *
 	 * @return id do item adicionado para doacao.
 	 */
-	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws DescricaoInvalidaException, IdInvalidoException, UsuarioNaoEncontradoException, QuantidadeInvalidaException {
 		if (descricaoItem == null || descricaoItem.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+			throw new DescricaoInvalidaException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
 		if (idDoador == null || idDoador.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (quantidade <= 0) {
-			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+			throw new QuantidadeInvalidaException("Entrada invalida: quantidade deve ser maior que zero.");
 		}
 		if (!this.controllerUsuario.existeUsuario(idDoador)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		if (!this.descritores.contains(descricaoItem.toLowerCase().trim())) {
 			this.descritores.add(descricaoItem.toLowerCase().trim());
@@ -160,15 +178,17 @@ public class ControllerItens {
 	 * 
 	 * @param idDoador String que representa o id de um doador.
 	 * @param idItem   Inteiro que representa o id de um item.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
 	 * 
 	 * @return String contendo a exibicao de um item.
 	 */
-	public String exibeItem(String idDoador, int idItem) {
+	public String exibeItem(String idDoador, int idItem) throws ItemNaoEncontradoException, UsuarioNaoEncontradoException {
 		if (!controllerUsuario.existeUsuario(idDoador)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + idItem + ".");
 		}
 		return this.controllerUsuario.getDoador(idDoador).exibeItem(idItem);
 	}
@@ -181,20 +201,24 @@ public class ControllerItens {
 	 * @param quantidade Inteiro que representa a quantidade de itens.
 	 * @param tags       String que representa as tags de um item.
 	 * 
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return String correspondente a o item atualizado.
 	 */
-	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException {
 		if (idItem < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IdInvalidoException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (idDoador == null || idDoador.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!controllerUsuario.existeUsuario(idDoador)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + idItem + ".");
 		}
 		if (controllerUsuario.existeUsuario(idDoador)) {
 			this.controllerUsuario.getDoador(idDoador).atualizaItemParaDoacao(idItem, quantidade, tags);
@@ -207,22 +231,27 @@ public class ControllerItens {
 	 * 
 	 * @param idDoador String que representa o id de um doador.
 	 * @param idItem   Inteiro que representa o id de um item.
+	 *
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoPossuiItensCadastradosException excecao que podera ser lancada.
 	 */
-	public void removeItemParaDoacao(int idItem, String idDoador) {
+	public void removeItemParaDoacao(int idItem, String idDoador) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException {
 		if (idItem < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IdInvalidoException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (idDoador == null || idDoador.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!controllerUsuario.existeUsuario(idDoador)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		if (!this.controllerUsuario.getDoador(idDoador).temItensParaDoacao()) {
-			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+			throw new UsuarioNaoPossuiItensCadastradosException("O Usuario nao possui itens cadastrados.");
 		}
 		if (!controllerUsuario.getDoador(idDoador).existeItem(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + idItem + ".");
 		}
 		Item aux = this.controllerUsuario.getDoador(idDoador).removeItemParaDoacao(idItem);
 		this.itens.remove(aux);
@@ -285,14 +314,16 @@ public class ControllerItens {
 	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
 	 * 
 	 * @param descricao String referente a descricao do item.
+	 *
+	 * @throws TextoInvalidoException excecao que podera ser lancada.
 	 * 
 	 * @return String contendo uma lista com todos os itens de uma dada string de
 	 *         pesquisa.
 	 */
 
-	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
+	public String pesquisaItemParaDoacaoPorDescricao(String descricao) throws TextoInvalidoException {
 		if (descricao == null || descricao.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+			throw new TextoInvalidoException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
 		}
 		String resultado = "";
 		int cont = 0;
@@ -325,20 +356,26 @@ public class ControllerItens {
 	 *                      necessarios.
 	 * @param tags          String que representa as tags de um item.
 	 * 
+	 * @throws DescricaoInvalidaException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws QuantidadeInvalidaException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que devera ser lancada.
+	 * 
 	 * @return id do item necessitado adicionado.
 	 */
-	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
+	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) throws DescricaoInvalidaException, IdInvalidoException, QuantidadeInvalidaException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		if (descricaoItem == null || descricaoItem.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+			throw new DescricaoInvalidaException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (quantidade <= 0) {
-			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+			throw new QuantidadeInvalidaException("Entrada invalida: quantidade deve ser maior que zero.");
 		}
 		if (!this.controllerUsuario.existeUsuario(idReceptor)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idReceptor + ".");
 		}
 		if (!this.descritores.contains(descricaoItem.toLowerCase().trim())) {
 			this.descritores.add(descricaoItem.toLowerCase().trim());
@@ -392,20 +429,25 @@ public class ControllerItens {
 	 * @param quantidade Inteiro que representa a quantidade de itens necessarios.
 	 * @param tags       String que representa as tags de um item.
 	 * 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
+	 * 
 	 * @return String vazia.
 	 */
-	public String atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) {
+	public String atualizaItemNecessario(int itemNecId, String idReceptor, int quantidade, String tags) throws ItemNaoEncontradoException, IdInvalidoException, UsuarioNaoEncontradoException, UsuarioDeveSerReceptorException {
 		if (itemNecId < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IdInvalidoException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!controllerUsuario.existeUsuario(idReceptor)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idReceptor + ".");
 		}
 		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(itemNecId)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + itemNecId + ".");
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + itemNecId + ".");
 		}
 		if (controllerUsuario.existeUsuario(idReceptor)) {
 			return this.controllerUsuario.getReceptor(idReceptor).atualizaItemNecessario(itemNecId, quantidade, tags);
@@ -419,23 +461,29 @@ public class ControllerItens {
 	 * 
 	 * @param idReceptor String que representa o id de um usuario receptor.
 	 * @param idItem     Inteiro que representa um id de um item necessario.
+	 * 
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoPossuiItensCadastradosException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
 	 */
-	public void removeItemNecessario(String idReceptor, int idItem) {
+	public void removeItemNecessario(String idReceptor, int idItem) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException, UsuarioNaoPossuiItensCadastradosException, UsuarioDeveSerReceptorException {
 		ItemNecessario resultado;
 		if (idItem < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IdInvalidoException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!controllerUsuario.existeUsuario(idReceptor)) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idReceptor + ".");
 		}
 		if (!controllerUsuario.getReceptor(idReceptor).temItensCadastrados()) {
-			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+			throw new UsuarioNaoPossuiItensCadastradosException("O Usuario nao possui itens cadastrados.");
 		}
 		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(idItem)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + idItem + ".");
 		}
 		resultado = this.controllerUsuario.getReceptor(idReceptor).getItemNecessario(idItem);
 		this.controllerUsuario.getReceptor(idReceptor).removeItemNecessario(idItem);
@@ -495,20 +543,25 @@ public class ControllerItens {
 	 * @param idReceptor       String que representa o id de um usuario receptor.
 	 * @param idItemNecessario Inteiro que representa o id de um item necessario.
 	 * 
+	 * @throws IdInvalidoException excecao que podera ser lancada.
+	 * @throws UsuarioNaoEncontradoException excecao que podera ser lancada.
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * @throws UsuarioDeveSerReceptorException excecao que podera ser lancada.
+	 * 
 	 * @return String contendo uma lista de matches.
 	 */
-	public String match(String idReceptor, int idItemNecessario) {
+	public String match(String idReceptor, int idItemNecessario) throws IdInvalidoException, UsuarioNaoEncontradoException, ItemNaoEncontradoException, UsuarioDeveSerReceptorException {
 		if (idReceptor == null || idReceptor.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new IdInvalidoException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
 		if (!(controllerUsuario.existeUsuario(idReceptor))) {
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+			throw new UsuarioNaoEncontradoException("Usuario nao encontrado: " + idReceptor + ".");
 		}
 		if (idItemNecessario < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IdInvalidoException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (!controllerUsuario.getReceptor(idReceptor).existeItemNecessario(idItemNecessario)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario + ".");
+			throw new ItemNaoEncontradoException("Item nao encontrado: " + idItemNecessario + ".");
 		}
 		Receptor receptor = this.controllerUsuario.getReceptor(idReceptor);
 		ItemNecessario itemN = receptor.getItemNecessario(idItemNecessario);
@@ -552,15 +605,17 @@ public class ControllerItens {
 	 * 
 	 * @param idItemDoado Item que foi doado.
 	 * 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return O item procurado.
 	 */
-	public Item pesquisaItem(int idItemDoado) {
+	public Item pesquisaItem(int idItemDoado) throws ItemNaoEncontradoException {
 		for (Item i : this.itens) {
 			if (i.getidItem() == idItemDoado) {
 				return i;
 			}
 		}
-		throw new IllegalArgumentException("Item nao encontrado: " + idItemDoado + ".");
+		throw new ItemNaoEncontradoException("Item nao encontrado: " + idItemDoado + ".");
 	}
 
 	/**
@@ -568,15 +623,17 @@ public class ControllerItens {
 	 * 
 	 * @param idItemNec Item necessario que sera pesquisado.
 	 * 
+	 * @throws ItemNaoEncontradoException excecao que podera ser lancada.
+	 * 
 	 * @return O item necessario procurado.
 	 */
-	public ItemNecessario pesquisaItemNecessario(int idItemNec) {
+	public ItemNecessario pesquisaItemNecessario(int idItemNec) throws ItemNaoEncontradoException {
 		for (ItemNecessario i : this.listaDeItensNecessarios) {
 			if (i.getItemNecId() == idItemNec) {
 				return i;
 			}
 		}
-		throw new IllegalArgumentException("Item nao encontrado: " + idItemNec + ".");
+		throw new ItemNaoEncontradoException("Item nao encontrado: " + idItemNec + ".");
 	}
 
 	/**
