@@ -1,8 +1,13 @@
 package controllers;
 
 import java.io.File;
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -146,9 +151,9 @@ public class ControllerUsuario {
 	/**
 	 * Metodo responsavel por atualizar um usuario no sistema.
 	 * 
-	 * @param id String que representa o id do usuario.
-	 * @param nome String que representa o nome do usuario.
-	 * @param email String que representa o email do usuario.
+	 * @param id      String que representa o id do usuario.
+	 * @param nome    String que representa o nome do usuario.
+	 * @param email   String que representa o email do usuario.
 	 * @param celular String que representa o celular do usuario.
 	 * 
 	 * @return a representacao textual atualizada do usuario.
@@ -210,6 +215,33 @@ public class ControllerUsuario {
 			return (Receptor) user;
 		}
 		throw new IllegalArgumentException("O Usuario deve ser um receptor: " + id + ".");
+	}
+
+	public void salvar() throws IOException {
+		File file = new File("persistencia/usuario.csv");
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream obj = new ObjectOutputStream(fos);
+		try {
+			obj.writeObject(this.usuarios);
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Arquivo nao existe no sistema.");
+		} catch (IOException e) {
+			System.out.println("Algum erro ocorreu...");
+		}
+	}
+
+	public void carregarDados() {
+		ObjectInputStream os;
+		try {
+			os = new ObjectInputStream(new FileInputStream("persistencia/usuario.csv"));
+			this.usuarios = (Map<String, Usuario>) os.readObject();
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Arquivo nao existe no sistema.");
+		} catch (IOException e) {
+			System.out.println("Algum erro ocorre...");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("Alguma coisa no sistema mudou");
+		}
 	}
 
 }

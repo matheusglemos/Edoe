@@ -1,5 +1,12 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import java.util.Arrays;
@@ -8,11 +15,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.edoe.models.Item;
 import com.edoe.models.ItemNecessario;
 import com.edoe.models.Receptor;
+import com.edoe.models.Usuario;
 
 import comparators.DescricaoItemOrdemAlfabetica;
 import comparators.ItemOrdemAlfabetica;
@@ -554,6 +563,41 @@ public class ControllerItens {
 			}
 		}
 		throw new IllegalArgumentException("Item nao encontrado: " + idItemNec + ".");
+	}
+	
+	public void salvar() throws IOException {
+		File file = new File("persistencia/itens.csv");
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream obj = new ObjectOutputStream(fos);
+		try {
+			obj.writeObject(this.descritores);
+			obj.writeObject(this.itens);
+			obj.writeObject(this.contadorItens);
+			obj.writeObject(this.listaDeItensNecessarios);
+			obj.writeObject(this.contadorItensNecessarios);
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Arquivo nao existe no sistema.");
+		} catch (IOException e) {
+			System.out.println("Algum erro ocorreu...");
+		}
+	}
+
+	public void carregarDados() {
+		ObjectInputStream os;
+		try {
+			os = new ObjectInputStream(new FileInputStream("persistencia/itens.csv"));
+			this.descritores = (Set<String>) os.readObject();
+			this.itens = (List<Item>) os.readObject();
+			this.contadorItens = (int) os.readObject();
+			this.listaDeItensNecessarios = (List<ItemNecessario>) os.readObject();
+			this.contadorItensNecessarios = (int) os.readObject();
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Arquivo nao existe no sistema.");
+		} catch (IOException e) {
+			System.out.println("Algum erro ocorre...");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("Alguma coisa no sistema mudou");
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.edoe.models;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,12 @@ import java.util.Date;
  * @author Caroliny Silva
  * @author Almir Crispiniano
  */
-public class Doacao {
+public class Doacao implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5595901637151680170L;
 
 	/**
 	 * Atributo em String que representa a data de uam doacao.

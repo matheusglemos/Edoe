@@ -1,5 +1,7 @@
 package com.edoe.models;
 
+import java.io.Serializable;
+
 import validador.ValidadorUsuario;
 
 /**
@@ -12,7 +14,12 @@ import validador.ValidadorUsuario;
  * @author Caroliny Silva
  *
  */
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5160403283063740014L;
 
 	/**
 	 * Atributo que representa o nome do usuario.

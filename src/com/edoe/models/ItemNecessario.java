@@ -1,9 +1,15 @@
 package com.edoe.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemNecessario {
+public class ItemNecessario implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5685089481021852582L;
 
 	/**
 	 * Atributo que representa o id de um item necessario.

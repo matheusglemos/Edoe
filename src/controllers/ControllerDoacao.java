@@ -1,9 +1,17 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import com.edoe.models.Doacao;
 import com.edoe.models.Item;
@@ -105,6 +113,33 @@ public class ControllerDoacao {
 			}
 		}
 		return res;
+	}
+	
+	public void salvar() throws IOException {
+		File file = new File("persistencia/doacoes.csv");
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream obj = new ObjectOutputStream(fos);
+		try {
+			obj.writeObject(this.doacoes);
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Arquivo nao existe no sistema.");
+		} catch (IOException e) {
+			System.out.println("Algum erro ocorreu...");
+		}
+	}
+
+	public void carregarDados() {
+		ObjectInputStream os;
+		try {
+			os = new ObjectInputStream(new FileInputStream("persistencia/doacoes.csv"));
+			this.doacoes = (List<Doacao>) os.readObject();
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Arquivo nao existe no sistema.");
+		} catch (IOException e) {
+			System.out.println("Algum erro ocorre...");
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("Alguma coisa no sistema mudou");
+		}
 	}
 
 }

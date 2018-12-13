@@ -44,7 +44,7 @@ public class Facade {
 	public static void main(String[] args) {
 		args = new String[] { "main.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt",
 				"acceptance_tests/use_case_3.txt", "acceptance_tests/use_case_4.txt", "acceptance_tests/use_case_5.txt",
-				"acceptance_tests/use_case_6.txt" };
+				"acceptance_tests/use_case_6.txt", "acceptance_tests/use_case_7.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -73,8 +73,8 @@ public class Facade {
 	 * 
 	 * @return Adicao de um doador no sistema.
 	 */
-	public String adicionaDoador(String nome, String id, String email, String celular, String classe) {
-		return this.controleDeUsuarios.adicionaDoador(nome, id, email, celular, classe);
+	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
+		return this.controleDeUsuarios.adicionaDoador(id, nome, email, celular, classe);
 	}
 
 	/**
@@ -292,6 +292,18 @@ public class Facade {
 
 	public String listaDoacoes() {
 		return this.controleDeDoacao.listaDoacoes();
+	}
+	
+	public void finalizaSistema() throws IOException {
+		this.controleDeUsuarios.salvar();
+		this.controleDeItens.salvar();
+		this.controleDeDoacao.salvar();
+	}
+	
+	public void iniciaSistema() {
+		this.controleDeUsuarios.carregarDados();
+		this.controleDeItens.carregarDados();
+		this.controleDeDoacao.carregarDados();
 	}
 
 }

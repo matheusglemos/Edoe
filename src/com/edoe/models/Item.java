@@ -1,5 +1,6 @@
 package com.edoe.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,13 @@ import java.util.List;
  * @author Caroliny Silva
  *
  */
-public class Item {
+public class Item implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7531992727606913939L;
+
 	/**
 	 * Atributo que representa o id do Item.
 	 */
