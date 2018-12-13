@@ -49,7 +49,11 @@ public class ControllerDoacao {
 	 * @param idItemNec   Inteiro representando o id de Um item necessario
 	 * @param idItemDoado Inteiro representando o id de um item doado
 	 * @param data        String representando a data da doacao
+<<<<<<< HEAD
 	 * @throws ParseException 
+=======
+	 * @throws ParseException
+>>>>>>> 22720a9516936ca841269d2527a7efaca2f437d6
 	 */
 	public Doacao realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
 		if (idItemNec < 0 || idItemDoado < 0) {
@@ -80,7 +84,7 @@ public class ControllerDoacao {
 		if (itemNecessario.getQuantidade() == 0) {
 			this.controllerItens.removeItemNecessario(itemNecessario.idReceptor(), idItemNec);
 		}
-		
+
 		Doacao doacao = new Doacao(data, itemDoado, itemNecessario, quantItensDoados);
 		this.doacoes.add(doacao);
 		return doacao;
