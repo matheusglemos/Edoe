@@ -43,15 +43,19 @@ public class ItemNecessario {
 	/**
 	 * Construtor de um item necessario.
 	 * 
-	 * @param itemNecId     Inteiro que corresponde a identificacao de um item
-	 *                      necessario.
-	 * @param descricaoItem String referente a descricao de um item.
-	 * @param quantidade    Inteiro que corresponde a quantidade de um item
-	 *                      necessario.
-	 * @param tag           String que corresponde a/as tags de um item necessario.
-	 * @param receptor      referente ao receptor que necessita do(s) item(s).
+	 * @param itemNecId
+	 *            Inteiro que corresponde a identificacao de um item necessario.
+	 * @param descricaoItem
+	 *            String referente a descricao de um item.
+	 * @param quantidade
+	 *            Inteiro que corresponde a quantidade de um item necessario.
+	 * @param tag
+	 *            String que corresponde a/as tags de um item necessario.
+	 * @param receptor
+	 *            referente ao receptor que necessita do(s) item(s).
 	 */
-	public ItemNecessario(int itemNecId, String descricaoItem, int quantidade, String tag, Receptor receptor) {
+	public ItemNecessario(int itemNecId, String descricaoItem, int quantidade,
+			String tag, Receptor receptor) {
 		this.itemNecId = itemNecId;
 		this.tags = new ArrayList<>();
 		this.separaTags(tag);
@@ -67,10 +71,11 @@ public class ItemNecessario {
 	}
 
 	/**
-	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada tag
-	 * e depois atualizar pelo set.
+	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada
+	 * tag e depois atualizar pelo set.
 	 * 
-	 * @param tag String correspondente a/as tags de um item necessario.
+	 * @param tag
+	 *            String correspondente a/as tags de um item necessario.
 	 */
 	public void setTags(String tag) {
 		separaTags(tag);
@@ -88,7 +93,8 @@ public class ItemNecessario {
 	/**
 	 * Metodo responsavel por atualizar a quantidade de um item necessario.
 	 * 
-	 * @param quantidade Inteiro correspondente a quantidade do item necessario.
+	 * @param quantidade
+	 *            Inteiro correspondente a quantidade do item necessario.
 	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
@@ -133,7 +139,8 @@ public class ItemNecessario {
 	/**
 	 * Metodo responsavel por alterar os pontos do match.
 	 * 
-	 * @param pontosMatch Inteiro correspondente aos pontos do match.
+	 * @param pontosMatch
+	 *            Inteiro correspondente aos pontos do match.
 	 */
 	public void setPontosMatch(int pontosMatch) {
 		this.pontosMatch = pontosMatch;
@@ -142,7 +149,8 @@ public class ItemNecessario {
 	/**
 	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista.
 	 * 
-	 * @param tag String correspondente a/as tags do item necessario.
+	 * @param tag
+	 *            String correspondente a/as tags do item necessario.
 	 */
 	private void separaTags(String tag) {
 		this.tags = new ArrayList<>();
@@ -153,22 +161,23 @@ public class ItemNecessario {
 	}
 
 	/**
-	 * Metodo que gera o hashcode de um item necessario. Dois itens necessarios sao
-	 * iguais se eles tiverem o mesmo descritor generico de item e as mesmas tags
-	 * (na mesma ordem).
+	 * Metodo que gera o hashcode de um item necessario. Dois itens necessarios
+	 * sao iguais se eles tiverem o mesmo descritor generico de item e as mesmas
+	 * tags (na mesma ordem).
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descricaoItem == null) ? 0 : descricaoItem.hashCode());
+		result = prime * result
+				+ ((descricaoItem == null) ? 0 : descricaoItem.hashCode());
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
 
 	/**
-	 * Metodo responsavel por comparar um item necessario com outro a partir da sua
-	 * descricao e tags.
+	 * Metodo responsavel por comparar um item necessario com outro a partir da
+	 * sua descricao e tags.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -198,7 +207,8 @@ public class ItemNecessario {
 	 */
 	@Override
 	public String toString() {
-		return this.getItemNecId() + " - " + this.getDescricaoItem() + ", tags: " + this.getTags() + ", quantidade: "
+		return this.getItemNecId() + " - " + this.getDescricaoItem()
+				+ ", tags: " + this.getTags() + ", quantidade: "
 				+ this.getQuantidade();
 	}
 
@@ -209,7 +219,8 @@ public class ItemNecessario {
 	 * @return String contendo descricao de um item necessario.
 	 */
 	public String itensNecessariosDescricaoCompleta() {
-		return this.toString() + ", Receptor: " + receptor.getNome() + "/" + receptor.getId();
+		return this.toString() + ", Receptor: " + receptor.getNome() + "/"
+				+ receptor.getId();
 	}
 
 	/**

@@ -8,8 +8,8 @@ import com.edoe.models.Item;
 import com.edoe.models.ItemNecessario;
 
 /**
- * Classe que controla as doaçoẽs entre usuarios. Realiza doações e lista
- * doações
+ * Classe que controla as doacoes entre usuarios. Realiza doacoes e lista
+ * doacoes.
  * 
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -35,33 +35,48 @@ public class ControllerDoacao {
 	}
 
 	/**
-	 * Metodo em que o usuário deve indicar o identificador do item necessário e do
-	 * item a ser doado. E o sistema deve validar o pedido de doação olhando se os
-	 * descritores de itens são mesmo iguais. Caso o pedido seja validado, o sistema
-	 * deve atualizar a quantidade de itens a serem doados e de itens necessários
-	 * dos itens envolvidos nesta doação. Se uma dessas quantidades cair para zero,
-	 * o item específico (para doação ou necessário) é removido do sistema.
+	 * Metodo em que o usuario deve indicar o identificador do item necessario e
+	 * do item a ser doado. E o sistema deve validar o pedido de doacao olhando
+	 * se os descritores de itens sao mesmo iguais. Caso o pedido seja validado,
+	 * o sistema deve atualizar a quantidade de itens a serem doados e de itens
+	 * necessarios dos itens envolvidos nesta doacao. Se uma dessas quantidades
+	 * cair para zero, o item especifico (para doacao ou necessario) e removido
+	 * do sistema.
 	 * 
-	 * @param idItemNec   Inteiro representando o id de Um item necessario
-	 * @param idItemDoado Inteiro representando o id de um item doado
-	 * @param data        String representando a data da doacao
+	 * @param idItemNec
+	 *            Inteiro representando o id de Um item necessario
+	 * @param idItemDoado
+	 *            Inteiro representando o id de um item doado
+	 * @param data
+	 *            String representando a data da doacao
 	 */
 	public void realizaDoacao(int idItemNec, int idItemDoado, String data) {
 		if (idItemNec < 0 || idItemDoado < 0) {
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new IllegalArgumentException(
+					"Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (data == null || data.trim().isEmpty()) {
-			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+			throw new IllegalArgumentException(
+					"Entrada invalida: data nao pode ser vazia ou nula.");
 		}
-		if (!this.controllerItens.getItemNecessario(idItemNec).getDescricaoItem()
-				.equals(this.controllerItens.getItem(idItemDoado).getDescricao())) {
-			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
+		if (!this.controllerItens
+				.getItemNecessario(idItemNec)
+				.getDescricaoItem()
+				.equals(this.controllerItens.getItem(idItemDoado)
+						.getDescricao())) {
+			throw new IllegalArgumentException(
+					"Os itens nao tem descricoes iguais.");
 		}
-		if (this.controllerItens.getItemNecessario(idItemNec).getDescricaoItem()
-				.equals(this.controllerItens.getItem(idItemDoado).getDescricao())) {
+		if (this.controllerItens
+				.getItemNecessario(idItemNec)
+				.getDescricaoItem()
+				.equals(this.controllerItens.getItem(idItemDoado)
+						.getDescricao())) {
 
-			int quantidadeItemDoado = controllerItens.getItem(idItemDoado).getQuantidade();
-			int quantidadeItemNecessario = controllerItens.getItemNecessario(idItemNec).getQuantidade();
+			int quantidadeItemDoado = controllerItens.getItem(idItemDoado)
+					.getQuantidade();
+			int quantidadeItemNecessario = controllerItens.getItemNecessario(
+					idItemNec).getQuantidade();
 
 			if (quantidadeItemNecessario < quantidadeItemDoado) {
 
@@ -79,9 +94,9 @@ public class ControllerDoacao {
 	}
 
 	/**
-	 * Metodo que lista o histórico de doações pela ordem em que as mesmas foram
-	 * realizadas (da mais antiga para a mais nova). E caso as datas sejam iguais ele
-	 * lista pela ordem alfabética das descrições dos itens doados.
+	 * Metodo que lista o historico de doacoes pela ordem em que as mesmas foram
+	 * realizadas (da mais antiga para a mais nova). E caso as datas sejam
+	 * iguais ele lista pela ordem alfabetica das descricoes dos itens doados.
 	 * 
 	 * @return String contendo as Doacoes
 	 */

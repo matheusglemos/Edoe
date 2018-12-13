@@ -15,7 +15,7 @@ import com.edoe.models.ItemNecessario;
  */
 public class OrdemIdItemNecessario implements Comparator<ItemNecessario> {
 	/**
-	 * Metodo que compara dois itens pelo seu id.
+	 * Metodo que compara dois itens atraves de seu id.
 	 */
 	@Override
 	public int compare(ItemNecessario o1, ItemNecessario o2) {
