@@ -544,7 +544,7 @@ public class ControllerItens {
 				return i;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("Item nao encontrado: " + idItemDoado + ".");
 	}
 
 	public ItemNecessario pesquisaItemNecessario(int idItemNec) {
@@ -553,7 +553,7 @@ public class ControllerItens {
 				return i;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("Item nao encontrado: " + idItemNec + ".");
 	}
 
 }

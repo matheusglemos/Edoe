@@ -49,11 +49,7 @@ public class ControllerDoacao {
 	 * @param idItemNec   Inteiro representando o id de Um item necessario
 	 * @param idItemDoado Inteiro representando o id de um item doado
 	 * @param data        String representando a data da doacao
-<<<<<<< HEAD
-	 * @throws ParseException 
-=======
 	 * @throws ParseException
->>>>>>> 22720a9516936ca841269d2527a7efaca2f437d6
 	 */
 	public Doacao realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
 		if (idItemNec < 0 || idItemDoado < 0) {
@@ -71,7 +67,7 @@ public class ControllerDoacao {
 		}
 
 		int quantItensDoados = itemNecessario.getQuantidade();
-		if (quantItensDoados < itemDoado.getQuantidade()) {
+		if (quantItensDoados > itemDoado.getQuantidade()) {
 			quantItensDoados = itemDoado.getQuantidade();
 		}
 
@@ -101,8 +97,12 @@ public class ControllerDoacao {
 	public String listaDoacoes() {
 		Collections.sort(this.doacoes, new OrdenarDoacaoPelaData());
 		String res = "";
-		for (Doacao doacao : doacoes) {
-			res += doacao.toString();
+		for (int i = 0; i < this.doacoes.size(); i++) {
+			if (i == this.doacoes.size() - 1) {
+				res += doacoes.get(i).toString();
+			} else {
+				res += doacoes.get(i).toString() + " | ";
+			}
 		}
 		return res;
 	}

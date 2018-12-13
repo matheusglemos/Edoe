@@ -278,6 +278,14 @@ public class Facade {
 		return this.controleDeItens.match(idReceptor, idItemNecessario);
 	}
 
+	/**
+	 * Metodo responsavel por realizar uma doacao.
+	 * 
+	 * @param idItemNec Inteiro referente a identificacao de um item necessario.
+	 * @param data
+	 * @return
+	 * @throws ParseException
+	 */
 	public String realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
 		return this.controleDeDoacao.realizaDoacao(idItemNec, idItemDoado, data).toString();
 	}
