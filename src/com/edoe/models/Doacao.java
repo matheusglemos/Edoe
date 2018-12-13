@@ -1,5 +1,10 @@
 package com.edoe.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Classe que ira representar uma doacao entre um usuario doador e um usuario
  * receptor atraves dos seus itens necessarios.
@@ -14,7 +19,7 @@ public class Doacao {
 	/**
 	 * Atributo em String que representa a data de uam doacao.
 	 */
-	private String data;
+	private Date data;
 
 	/**
 	 * Atributo Item que representa um item a ser doado.
@@ -38,26 +43,29 @@ public class Doacao {
 	 * @param itemDoado
 	 * @param itemNecessario
 	 * @param totalDoado
+	 * @throws ParseException 
 	 */
 	public Doacao(String data, Item itemDoado, ItemNecessario itemNecessario,
-			int totalDoado) {
+			int totalDoado) throws ParseException {
 		if (data == null || data.trim().isEmpty()) {
 			throw new IllegalArgumentException(
 					"Entrada invalida: data nao pode ser vazia ou nula.");
 		}
 
-		this.data = data;
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		this.data = format.parse(data);
 		this.itemDoado = itemDoado;
 		this.itemNecessario = itemNecessario;
 		this.totalDoado = totalDoado;
 	}
 
 	public String getData() {
-		return data;
+		return data.toString();
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setData(String data) throws ParseException {
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		this.data = format.parse(data);
 	}
 
 	public int getTotalDoado() {

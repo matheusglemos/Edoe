@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import controllers.ControllerDoacao;
 import controllers.ControllerItens;
@@ -21,17 +22,17 @@ public class Facade {
 	/**
 	 * Atributo referente aos controles do projeto.
 	 */
-	private ControllerUsuario controleUm;
-	private ControllerItens controleDois;
-	private ControllerDoacao controleTres;
+	private ControllerUsuario controleDeUsuarios;
+	private ControllerItens controleDeItens;
+	private ControllerDoacao controleDeDoacao;
 
 	/**
 	 * Construtor.
 	 */
 	public Facade() {
-		controleUm = new ControllerUsuario();
-		controleDois = new ControllerItens(controleUm);
-		controleTres = new ControllerDoacao(controleDois);
+		controleDeUsuarios = new ControllerUsuario();
+		controleDeItens = new ControllerItens(controleDeUsuarios);
+		controleDeDoacao = new ControllerDoacao(controleDeItens);
 	}
 
 	/**
@@ -54,7 +55,7 @@ public class Facade {
 	 * @throws IOException referente a excecao que podera ser lancada.
 	 */
 	public void lerReceptores(String caminho) throws IOException {
-		this.controleUm.lerReceptores(caminho);
+		this.controleDeUsuarios.lerReceptores(caminho);
 	}
 
 	/**
@@ -73,7 +74,7 @@ public class Facade {
 	 * @return Adicao de um doador no sistema.
 	 */
 	public String adicionaDoador(String nome, String id, String email, String celular, String classe) {
-		return this.controleUm.adicionaDoador(nome, id, email, celular, classe);
+		return this.controleDeUsuarios.adicionaDoador(nome, id, email, celular, classe);
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class Facade {
 	 *         sistema.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
-		return controleUm.pesquisaUsuarioPorId(id);
+		return controleDeUsuarios.pesquisaUsuarioPorId(id);
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class Facade {
 	 *         sistema.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
-		return controleUm.pesquisaUsuarioPorNome(nome);
+		return controleDeUsuarios.pesquisaUsuarioPorNome(nome);
 	}
 
 	/**
@@ -111,7 +112,7 @@ public class Facade {
 	 * @return A atualizacao de um usuario no sistema.
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
-		return controleUm.atualizaUsuario(id, nome, email, celular);
+		return controleDeUsuarios.atualizaUsuario(id, nome, email, celular);
 	}
 
 	/**
@@ -120,7 +121,7 @@ public class Facade {
 	 * @param id String que representa o id do usuario.
 	 */
 	public void removeUsuario(String id) {
-		controleUm.removeUsuario(id);
+		controleDeUsuarios.removeUsuario(id);
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class Facade {
 	 * @param descricao String que representa a descricao de um item.
 	 */
 	public void adicionaDescritor(String descricao) {
-		controleDois.adicionaDescritor(descricao);
+		controleDeItens.adicionaDescritor(descricao);
 	}
 
 	/**
@@ -143,7 +144,7 @@ public class Facade {
 	 * @return o id do item adicionado para a doacao.
 	 */
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		return controleDois.adicionaItemParaDoacao(idDoador, descricaoItem, quantidade, tags);
+		return controleDeItens.adicionaItemParaDoacao(idDoador, descricaoItem, quantidade, tags);
 	}
 
 	/**
@@ -156,7 +157,7 @@ public class Facade {
 	 * @return exibicao o item.
 	 */
 	public String exibeItem(int idItem, String idDoador) {
-		return controleDois.exibeItem(idDoador, idItem);
+		return controleDeItens.exibeItem(idDoador, idItem);
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class Facade {
 	 * @return Atualizacao do item para doacao.
 	 */
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
-		return controleDois.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
+		return controleDeItens.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 
 	/**
@@ -180,7 +181,7 @@ public class Facade {
 	 * @param idItem   Inteiro que representa o id de um item.
 	 */
 	public void removeItemParaDoacao(int idItem, String idDoador) {
-		controleDois.removeItemParaDoacao(idItem, idDoador);
+		controleDeItens.removeItemParaDoacao(idItem, idDoador);
 	}
 
 	/**
@@ -190,7 +191,7 @@ public class Facade {
 	 * @return String contendo lista dos descritores em ordem alfabetica.
 	 */
 	public String listaDescritorDeItensParaDoacao() {
-		return controleDois.listaDescritorDeItensParaDoacao();
+		return controleDeItens.listaDescritorDeItensParaDoacao();
 	}
 
 	/**
@@ -200,7 +201,7 @@ public class Facade {
 	 * @return String contendo lista dos itens em ordem pela quantidade do item.
 	 */
 	public String listaItensParaDoacao() {
-		return controleDois.listaItensParaDoacao();
+		return controleDeItens.listaItensParaDoacao();
 	}
 
 	/**
@@ -212,7 +213,7 @@ public class Facade {
 	 *         pesquisa.
 	 */
 	public String pesquisaItemParaDoacaoPorDescricao(String descricao) {
-		return controleDois.pesquisaItemParaDoacaoPorDescricao(descricao);
+		return controleDeItens.pesquisaItemParaDoacaoPorDescricao(descricao);
 	}
 
 	/**
@@ -227,7 +228,7 @@ public class Facade {
 	 * @return o id do item necessitado adicionado.
 	 */
 	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
-		return controleDois.adicionaItemNecessario(idReceptor, descricaoItem, quantidade, tags);
+		return controleDeItens.adicionaItemNecessario(idReceptor, descricaoItem, quantidade, tags);
 	}
 
 	/**
@@ -237,7 +238,7 @@ public class Facade {
 	 * @return String contendo uma lista de itens necessarios.
 	 */
 	public String listaItensNecessarios() {
-		return controleDois.listaItensNecessarios();
+		return controleDeItens.listaItensNecessarios();
 	}
 
 	/**
@@ -252,7 +253,7 @@ public class Facade {
 	 * @return String vazia.
 	 */
 	public String atualizaItemNecessario(String idReceptor, int itemNecId, int quantidade, String tags) {
-		return controleDois.atualizaItemNecessario(itemNecId, idReceptor, quantidade, tags);
+		return controleDeItens.atualizaItemNecessario(itemNecId, idReceptor, quantidade, tags);
 	}
 
 	/**
@@ -262,7 +263,7 @@ public class Facade {
 	 * @param idItem     Inteiro que representa um id de um item necessario.
 	 */
 	public void removeItemNecessario(String idReceptor, int idItem) {
-		controleDois.removeItemNecessario(idReceptor, idItem);
+		controleDeItens.removeItemNecessario(idReceptor, idItem);
 	}
 
 	/**
@@ -274,15 +275,15 @@ public class Facade {
 	 * @return String contendo Matches.
 	 */
 	public String match(String idReceptor, int idItemNecessario) {
-		return this.controleDois.match(idReceptor, idItemNecessario);
-		// controleUm.getReceptor(idReceptor).match(idReceptor, idItemNecessario);
+		return this.controleDeItens.match(idReceptor, idItemNecessario);
 	}
 
-	public void realizaDoacao(int idItemNec, int idItemDoado, String data) {
+	public String realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
+		return this.controleDeDoacao.realizaDoacao(idItemNec, idItemDoado, data).toString();
 	}
 
 	public String listaDoacoes() {
-		return "";
+		return this.controleDeDoacao.listaDoacoes();
 	}
 
 }

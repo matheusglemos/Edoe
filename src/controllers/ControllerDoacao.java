@@ -1,11 +1,15 @@
 package controllers;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.edoe.models.Doacao;
 import com.edoe.models.Item;
 import com.edoe.models.ItemNecessario;
+
+import comparators.OrdenarDoacaoPelaData;
 
 /**
  * Classe que controla as doacoes entre usuarios. Realiza doacoes e lista
@@ -35,73 +39,67 @@ public class ControllerDoacao {
 	}
 
 	/**
-	 * Metodo em que o usuario deve indicar o identificador do item necessario e
-	 * do item a ser doado. E o sistema deve validar o pedido de doacao olhando
-	 * se os descritores de itens sao mesmo iguais. Caso o pedido seja validado,
-	 * o sistema deve atualizar a quantidade de itens a serem doados e de itens
-	 * necessarios dos itens envolvidos nesta doacao. Se uma dessas quantidades
-	 * cair para zero, o item especifico (para doacao ou necessario) e removido
-	 * do sistema.
+	 * Metodo em que o usuario deve indicar o identificador do item necessario e do
+	 * item a ser doado. E o sistema deve validar o pedido de doacao olhando se os
+	 * descritores de itens sao mesmo iguais. Caso o pedido seja validado, o sistema
+	 * deve atualizar a quantidade de itens a serem doados e de itens necessarios
+	 * dos itens envolvidos nesta doacao. Se uma dessas quantidades cair para zero,
+	 * o item especifico (para doacao ou necessario) e removido do sistema.
 	 * 
-	 * @param idItemNec
-	 *            Inteiro representando o id de Um item necessario
-	 * @param idItemDoado
-	 *            Inteiro representando o id de um item doado
-	 * @param data
-	 *            String representando a data da doacao
+	 * @param idItemNec   Inteiro representando o id de Um item necessario
+	 * @param idItemDoado Inteiro representando o id de um item doado
+	 * @param data        String representando a data da doacao
+	 * @throws ParseException
 	 */
-	public void realizaDoacao(int idItemNec, int idItemDoado, String data) {
+	public Doacao realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
 		if (idItemNec < 0 || idItemDoado < 0) {
-			throw new IllegalArgumentException(
-					"Entrada invalida: id do item nao pode ser negativo.");
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
 		if (data == null || data.trim().isEmpty()) {
-			throw new IllegalArgumentException(
-					"Entrada invalida: data nao pode ser vazia ou nula.");
+			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
 		}
-		if (!this.controllerItens
-				.getItemNecessario(idItemNec)
-				.getDescricaoItem()
-				.equals(this.controllerItens.getItem(idItemDoado)
-						.getDescricao())) {
-			throw new IllegalArgumentException(
-					"Os itens nao tem descricoes iguais.");
+		Item itemDoado = controllerItens.getItem(idItemDoado);
+		ItemNecessario itemNecessario = controllerItens.getItemNecessario(idItemNec);
+
+		if (!itemNecessario.getDescricaoItem().equals(itemDoado.getDescricao())) {
+			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
 		}
-		if (this.controllerItens
-				.getItemNecessario(idItemNec)
-				.getDescricaoItem()
-				.equals(this.controllerItens.getItem(idItemDoado)
-						.getDescricao())) {
 
-			int quantidadeItemDoado = controllerItens.getItem(idItemDoado)
-					.getQuantidade();
-			int quantidadeItemNecessario = controllerItens.getItemNecessario(
-					idItemNec).getQuantidade();
-
-			if (quantidadeItemNecessario < quantidadeItemDoado) {
-
-			}
-
-			if (quantidadeItemDoado == 0) {
-
-			}
-
-			if (quantidadeItemNecessario == 0) {
-
-			}
+		int quantItensDoados = itemNecessario.getQuantidade();
+		if (quantItensDoados < itemDoado.getQuantidade()) {
+			quantItensDoados = itemDoado.getQuantidade();
 		}
+
+		itemDoado.setQuantidade(itemDoado.getQuantidade() - quantItensDoados);
+		if (itemDoado.getQuantidade() == 0) {
+			this.controllerItens.removeItemParaDoacao(idItemDoado, itemDoado.idDoador());
+		}
+
+		itemNecessario.setQuantidade(itemNecessario.getQuantidade() - quantItensDoados);
+		if (itemNecessario.getQuantidade() == 0) {
+			this.controllerItens.removeItemNecessario(itemNecessario.idReceptor(), idItemNec);
+		}
+
+		Doacao doacao = new Doacao(data, itemDoado, itemNecessario, quantItensDoados);
+		this.doacoes.add(doacao);
+		return doacao;
 
 	}
 
 	/**
 	 * Metodo que lista o historico de doacoes pela ordem em que as mesmas foram
-	 * realizadas (da mais antiga para a mais nova). E caso as datas sejam
-	 * iguais ele lista pela ordem alfabetica das descricoes dos itens doados.
+	 * realizadas (da mais antiga para a mais nova). E caso as datas sejam iguais
+	 * ele lista pela ordem alfabetica das descricoes dos itens doados.
 	 * 
 	 * @return String contendo as Doacoes
 	 */
 	public String listaDoacoes() {
-		return "0";
+		Collections.sort(this.doacoes, new OrdenarDoacaoPelaData());
+		String res = "";
+		for (Doacao doacao : doacoes) {
+			res += doacao.toString();
+		}
+		return res;
 	}
 
 }
