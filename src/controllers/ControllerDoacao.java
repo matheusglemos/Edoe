@@ -31,17 +31,21 @@ import comparators.OrdenarDoacaoPelaData;
  */
 public class ControllerDoacao {
 	/**
-	 * Atributo responsavel por ligar uma Doacao a um item
+	 * Atributo responsavel por ligar uma Doacao a um item.
 	 */
 	private ControllerItens controllerItens;
 
 	/**
-	 * Atributo que representa uma lista de doacoes
+	 * Atributo que representa uma lista de doacoes.
 	 */
 	private List<Doacao> doacoes;
 
+	/**
+	 * Contrutor do controller de doacoes.
+	 * 
+	 * @param controllerItens referente ao controller de itens.
+	 */
 	public ControllerDoacao(ControllerItens controllerItens) {
-
 		this.controllerItens = controllerItens;
 		this.doacoes = new ArrayList<>();
 	}
@@ -54,10 +58,13 @@ public class ControllerDoacao {
 	 * dos itens envolvidos nesta doacao. Se uma dessas quantidades cair para zero,
 	 * o item especifico (para doacao ou necessario) e removido do sistema.
 	 * 
-	 * @param idItemNec   Inteiro representando o id de Um item necessario
-	 * @param idItemDoado Inteiro representando o id de um item doado
-	 * @param data        String representando a data da doacao
-	 * @throws ParseException
+	 * @param idItemNec   Inteiro representando o id de Um item necessario.
+	 * @param idItemDoado Inteiro representando o id de um item doado.
+	 * @param data        String representando a data da doacao.
+	 * 
+	 * @throws ParseException excecao que podera ser lancada.
+	 * 
+	 * @return Doacao.
 	 */
 	public Doacao realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
 		if (idItemNec < 0 || idItemDoado < 0) {
@@ -100,7 +107,7 @@ public class ControllerDoacao {
 	 * realizadas (da mais antiga para a mais nova). E caso as datas sejam iguais
 	 * ele lista pela ordem alfabetica das descricoes dos itens doados.
 	 * 
-	 * @return String contendo as Doacoes
+	 * @return String contendo as Doacoes.
 	 */
 	public String listaDoacoes() {
 		Collections.sort(this.doacoes, new OrdenarDoacaoPelaData());
@@ -114,7 +121,12 @@ public class ControllerDoacao {
 		}
 		return res;
 	}
-	
+
+	/**
+	 * Metodo responsavel por salvar os dados em um arquivo.
+	 * 
+	 * @throws IOException excecao que podera ser lancada.
+	 */
 	public void salvar() throws IOException {
 		File file = new File("persistencia/doacoes.csv");
 		FileOutputStream fos = new FileOutputStream(file);
@@ -128,6 +140,9 @@ public class ControllerDoacao {
 		}
 	}
 
+	/**
+	 * Metodo responsavel por carregar os dados salvos em um arquivo.
+	 */
 	public void carregarDados() {
 		ObjectInputStream os;
 		try {
@@ -141,5 +156,4 @@ public class ControllerDoacao {
 			throw new IllegalArgumentException("Alguma coisa no sistema mudou");
 		}
 	}
-
 }

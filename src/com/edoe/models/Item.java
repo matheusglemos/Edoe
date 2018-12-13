@@ -15,10 +15,7 @@ import java.util.List;
  *
  */
 public class Item implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 7531992727606913939L;
 
 	/**
@@ -77,6 +74,11 @@ public class Item implements Serializable {
 		this.pontosMatch = 0;
 	}
 
+	/**
+	 * Metodo que retorna uma lista de tags.
+	 * 
+	 * @return Tags;
+	 */
 	public List<String> getTags() {
 		return tags;
 	}
@@ -235,24 +237,22 @@ public class Item implements Serializable {
 		return this.pontosMatch;
 	}
 
-
 	/**
-	 * Metodo que retorna o nome de um Usuario doador
+	 * Metodo que retorna o nome de um Usuario doador.
 	 * 
-	 * @return String contendo nome do usuario doador
+	 * @return String contendo nome do usuario doador.
 	 */
 	public String nomeDoador() {
 		return doador.getNome();
 	}
 
 	/**
-	 * Metodo que retorna o id de um usuario doador
+	 * Metodo que retorna o id de um usuario doador.
 	 * 
-	 * @return String contendo id do usuario doador
+	 * @return String contendo id do usuario doador.
 	 */
 	public String idDoador() {
 		return doador.getId();
 	}
-
 
 }

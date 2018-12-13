@@ -18,7 +18,7 @@ import java.util.Set;
 public class Doador extends Usuario {
 
 	/**
-	 * Atributo que represnta um mapa de itens que um usuario doador possui.
+	 * Atributo que representa um mapa de itens que um usuario doador possui.
 	 */
 	private Map<Integer, Item> itens;
 

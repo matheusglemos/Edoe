@@ -52,6 +52,7 @@ public class Facade {
 	 * Metodo responsavel por ler os recptores o arquivo csv.
 	 * 
 	 * @param caminho String referente ao caminho dos receptores.
+	 * 
 	 * @throws IOException referente a excecao que podera ser lancada.
 	 */
 	public void lerReceptores(String caminho) throws IOException {
@@ -62,13 +63,9 @@ public class Facade {
 	 * Metodo que adiciona um usuario doador no sistema.
 	 * 
 	 * @param nome    String que representa o nome do usuario doador.
-	 * 
 	 * @param id      String que representa o id do usuario doador.
-	 * 
 	 * @param email   String que representa o email do usuario doador.
-	 * 
 	 * @param celular String que representa o celular do usuario doador.
-	 * 
 	 * @param classe  String que representa a classe do usuario doador.
 	 * 
 	 * @return Adicao de um doador no sistema.
@@ -141,6 +138,7 @@ public class Facade {
 	 * @param descricaoItem String que representa a descricao de um item.
 	 * @param quantidade    Inteiro que representa a quantidade de itens.
 	 * @param tags          String que representa as tags de um item.
+	 * 
 	 * @return o id do item adicionado para a doacao.
 	 */
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
@@ -225,6 +223,7 @@ public class Facade {
 	 * @param quantidade    Inteiro que representa a quantidade de itens
 	 *                      necessarios.
 	 * @param tags          String que representa as tags de um item.
+	 * 
 	 * @return o id do item necessitado adicionado.
 	 */
 	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
@@ -272,6 +271,7 @@ public class Facade {
 	 * 
 	 * @param idReceptor       String que representa o id de um usuario receptor.
 	 * @param idItemNecessario Inteiro que representa um id de um item necessario.
+	 * 
 	 * @return String contendo Matches.
 	 */
 	public String match(String idReceptor, int idItemNecessario) {
@@ -281,25 +281,41 @@ public class Facade {
 	/**
 	 * Metodo responsavel por realizar uma doacao.
 	 * 
-	 * @param idItemNec Inteiro referente a identificacao de um item necessario.
-	 * @param data
-	 * @return
-	 * @throws ParseException
+	 * @param idItemNec   Inteiro referente a identificacao de um item necessario.
+	 * @param idItemDoado Inteiro referente a identificacao de um item doado.
+	 * @param data        String referente a data da doacao.
+	 * 
+	 * @return Exibicao das informacoes da doacao como uma String.
+	 * 
+	 * @throws ParseException excecao que podera ser lancada.
 	 */
 	public String realizaDoacao(int idItemNec, int idItemDoado, String data) throws ParseException {
 		return this.controleDeDoacao.realizaDoacao(idItemNec, idItemDoado, data).toString();
 	}
 
+	/**
+	 * Metodo responsavel por listar as doacoes.
+	 * 
+	 * @return String contendo a lista de doacoes.
+	 */
 	public String listaDoacoes() {
 		return this.controleDeDoacao.listaDoacoes();
 	}
-	
+
+	/**
+	 * Metodo responsavel por realizar o salvamento dos dados no arquivo.
+	 * 
+	 * @throws IOException excecao que podera ser lancada.
+	 */
 	public void finalizaSistema() throws IOException {
 		this.controleDeUsuarios.salvar();
 		this.controleDeItens.salvar();
 		this.controleDeDoacao.salvar();
 	}
-	
+
+	/**
+	 * Metodo responsavel por realizar o carregamento dos dados salvos no arquivo.
+	 */
 	public void iniciaSistema() {
 		this.controleDeUsuarios.carregarDados();
 		this.controleDeItens.carregarDados();

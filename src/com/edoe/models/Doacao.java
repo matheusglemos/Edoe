@@ -17,16 +17,16 @@ import java.util.Date;
  */
 public class Doacao implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5595901637151680170L;
 
 	/**
-	 * Atributo em String que representa a data de uam doacao.
+	 * Atributo em String que representa a data de uma doacao.
 	 */
 	private Date data;
 
+	/**
+	 * Atributo String que representa a data de uma doacao.
+	 */
 	private String date;
 
 	/**
@@ -47,11 +47,12 @@ public class Doacao implements Serializable {
 	/**
 	 * Construtor da classe doacao.
 	 * 
-	 * @param data
-	 * @param itemDoado
-	 * @param itemNecessario
-	 * @param totalDoado
-	 * @throws ParseException
+	 * @param data           String referente a data da doacao.
+	 * @param itemDoado      Item referente ao item doado.
+	 * @param itemNecessario Item referente ao item necessario.
+	 * @param totalDoado     Inteiro referente ao total de itens doados.
+	 * 
+	 * @throws ParseException excecao que podera ser lancada.
 	 */
 	public Doacao(String data, Item itemDoado, ItemNecessario itemNecessario, int totalDoado) throws ParseException {
 		if (data == null || data.trim().isEmpty()) {
@@ -66,41 +67,65 @@ public class Doacao implements Serializable {
 		this.date = data;
 	}
 
+	/**
+	 * Metodo responsavel por retornar uma data.
+	 * 
+	 * @return A data da doacao de um item.
+	 */
 	public Date getData() {
 		return data;
 	}
 
+	/**
+	 * Metodo que altera uma data.
+	 * 
+	 * @param data referente a data da doacao de um item.
+	 * 
+	 * @throws ParseException excecao que podera ser lancada.
+	 */
 	public void setData(String data) throws ParseException {
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		this.data = format.parse(data);
 	}
 
+	/**
+	 * Metodo que retorna o total de itens doados.
+	 * 
+	 * @return Inteiro correspondente ao total de itens doados.
+	 */
 	public int getTotalDoado() {
 		return totalDoado;
 	}
 
+	/**
+	 * Metodo que altera o total de itens doados.
+	 * 
+	 * @param totalDoado Inteiro correspondente ao total doado.
+	 */
 	public void setTotalDoado(int totalDoado) {
 		this.totalDoado = totalDoado;
 	}
 
+	/**
+	 * Metodo que retorna um item doado.
+	 * 
+	 * @return Item que foi doado.
+	 */
 	public Item getItemDoado() {
 		return itemDoado;
 	}
 
+	/**
+	 * Metodo que retorna um item necessario.
+	 * 
+	 * @return Item que e necessario.
+	 */
 	public ItemNecessario getItemNecessario() {
 		return itemNecessario;
 	}
 
 	/**
-	 * 
-	 * <11/10/2018 - doador: Cave Johnson/18304715242, item: cadeira de rodas,
-	 * quantidade: 7, receptor: Luiza Elisa Lopes/72859801000118> <11/10/2018 -
-	 * doador: Cave Johnson/18304715242, item: cadeira de rodas, quantidade: 15,
-	 * receptor: Luiza Elisa Lopes/72859801000118>
-	 */
-
-	/**
-	 * Representação textual da classe doacao.
+	 * Representacao textual da classe doacao.
 	 */
 	@Override
 	public String toString() {

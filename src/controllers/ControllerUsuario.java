@@ -197,6 +197,7 @@ public class ControllerUsuario {
 	 * Metodo responsavel por retornar um doador a partir do id de um usuario.
 	 * 
 	 * @param id String que representa o id do usuario.
+	 * 
 	 * @return Um usuario doador.
 	 */
 	public Doador getDoador(String id) {
@@ -207,6 +208,7 @@ public class ControllerUsuario {
 	 * Metodo responsavel por retornar um receptor a partir do id de um usuario.
 	 * 
 	 * @param id String que representa o id do usuario.
+	 * 
 	 * @return Um usuario receptor.
 	 */
 	public Receptor getReceptor(String id) {
@@ -217,6 +219,11 @@ public class ControllerUsuario {
 		throw new IllegalArgumentException("O Usuario deve ser um receptor: " + id + ".");
 	}
 
+	/**
+	 * Metodo responsavel por salvar os dados em um arquivo.
+	 * 
+	 * @throws IOException excecao que podera ser lancada.
+	 */
 	public void salvar() throws IOException {
 		File file = new File("persistencia/usuario.csv");
 		FileOutputStream fos = new FileOutputStream(file);
@@ -230,6 +237,9 @@ public class ControllerUsuario {
 		}
 	}
 
+	/**
+	 * Metodo responsavel por carregar os dados salvos em um arquivo.
+	 */
 	public void carregarDados() {
 		ObjectInputStream os;
 		try {

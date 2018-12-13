@@ -16,9 +16,6 @@ import validador.ValidadorUsuario;
  */
 public abstract class Usuario implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5160403283063740014L;
 
 	/**

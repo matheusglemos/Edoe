@@ -6,9 +6,6 @@ import java.util.List;
 
 public class ItemNecessario implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5685089481021852582L;
 
 	/**
@@ -49,19 +46,15 @@ public class ItemNecessario implements Serializable {
 	/**
 	 * Construtor de um item necessario.
 	 * 
-	 * @param itemNecId
-	 *            Inteiro que corresponde a identificacao de um item necessario.
-	 * @param descricaoItem
-	 *            String referente a descricao de um item.
-	 * @param quantidade
-	 *            Inteiro que corresponde a quantidade de um item necessario.
-	 * @param tag
-	 *            String que corresponde a/as tags de um item necessario.
-	 * @param receptor
-	 *            referente ao receptor que necessita do(s) item(s).
+	 * @param itemNecId     Inteiro que corresponde a identificacao de um item
+	 *                      necessario.
+	 * @param descricaoItem String referente a descricao de um item.
+	 * @param quantidade    Inteiro que corresponde a quantidade de um item
+	 *                      necessario.
+	 * @param tag           String que corresponde a/as tags de um item necessario.
+	 * @param receptor      referente ao receptor que necessita do(s) item(s).
 	 */
-	public ItemNecessario(int itemNecId, String descricaoItem, int quantidade,
-			String tag, Receptor receptor) {
+	public ItemNecessario(int itemNecId, String descricaoItem, int quantidade, String tag, Receptor receptor) {
 		this.itemNecId = itemNecId;
 		this.tags = new ArrayList<>();
 		this.separaTags(tag);
@@ -72,16 +65,20 @@ public class ItemNecessario implements Serializable {
 		this.pontosMatch = 0;
 	}
 
+	/**
+	 * Metodo que retorna uma lista de tags.
+	 * 
+	 * @return Tags.
+	 */
 	public List<String> getTags() {
 		return tags;
 	}
 
 	/**
-	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada
-	 * tag e depois atualizar pelo set.
+	 * Metodo que recebe uma tag em String e usa o separaTags para separar cada tag
+	 * e depois atualizar pelo set.
 	 * 
-	 * @param tag
-	 *            String correspondente a/as tags de um item necessario.
+	 * @param tag String correspondente a/as tags de um item necessario.
 	 */
 	public void setTags(String tag) {
 		separaTags(tag);
@@ -99,8 +96,7 @@ public class ItemNecessario implements Serializable {
 	/**
 	 * Metodo responsavel por atualizar a quantidade de um item necessario.
 	 * 
-	 * @param quantidade
-	 *            Inteiro correspondente a quantidade do item necessario.
+	 * @param quantidade Inteiro correspondente a quantidade do item necessario.
 	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
@@ -145,8 +141,7 @@ public class ItemNecessario implements Serializable {
 	/**
 	 * Metodo responsavel por alterar os pontos do match.
 	 * 
-	 * @param pontosMatch
-	 *            Inteiro correspondente aos pontos do match.
+	 * @param pontosMatch Inteiro correspondente aos pontos do match.
 	 */
 	public void setPontosMatch(int pontosMatch) {
 		this.pontosMatch = pontosMatch;
@@ -155,8 +150,7 @@ public class ItemNecessario implements Serializable {
 	/**
 	 * Metodo que recebe uma String com tags e adiciona uma por uma numa lista.
 	 * 
-	 * @param tag
-	 *            String correspondente a/as tags do item necessario.
+	 * @param tag String correspondente a/as tags do item necessario.
 	 */
 	private void separaTags(String tag) {
 		this.tags = new ArrayList<>();
@@ -167,23 +161,22 @@ public class ItemNecessario implements Serializable {
 	}
 
 	/**
-	 * Metodo que gera o hashcode de um item necessario. Dois itens necessarios
-	 * sao iguais se eles tiverem o mesmo descritor generico de item e as mesmas
-	 * tags (na mesma ordem).
+	 * Metodo que gera o hashcode de um item necessario. Dois itens necessarios sao
+	 * iguais se eles tiverem o mesmo descritor generico de item e as mesmas tags
+	 * (na mesma ordem).
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((descricaoItem == null) ? 0 : descricaoItem.hashCode());
+		result = prime * result + ((descricaoItem == null) ? 0 : descricaoItem.hashCode());
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
 
 	/**
-	 * Metodo responsavel por comparar um item necessario com outro a partir da
-	 * sua descricao e tags.
+	 * Metodo responsavel por comparar um item necessario com outro a partir da sua
+	 * descricao e tags.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -213,8 +206,7 @@ public class ItemNecessario implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return this.getItemNecId() + " - " + this.getDescricaoItem()
-				+ ", tags: " + this.getTags() + ", quantidade: "
+		return this.getItemNecId() + " - " + this.getDescricaoItem() + ", tags: " + this.getTags() + ", quantidade: "
 				+ this.getQuantidade();
 	}
 
@@ -225,23 +217,22 @@ public class ItemNecessario implements Serializable {
 	 * @return String contendo descricao de um item necessario.
 	 */
 	public String itensNecessariosDescricaoCompleta() {
-		return this.toString() + ", Receptor: " + receptor.getNome() + "/"
-				+ receptor.getId();
+		return this.toString() + ", Receptor: " + receptor.getNome() + "/" + receptor.getId();
 	}
 
 	/**
-	 * Metodo que retorna o nome de um Usuario receptor
+	 * Metodo que retorna o nome de um Usuario receptor.
 	 * 
-	 * @return String contendo nome do usuario receptor
+	 * @return String contendo nome do usuario receptor.
 	 */
 	public String nomeReceptor() {
 		return receptor.getNome();
 	}
 
 	/**
-	 * Metodo que retorna o id de um usuario receptor
+	 * Metodo que retorna o id de um usuario receptor.
 	 * 
-	 * @return String contendo id do usuario receptor
+	 * @return String contendo id do usuario receptor.
 	 */
 	public String idReceptor() {
 		return receptor.getId();

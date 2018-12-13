@@ -525,7 +525,7 @@ public class ControllerItens {
 		}
 		return saida;
 	}
-	
+
 	/**
 	 * Metodo responsavel por retornar um item a partir do id do item.
 	 * 
@@ -547,6 +547,13 @@ public class ControllerItens {
 		return (ItemNecessario) this.listaDeItensNecessarios.get(itemNecId);
 	}
 
+	/**
+	 * Metodo que pesquisa um item doado.
+	 * 
+	 * @param idItemDoado Item que foi doado.
+	 * 
+	 * @return O item procurado.
+	 */
 	public Item pesquisaItem(int idItemDoado) {
 		for (Item i : this.itens) {
 			if (i.getidItem() == idItemDoado) {
@@ -556,6 +563,13 @@ public class ControllerItens {
 		throw new IllegalArgumentException("Item nao encontrado: " + idItemDoado + ".");
 	}
 
+	/**
+	 * Metodo que pesquisa um item necessario.
+	 * 
+	 * @param idItemNec Item necessario que sera pesquisado.
+	 * 
+	 * @return O item necessario procurado.
+	 */
 	public ItemNecessario pesquisaItemNecessario(int idItemNec) {
 		for (ItemNecessario i : this.listaDeItensNecessarios) {
 			if (i.getItemNecId() == idItemNec) {
@@ -564,7 +578,12 @@ public class ControllerItens {
 		}
 		throw new IllegalArgumentException("Item nao encontrado: " + idItemNec + ".");
 	}
-	
+
+	/**
+	 * Metodo responsavel por salvar os dados em um arquivo.
+	 * 
+	 * @throws IOException excecao que podera ser lancada.
+	 */
 	public void salvar() throws IOException {
 		File file = new File("persistencia/itens.csv");
 		FileOutputStream fos = new FileOutputStream(file);
@@ -582,6 +601,9 @@ public class ControllerItens {
 		}
 	}
 
+	/**
+	 * Metodo responsavel por carregar os dados salvos em um arquivo.
+	 */
 	public void carregarDados() {
 		ObjectInputStream os;
 		try {

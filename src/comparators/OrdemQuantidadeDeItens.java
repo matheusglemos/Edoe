@@ -6,7 +6,7 @@ import com.edoe.models.Item;
 
 /**
  * Classe responsavel por implementar o comparator da classe item, com objetivo
- * de ordenar os itens pela sua quantidade
+ * de ordenar os itens pela sua quantidade.
  * 
  * @author Matheus Gusmao
  * @author Davidson Guedes
@@ -16,7 +16,7 @@ import com.edoe.models.Item;
 public class OrdemQuantidadeDeItens implements Comparator<Item> {
 	/**
 	 * Metodo que compara dois itens pela sua quantidade, se dois itens tiverem a
-	 * mesma quantidade os mesmo seram comparados pela sua descrição
+	 * mesma quantidade os mesmo seram comparados pela sua descricao.
 	 */
 	@Override
 	public int compare(Item o1, Item o2) {

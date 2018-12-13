@@ -18,20 +18,15 @@ public class ValidadorUsuario {
 	 * email, celular, id ou classe sejam nulo ou vazio, a excecao sera lancada
 	 * juntamente com uma mensagem.
 	 * 
-	 * @param nome
-	 *            String que representa o nome do usuario doador.
+	 * @param nome    String que representa o nome do usuario doador.
 	 * 
-	 * @param id
-	 *            String que representa o id do usuario doador.
+	 * @param id      String que representa o id do usuario doador.
 	 * 
-	 * @param email
-	 *            String que representa o email do usuario doador.
+	 * @param email   String que representa o email do usuario doador.
 	 * 
-	 * @param celular
-	 *            String que representa o celular do usuario doador.
+	 * @param celular String que representa o celular do usuario doador.
 	 * 
-	 * @param classe
-	 *            String que representa a classe do usuario doador.
+	 * @param classe  String que representa a classe do usuario doador.
 	 */
 	public static void validaCriacaoDeUsuario(String nome, String email, String celular, String id, String classe) {
 
